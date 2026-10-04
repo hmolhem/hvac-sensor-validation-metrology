@@ -1,0 +1,11 @@
+check_id,check,status,details
+A,Required release artifacts,PASS,Canonical raw package contains exactly the required 10 files.
+B,Release identity,PASS,Expected release_id=VSM-LAB-DATA-v1.1
+C,Frozen upstream release state,PASS,FROZEN; DR-002 PASS (11/11); measurement_payload_changed=false
+D,Committed manifest SHA-256,PASS,Observed=efd9e79958b9d7c7b8730ee9015c72c3e8205effd03c686ff58b03454188f847
+E,CSV payload SHA-256 commitments,PASS,All seven committed CSV blobs match the manifest.
+F,CSV row counts,PASS,All committed CSV row counts match the manifest.
+G,CSV schemas,PASS,All committed CSV schemas match the manifest.
+H,Analyst/private-truth boundary,PASS,Manifest declares no private truth and no protected private-truth paths are tracked.
+I,Test matrix and release-package completeness,PASS,test_matrix.csv present with 333 rows and manifest defines exactly seven CSV payloads.
+J,Canonical LF committed-byte policy,PASS,Committed release blobs contain no CR bytes and .gitattributes enforces canonical LF.
