@@ -51,7 +51,7 @@ The canonical `VSM-LAB-DATA-v1.1` package is now imported and independently veri
 
 **Status:** PASS WITH DOCUMENTED DESIGN CONDITIONS  
 **Branch:** `feature/hv-003-dataset-qualification`  
-**Pull Request:** TBD
+**Pull Request:** #3
 
 ### Objective
 Qualify the frozen analyst-facing `VSM-LAB-DATA-v1.1` campaign before any substantive DUT-performance analysis by verifying structural completeness, experimental traceability, calibration/validation separation, temporal integrity, and experimental-state consistency.
