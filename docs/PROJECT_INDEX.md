@@ -5,8 +5,8 @@ This file is the canonical milestone registry for the HVAC Sensor Validation & M
 | ID | Milestone | Branch | Verification / Gate | Handoff | PR | Status |
 |---|---|---|---|---|---|---|
 | HV-001 | Repository Bootstrap | `chore/hv-001-repository-bootstrap` | Bootstrap review PASS | `docs/handoffs/HV-001_REPOSITORY_BOOTSTRAP.md` | #1 | PASS |
-| HV-002 | Frozen Dataset Intake | TBD | DV-001 Dataset Intake Verification | TBD | TBD | PLANNED |
-| HV-003 | Dataset Qualification | TBD | DQ-001 Dataset Qualification | TBD | TBD | PLANNED |
+| HV-002 | Frozen Dataset Intake | `feature/hv-002-frozen-dataset-intake` | DV-001 Dataset Intake Verification | `docs/handoffs/HV-002_FROZEN_DATASET_INTAKE.md` | #2 | PASS |
+| HV-003 | Dataset Qualification | `feature/hv-003-dataset-qualification` | DQ-001 Dataset Qualification | `docs/handoffs/HV-003_DATASET_QUALIFICATION.md` | #3 | PASS WITH DOCUMENTED DESIGN CONDITIONS |
 
 ## Milestone-ID Policy
 
