@@ -26,7 +26,7 @@ DQ-001 evaluates:
 8. Calibration/validation role separation
 9. Elapsed-time, ordering, and sampling-interval consistency
 10. Experimental-state and metadata consistency
-11. Known design exceptions, including uncertainty-evaluation points that do not have standalone measurement CSV rows
+11. Known design conditions, including uncertainty-evaluation points that do not have standalone measurement CSV rows
 
 ## Inputs
 
@@ -63,7 +63,7 @@ DQ-001 passes only if no unresolved defect blocks trustworthy downstream analysi
 Possible outcomes:
 
 - `PASS` - dataset is qualified for downstream analysis.
-- `PASS WITH DOCUMENTED EXCEPTIONS` - dataset is usable and all exceptions are understood and non-blocking.
+- `PASS WITH DOCUMENTED DESIGN CONDITIONS` - dataset is usable and all documented design conditions are understood, accepted, and non-blocking.
 - `FAIL` - one or more unresolved defects invalidate or materially compromise downstream analysis.
 
 ## Notebook
