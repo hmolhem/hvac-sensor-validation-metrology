@@ -5,7 +5,7 @@
 - Project: HVAC Sensor Validation & Metrology
 - Milestone: HV-003
 - Branch: `feature/hv-003-dataset-qualification`
-- Pull Request: TBD
+- Pull Request: #3
 - Technical Gate: `DQ-001`
 - Status: PASS WITH DOCUMENTED DESIGN CONDITIONS
 
