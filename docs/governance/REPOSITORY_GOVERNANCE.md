@@ -50,9 +50,9 @@ The following must never be introduced:
 
 ## G-04 — Frozen Raw Data
 
-The imported release `VSM-LAB-DATA-v1` is treated as immutable analytical input.
+The imported release `VSM-LAB-DATA-v1.1` is treated as immutable analytical input.
 
-Files under `data/raw/vsm_lab_data_v1/` must not be overwritten by notebooks or analysis scripts. Derived artifacts belong under `data/processed/`, `reports/tables/`, or `reports/figures/`.
+Files under `data/raw/vsm_lab_data_v1_1/` must not be overwritten by notebooks or analysis scripts. Derived artifacts belong under `data/processed/`, `reports/tables/`, or `reports/figures/`.
 
 ## G-05 — Engineering-Question-Driven Analysis
 
