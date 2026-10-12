@@ -45,9 +45,10 @@ Final Engineering Assessment
 | **HV-001** | Repository Bootstrap & Governance | Bootstrap review | **PASS** |
 | **HV-002** | Frozen Dataset Intake | DV-001 | **PASS** |
 | **HV-003** | Dataset Qualification | DQ-001 | **PASS WITH DOCUMENTED DESIGN CONDITIONS** |
-| **HV-004** | Static Characterization | To be defined | **NEXT** |
+| **HV-004** | Static Characterization | SC-001 | **PASS** |
+| **HV-005** | Repeatability & Reproducibility | To be defined | **NEXT** |
 
-The dataset has now passed the formal qualification gate and is released for downstream DUT-performance analysis.
+The dataset has passed formal qualification, and the static-characterization milestone has established the pre-calibration DUT-performance baseline.
 
 Canonical milestone tracking: [docs/PROJECT_INDEX.md](docs/PROJECT_INDEX.md)  
 Project history: [docs/PROJECT_HISTORY.md](docs/PROJECT_HISTORY.md)
@@ -137,8 +138,8 @@ The reference instrument is itself a measurement system with finite uncertainty.
 | Notebook | Engineering Stage | Status |
 |---|---|---|
 | `00_dataset_qualification.ipynb` | Dataset Qualification | **COMPLETE** |
-| `01_static_characterization.ipynb` | Static Measurement Performance | **NEXT** |
-| `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | Planned |
+| `01_static_characterization.ipynb` | Static Measurement Performance | **COMPLETE** |
+| `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **NEXT** |
 | `03_calibration_model.ipynb` | Calibration Model Development | Planned |
 | `04_blind_validation.ipynb` | Independent Validation | Planned |
 | `05_step_response.ipynb` | Dynamic Step Response | Planned |
@@ -210,19 +211,27 @@ Handoff index: [docs/handoffs/HANDOFF_INDEX.md](docs/handoffs/HANDOFF_INDEX.md)
 
 ## Current Focus
 
-The project has completed **HV-003 / DQ-001 Dataset Qualification**.
+The project has completed **HV-004 / SC-001 Static Characterization**.
+
+Key pre-calibration findings include:
+
+- overall Test_ID-level MBE: approximately **-1.1412 %RH**
+- all 120 Test_ID mean errors were negative
+- matched UP - DOWN direction difference: approximately **-0.8304 %RH**
+- temperature response changed with RH context
+- a smaller run-related shift remains for formal R&R analysis
 
 The next engineering stage is:
 
 ```text
-HV-004 - Static Characterization
-Notebook 01 - Static Characterization
+HV-005 - Repeatability & Reproducibility
+Notebook 02 - Repeatability & Reproducibility
 ```
 
 The engineering question now changes from:
 
-> Can the measurement evidence be trusted?
+> What does the qualified evidence reveal about DUT static measurement performance?
 
 to:
 
-> What does the qualified evidence reveal about DUT measurement performance?
+> How much of the observed measurement variation is attributable to repeatability and reproducibility?

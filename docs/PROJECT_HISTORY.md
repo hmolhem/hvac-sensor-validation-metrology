@@ -73,3 +73,36 @@ All blocking checks passed. The final notebook gate reports `DQ-001 GATE: PASS` 
 The frozen dataset is qualified as sufficiently complete, traceable, internally consistent, and experimentally coherent for downstream sensor characterization, calibration, independent validation, dynamic-response analysis, stability assessment, and measurement-uncertainty evaluation.
 
 The next analysis stage is Notebook 01 - Static Characterization.
+
+## HV-004 - Static Characterization
+
+**Status:** PASS  
+**Branch:** `feature/hv-004-static-characterization`  
+**Pull Request:** #5
+
+### Objective
+Establish the DUT pre-calibration static-performance baseline using only qualified `STATIC / CHARACTERIZATION` evidence while preserving calibration/validation isolation and the analyst-blind boundary.
+
+### Key Decisions
+- Define observed RH error as `RH_DUT - RH_Reference`.
+- Treat Test_ID, not individual time samples, as the primary experimental unit for condition-level comparisons.
+- Preserve sample-level information for within-test behavior without pseudoreplication.
+- Retain statistically extreme observations unless a traceable engineering reason justifies exclusion.
+- Evaluate RH and temperature dependence without assuming a constant-offset model.
+- Evaluate direction using matched UP/DOWN conditions with RH, temperature, day, and run held fixed.
+- Treat day/run findings as contextual evidence; defer formal variance-component decomposition to Notebook 02.
+- Require Restart Kernel -> Run All before closing SC-001.
+
+### Verification
+`SC-001 = PASS`.
+
+All twelve static-characterization completion criteria passed, including role isolation, error-definition verification, Test_ID summary integrity, RH/temperature/direction/day-run analyses, analyst-visible evidence only, documented engineering interpretation, and clean-kernel reproducibility.
+
+### Result
+The DUT exhibits a persistent negative pre-calibration error with an overall Test_ID-level MBE of approximately -1.1412 %RH. The error is not adequately described by a single constant offset.
+
+The strongest static structure is matched direction dependence: the mean UP - DOWN difference is approximately -0.8304 %RH across 60 matched pairs. Temperature behavior also changes with RH context, while a smaller run-related shift remains for later R&R analysis.
+
+HV-004 establishes the static pre-calibration baseline required for downstream repeatability/reproducibility analysis and calibration-model development.
+
+The next analysis stage is Notebook 02 - Repeatability & Reproducibility.
