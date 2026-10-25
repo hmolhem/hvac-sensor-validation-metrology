@@ -15,12 +15,16 @@ same nominal test execution and operating condition.
 In this project, repeatability is screened using the 60 repeated 1 Hz samples
 within each static CHARACTERIZATION Test_ID.
 
-### Reproducibility
+### Intermediate Precision
 
-Variation associated with changing a higher-level replication condition while
-holding the intended operating condition matched.
+Variation observed when selected measurement conditions change within the
+same laboratory or measurement system while the intended operating condition
+is controlled.
 
-HV-005 evaluates two reproducibility views:
+For this campaign, Run and Day are interpreted as intermediate-precision
+factors. This is more precise than calling them full reproducibility factors.
+
+HV-005 evaluates two intermediate-precision views:
 
 - Run 1 versus Run 2 under matched RH, temperature, direction, and day.
 - Day 1 versus Day 2 where RH, temperature, and direction are genuinely
@@ -137,6 +141,12 @@ a statistical model.
 
 HV-005 does not force a variance-component estimate where the design does not
 support clean identification.
+
+### Reproducibility
+
+Full reproducibility is not directly estimated in HV-005. In ISO-style
+precision terminology, reproducibility represents a broader change of
+measurement conditions than the limited Run/Day changes available here.
 
 ### Gage R&R / Measurement System Analysis
 
