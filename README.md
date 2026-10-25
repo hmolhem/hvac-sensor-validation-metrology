@@ -50,6 +50,7 @@ Final Engineering Assessment
 
 The dataset has passed formal qualification, and the static-characterization milestone has established the pre-calibration DUT-performance baseline.
 
+Operational continuity snapshot: [PROJECT_STATE.md](PROJECT_STATE.md)  
 Canonical milestone tracking: [docs/PROJECT_INDEX.md](docs/PROJECT_INDEX.md)  
 Project history: [docs/PROJECT_HISTORY.md](docs/PROJECT_HISTORY.md)
 
@@ -211,15 +212,16 @@ Handoff index: [docs/handoffs/HANDOFF_INDEX.md](docs/handoffs/HANDOFF_INDEX.md)
 
 ## Current Focus
 
-The project has completed **HV-004 / SC-001 Static Characterization**.
+The project has completed **HV-005 / RR-001 Repeatability & Reproducibility** with documented design conditions.
 
-Key pre-calibration findings include:
+Key verified findings include:
 
-- overall Test_ID-level MBE: approximately **-1.1412 %RH**
-- all 120 Test_ID mean errors were negative
-- matched UP - DOWN direction difference: approximately **-0.8304 %RH**
-- temperature response changed with RH context
-- a smaller run-related shift remains for formal R&R analysis
+- pooled within-Test_ID repeatability SD: approximately **0.2593 %RH**
+- mean Run 2 − Run 1 shift: approximately **-0.0851 %RH**
+- mean Day 2 − Day 1 shift: approximately **-0.0901 %RH**
+- the independent day comparison is restricted to the matched Day 1 / Day 2 subset because **Day × RH is partially crossed**
+- Run and Day effects are treated as **intermediate precision** effects rather than full interlaboratory reproducibility
+- systematic center shifts remain explicitly separated from random paired scatter
 
 The next engineering stage is:
 
@@ -228,10 +230,6 @@ HV-006 - Calibration Model Development
 Notebook 03 - Calibration
 ```
 
-The engineering question now changes from:
+Before Notebook 03 implementation, the HV-006 analysis plan must freeze the calibration objective, CALIBRATION-only data boundary, target/predictor definitions, candidate models, model-selection strategy, metrics, freeze criteria, and blind VALIDATION protection.
 
-> What does the qualified evidence reveal about DUT static measurement performance?
-
-to:
-
-> How much of the observed measurement variation is attributable to repeatability and reproducibility?
+For any new work session or ChatGPT conversation, read [PROJECT_STATE.md](PROJECT_STATE.md) first.
