@@ -9,9 +9,9 @@
 - Default branch: `main`
 - Development policy: **merge-only main**
 - State snapshot date: **2026-10-25**
-- Snapshot baseline commit on `main`: `fd48f916684e76d3cac222cd95a720b76325622f`
-- Baseline commit message: `HV-005: repeatability and reproducibility analysis`
-- Continuity-work branch: `chore/project-state-continuity`
+- Snapshot baseline commit on `main`: `d3b348a3bb8f598260e96a1a003f04cfcdb407f2`
+- Baseline commit message: `Add durable project-state continuity snapshot (#7)`
+- Current development branch: `feature/hv-006-calibration-model-development`
 
 ## 2. Project Mission
 
@@ -132,7 +132,7 @@ The four matrix-only Test_IDs are intentional `UNCERTAINTY_EVALUATION` design po
 | HV-003 | Dataset Qualification | DQ-001 | **PASS WITH DOCUMENTED DESIGN CONDITIONS** |
 | HV-004 | Static Characterization | SC-001 | **PASS** |
 | HV-005 | Repeatability & Reproducibility | RR-001 | **PASS WITH DOCUMENTED CONDITIONS** |
-| HV-006 | Calibration Model Development | To be defined | **NEXT / NOT YET FROZEN** |
+| HV-006 | Calibration Model Development | CM-001 | **IN PROGRESS — DESIGN PLAN FROZEN** |
 
 Closed HV-001 through HV-005 should not be reopened or redesigned casually. A later correction requires traceable evidence and a deliberate project decision.
 
@@ -365,29 +365,28 @@ HV-005 Repeatability & Reproducibility
 HV-006 Calibration Model Development   <-- NEXT
 ```
 
-No HV-006 analysis plan or calibration implementation is frozen yet.
+The CM-001 calibration-model-development analysis plan is now frozen on the HV-006 branch. Notebook 03 implementation has not yet started.
 
 ## 17. HV-006 — Immediate Next Task
 
 The next work session should begin with **design, not code**.
 
-Before creating or implementing `notebooks/03_calibration_model.ipynb`, freeze an HV-006 analysis plan that defines at minimum:
+The frozen HV-006 analysis plan is `docs/analysis_plan/CM-001_CALIBRATION_MODEL_DEVELOPMENT_PLAN.md`. It defines:
 
 - calibration engineering objective;
 - exact CALIBRATION-only data boundary;
-- target variable;
-- candidate predictor set;
-- candidate model classes;
-- feature-engineering policy;
-- training / internal model-selection strategy;
-- metrics and diagnostic plots;
-- model-selection rule;
-- overfitting controls;
-- model-freeze artifact;
-- explicit protection of the blind VALIDATION dataset;
-- completion criteria and technical gate ID.
+- correction target `RH_Reference - RH_DUT`;
+- deployable predictor policy;
+- candidate model hierarchy C0-C5;
+- Test_ID-level modeling unit;
+- group-aware cross-validation and robustness stress tests;
+- model-selection metrics and residual diagnostics;
+- parsimony/deployability selection rule;
+- canonical freeze artifact `config/calibration_model_v1.json`;
+- explicit blind VALIDATION protection;
+- CM-001 completion criteria.
 
-The VALIDATION set must remain untouched during model development.
+The immediate next task is to implement the CALIBRATION-only data audit and Test_ID summary section of Notebook 03. VALIDATION measurement values remain untouched.
 
 ## 18. Resume Protocol for a New Chat
 
