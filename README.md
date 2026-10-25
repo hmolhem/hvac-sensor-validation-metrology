@@ -221,12 +221,11 @@ Key pre-calibration findings include:
 - temperature response changed with RH context
 - a smaller run-related shift remains for formal R&R analysis
 
-The active engineering stage is:
+The next engineering stage is:
 
 ```text
-HV-005 - Repeatability & Reproducibility
-Notebook 02 - Repeatability & Reproducibility
-Technical Gate - RR-001
+HV-006 - Calibration Model Development
+Notebook 03 - Calibration
 ```
 
 The engineering question now changes from:
