@@ -46,7 +46,7 @@ Final Engineering Assessment
 | **HV-002** | Frozen Dataset Intake | DV-001 | **PASS** |
 | **HV-003** | Dataset Qualification | DQ-001 | **PASS WITH DOCUMENTED DESIGN CONDITIONS** |
 | **HV-004** | Static Characterization | SC-001 | **PASS** |
-| **HV-005** | Repeatability & Reproducibility | To be defined | **NEXT** |
+| **HV-005** | Repeatability & Reproducibility | RR-001 | **IN PROGRESS** |
 
 The dataset has passed formal qualification, and the static-characterization milestone has established the pre-calibration DUT-performance baseline.
 
@@ -139,7 +139,7 @@ The reference instrument is itself a measurement system with finite uncertainty.
 |---|---|---|
 | `00_dataset_qualification.ipynb` | Dataset Qualification | **COMPLETE** |
 | `01_static_characterization.ipynb` | Static Measurement Performance | **COMPLETE** |
-| `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **NEXT** |
+| `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **IN PROGRESS** |
 | `03_calibration_model.ipynb` | Calibration Model Development | Planned |
 | `04_blind_validation.ipynb` | Independent Validation | Planned |
 | `05_step_response.ipynb` | Dynamic Step Response | Planned |
@@ -221,11 +221,12 @@ Key pre-calibration findings include:
 - temperature response changed with RH context
 - a smaller run-related shift remains for formal R&R analysis
 
-The next engineering stage is:
+The active engineering stage is:
 
 ```text
 HV-005 - Repeatability & Reproducibility
 Notebook 02 - Repeatability & Reproducibility
+Technical Gate - RR-001
 ```
 
 The engineering question now changes from:
