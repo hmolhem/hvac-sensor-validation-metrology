@@ -184,9 +184,9 @@ Engineering conclusions are based on analyst-visible measurements, stated requir
 |   `-- handoffs/             # Milestone boundary records
 |-- notebooks/                # Engineering-question-driven analyses
 |-- reports/
-|   |-- figures/              # Derived figures
-|   `-- tables/               # Derived tables
-|-- scripts/                  # Reusable analytical/verification code
+|   |-- figures/              # Exported analytical figures
+|   `-- tables/               # Exported summary tables
+|-- src/                      # Reusable analyst-side analysis helpers
 `-- README.md
 ```
 
