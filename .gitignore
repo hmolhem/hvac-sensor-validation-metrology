@@ -16,10 +16,14 @@ env/
 Thumbs.db
 
 # Generated analysis outputs
+# Keep folders ignored by default, but allow curated milestone evidence.
 reports/figures/*
 !reports/figures/.gitkeep
+!reports/figures/hv005_*.png
+
 reports/tables/*
 !reports/tables/.gitkeep
+!reports/tables/hv005_*.csv
 data/processed/*
 !data/processed/.gitkeep
 

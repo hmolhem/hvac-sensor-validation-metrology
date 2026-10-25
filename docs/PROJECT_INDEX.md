@@ -8,6 +8,7 @@ This file is the canonical milestone registry for the HVAC Sensor Validation & M
 | HV-002 | Frozen Dataset Intake | `feature/hv-002-frozen-dataset-intake` | DV-001 Dataset Intake Verification | `docs/handoffs/HV-002_FROZEN_DATASET_INTAKE.md` | #2 | PASS |
 | HV-003 | Dataset Qualification | `feature/hv-003-dataset-qualification` | DQ-001 Dataset Qualification | `docs/handoffs/HV-003_DATASET_QUALIFICATION.md` | #3 | PASS WITH DOCUMENTED DESIGN CONDITIONS |
 | HV-004 | Static Characterization | `feature/hv-004-static-characterization` | SC-001 Static Characterization | `docs/handoffs/HV-004_STATIC_CHARACTERIZATION.md` | #5 | PASS |
+| HV-005 | Repeatability & Reproducibility | `feature/hv-005-repeatability-reproducibility` | RR-001 Repeatability & Reproducibility | `docs/handoffs/HV-005_REPEATABILITY_REPRODUCIBILITY.md` | #6 | PASS WITH DOCUMENTED CONDITIONS |
 
 ## Milestone-ID Policy
 
