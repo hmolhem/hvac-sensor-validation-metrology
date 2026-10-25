@@ -106,3 +106,54 @@ The strongest static structure is matched direction dependence: the mean UP - DO
 HV-004 establishes the static pre-calibration baseline required for downstream repeatability/reproducibility analysis and calibration-model development.
 
 The next analysis stage is Notebook 02 - Repeatability & Reproducibility.
+
+
+## HV-005 - Repeatability & Reproducibility
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
+**Branch:** `feature/hv-005-repeatability-reproducibility`  
+**Technical Gate:** RR-001
+
+### Objective
+Quantify short-term repeatability and higher-level Run/Day measurement
+variation using only qualified STATIC / CHARACTERIZATION evidence.
+
+### Key Decisions
+- Preserve Test_ID as the experimental unit for condition-level comparisons.
+- Treat the 60 samples within each Test_ID as repeated time samples, not
+  independent experimental replications.
+- Use pooled within-Test_ID SD for short-term repeatability.
+- Match Run 1 and Run 2 on RH, temperature, direction, and day.
+- Restrict the day analysis to the genuinely matched Day 1 / Day 2 subset at
+  RH 30, 50, and 70 %RH.
+- Exclude Day 3 from independent day-effect estimation because Day and RH are
+  partially crossed.
+- Separate systematic paired shifts from paired scatter.
+- Use intermediate-precision terminology for Run and Day effects rather than
+  claiming full reproducibility.
+- Add reusable analyst-side helpers in `src/static_analysis.py`.
+- Export curated HV-005 figures and tables for reporting and poster use.
+
+### Verification
+`RR-001 = PASS WITH DOCUMENTED CONDITIONS`.
+
+All twelve completion criteria passed after a clean-kernel Run All.
+
+### Results
+- pooled within-Test_ID repeatability SD: 0.259265 %RH;
+- mean Run 2 − Run 1 shift: -0.085128 %RH;
+- SD of run paired differences: 0.048747 %RH;
+- 58/60 run differences negative;
+- mean Day 2 − Day 1 shift: -0.090148 %RH;
+- SD of day paired differences: 0.034539 %RH;
+- 18/18 matched day differences negative.
+
+### Result
+The measurement system shows a stable short-term repeatability baseline
+together with smaller but persistent Run- and Day-related center shifts.
+
+The day result is explicitly limited to the matched Day 1 / Day 2 subset
+because the campaign is partially crossed in Day × RH.
+
+HV-005 provides the measurement-variation baseline required before calibration
+model development and later uncertainty analysis.
