@@ -18,6 +18,23 @@ How much of the observed static measurement variation is associated with:
 
 The analysis must distinguish measurement-system variation from variation caused by RH, temperature, direction, and other operating conditions.
 
+## Precision Terminology
+
+HV-005 keeps the roadmap label "Repeatability & Reproducibility" for project
+continuity. In strict ISO 5725 terminology, however, changing selected
+within-laboratory factors such as time/day or run while other conditions remain
+controlled is more accurately described as **intermediate precision** rather
+than full reproducibility.
+
+Accordingly:
+
+- within-Test_ID scatter is treated as repeatability evidence;
+- matched Run 1 / Run 2 differences are treated as run-related intermediate
+  precision evidence;
+- matched Day 1 / Day 2 differences are treated as day-related intermediate
+  precision evidence;
+- the notebook does not claim full interlaboratory reproducibility.
+
 ## Why This Is Not Treated as a Classical Gage R&R by Default
 
 The campaign does not use the classical Part × Operator × Repeat structure of a standard crossed AIAG Gage R&R study.
@@ -66,7 +83,7 @@ Day is not fully crossed with RH.
 
 Therefore a three-day marginal comparison is confounded with RH composition.
 
-Day-to-day reproducibility will be evaluated only on the genuinely matched Day 1 vs Day 2 subset:
+Day-to-day intermediate precision will be evaluated only on the genuinely matched Day 1 vs Day 2 subset:
 
 `RH ∈ {30, 50, 70} × Temperature × Direction`
 
