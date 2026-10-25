@@ -386,7 +386,7 @@ The frozen HV-006 analysis plan is `docs/analysis_plan/CM-001_CALIBRATION_MODEL_
 - explicit blind VALIDATION protection;
 - CM-001 completion criteria.
 
-The immediate next task is to implement the CALIBRATION-only data audit and Test_ID summary section of Notebook 03. VALIDATION measurement values remain untouched.
+Notebook 03 now contains the CALIBRATION-only boundary audit, Test_ID summary, correction-target verification, predictor-leakage audit, and initial design export. The immediate next task is a clean-kernel run of Sections 4-9 and verification of the expected PASS outputs before any C0-C5 model fitting. VALIDATION measurement values remain untouched.
 
 ## 18. Resume Protocol for a New Chat
 
