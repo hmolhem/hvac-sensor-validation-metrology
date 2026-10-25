@@ -1,0 +1,6 @@
+Component,Statistic,Value_RH,N
+Within-Test Repeatability,Pooled SD,0.2592654906322251,120
+Run-to-Run,Mean Run2-Run1 shift,-0.0851277777777779,60
+Run-to-Run,SD of paired differences,0.04874671621241823,60
+Day-to-Day,Mean Day2-Day1 shift,-0.09014814814814812,18
+Day-to-Day,SD of paired differences,0.034538892489599744,18
