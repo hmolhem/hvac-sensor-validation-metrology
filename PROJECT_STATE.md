@@ -386,7 +386,7 @@ The frozen HV-006 analysis plan is `docs/analysis_plan/CM-001_CALIBRATION_MODEL_
 - explicit blind VALIDATION protection;
 - CM-001 completion criteria.
 
-Notebook 03 has passed the initial clean-kernel checkpoint through CM-04 (boundary audit, Test_ID summary, correction-target verification, and predictor-leakage audit). The notebook now also contains CM-05 grouped cross-validation plus C0 uncalibrated and C1 constant-offset baselines. The immediate next task is a clean-kernel run through the baseline checkpoint and review of the out-of-fold C0/C1 metrics and residual structure before introducing C2/C3. VALIDATION measurement values remain untouched.
+Notebook 03 has passed the initial clean-kernel checkpoint through CM-04 (boundary audit, Test_ID summary, correction-target verification, and predictor-leakage audit). The notebook now also contains CM-05 grouped cross-validation plus C0 uncalibrated and C1 constant-offset baselines. The C0/C1 baseline checkpoint has been reviewed: C1 reduces RMSE and MAE by about 60% versus C0 but leaves a strong Direction-dependent residual structure (approximately +0.4923 %RH for DOWN and -0.4923 %RH for UP). Notebook 03 now includes C2 RH-only and C3 RH+temperature linear correction models using the same frozen group-aware CV folds. The immediate next task is a clean-kernel run through the C2/C3 checkpoint and review of out-of-fold metrics, coefficient stability, and residual structure before considering C4/C5. VALIDATION measurement values remain untouched.
 
 ## 18. Resume Protocol for a New Chat
 
