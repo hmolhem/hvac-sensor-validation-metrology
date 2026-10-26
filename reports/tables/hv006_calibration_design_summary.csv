@@ -1,0 +1,11 @@
+Item,Value
+Measurement rows,5760
+Calibration Test_IDs,96
+RH levels,"20.0, 40.0, 60.0, 80.0"
+Temperature levels C,"15.0, 25.0, 35.0"
+Directions,"DOWN, UP"
+Days,"1, 2"
+Runs,"1, 2"
+Condition groups,24
+Samples per Test_ID,60
+Reserved validation Test_IDs,36

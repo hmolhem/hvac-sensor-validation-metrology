@@ -1,0 +1,5 @@
+Model,Parameter,Value,Role
+C1_Constant_Offset,offset_percent_rh,1.2266788194444438,Deployable
+C5_Direction_Diagnostic,intercept_down_correction_percent_rh,0.8164583333333324,Diagnostic
+C5_Direction_Diagnostic,up_increment_percent_rh,0.8204409722222229,Diagnostic
+C5_Direction_Diagnostic,up_correction_percent_rh,1.6368993055555552,Diagnostic
