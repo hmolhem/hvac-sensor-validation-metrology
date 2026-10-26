@@ -157,3 +157,57 @@ because the campaign is partially crossed in Day × RH.
 
 HV-005 provides the measurement-variation baseline required before calibration
 model development and later uncertainty analysis.
+
+
+## HV-006 - Calibration Model Development
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
+**Branch:** `feature/hv-006-calibration-model-development`  
+**Technical Gate:** CM-001
+
+### Objective
+Develop and freeze a calibration model using STATIC / CALIBRATION evidence only while preserving the reserved VALIDATION measurements as blind independent evidence.
+
+### Key Decisions
+- Use one Test_ID summary as the primary modeling unit.
+- Prohibit sample-level random splitting and use group-aware cross-validation by RH × Temperature × Direction condition.
+- Compare C0-C4 as baseline/deployable candidates and retain C5 separately as a Direction/state diagnostic.
+- Use leave-one-RH and leave-one-day stress tests before model freeze.
+- Select the simplest deployable model supported by out-of-fold performance, residual structure, robustness, and operational availability of predictors.
+- Keep VALIDATION measurements untouched through model selection and freeze.
+
+### Verification
+`CM-001 = PASS WITH DOCUMENTED CONDITIONS`.
+
+The selected deployable model is C1, a constant additive RH correction.
+
+Frozen C1 correction:
+
+```text
++1.2266788194 %RH
+```
+
+Primary GroupCV RMSE is 0.5216 %RH, compared with 1.3045 %RH for the uncalibrated baseline.
+
+C2 adds no meaningful improvement, while C3 and C4 perform worse.
+
+C5, a Direction-augmented diagnostic model, reduces GroupCV RMSE to 0.1779 %RH and removes the dominant UP/DOWN residual split, demonstrating that Direction/hysteresis is the principal unresolved systematic structure.
+
+Frozen C5 diagnostic parameters:
+
+- DOWN correction: +0.8164583333 %RH
+- UP increment: +0.8204409722 %RH
+- UP correction: +1.6368993056 %RH
+
+### Robustness
+C1 remains stable under leave-one-RH and leave-one-day stress tests.
+
+C5 remains strongly superior and its Direction increment remains approximately 0.82 %RH across stress-test fits.
+
+### Documented Condition
+The memoryless C1 calibration does not eliminate Direction/hysteresis. C5 is therefore retained as a state-aware diagnostic model, but it is not treated as deployable until Direction can be defined as a reliable operational field input.
+
+### Result
+HV-006 freezes the calibration model before any independent VALIDATION measurement is evaluated.
+
+The next stage is HV-007 - Independent Blind Validation.

@@ -1,0 +1,43 @@
+{
+  "model_id": "C5_Direction_Diagnostic",
+  "model_version": "1.0",
+  "dataset_release": "VSM-LAB-DATA-v1.1",
+  "milestone_id": "HV-006",
+  "technical_gate_id": "CM-001",
+  "role": "state_aware_diagnostic_not_yet_deployable",
+  "model_form": "Correction_RH = intercept_down + up_increment * I(Direction == UP)",
+  "target_definition": "Correction_RH = RH_Reference_Mean - RH_DUT_Mean",
+  "predictors": [
+    "Direction_UP"
+  ],
+  "preprocessing": {
+    "Direction_UP": "1 for UP, 0 for DOWN"
+  },
+  "feature_names_after_transformation": [
+    "Direction_UP"
+  ],
+  "parameters": {
+    "intercept_down_correction_percent_rh": 0.8164583333333324,
+    "up_increment_percent_rh": 0.8204409722222229,
+    "up_correction_percent_rh": 1.6368993055555552
+  },
+  "regularization": null,
+  "calibration_test_id_count": 96,
+  "modeling_unit": "one summary row per CALIBRATION Test_ID",
+  "selection_summary": {
+    "primary_groupcv_rmse_percent_rh": 0.17785039762142837,
+    "primary_groupcv_mae_percent_rh": 0.14489290364583293,
+    "loo_rh_rmse_percent_rh": 0.1933425820957761,
+    "loo_day_rmse_percent_rh": 0.1861538249401129,
+    "interpretation": "Direction/hysteresis contains major calibration information.",
+    "deployment_condition": "Do not use as the field calibration model unless Direction can be operationally and reliably determined."
+  },
+  "software": {
+    "python": "3.12.12",
+    "numpy": "2.4.0",
+    "pandas": "2.3.3",
+    "scikit_learn": "1.8.0"
+  },
+  "validation_measurements_used": false,
+  "validation_statement": "Reserved VALIDATION measurement values were not used for fitting, tuning, model selection, or model freeze."
+}

@@ -1,0 +1,39 @@
+{
+  "model_id": "C1_Constant_Offset",
+  "model_version": "1.0",
+  "dataset_release": "VSM-LAB-DATA-v1.1",
+  "milestone_id": "HV-006",
+  "technical_gate_id": "CM-001",
+  "role": "memoryless_deployable_calibration",
+  "model_form": "RH_Calibrated = RH_DUT + offset",
+  "target_definition": "Correction_RH = RH_Reference_Mean - RH_DUT_Mean",
+  "predictors": [],
+  "preprocessing": "none",
+  "feature_names_after_transformation": [],
+  "parameters": {
+    "offset_percent_rh": 1.2266788194444438
+  },
+  "regularization": null,
+  "calibration_test_id_count": 96,
+  "modeling_unit": "one summary row per CALIBRATION Test_ID",
+  "selection_summary": {
+    "selected_over": [
+      "C2_RH_Linear",
+      "C3_RH_Temperature_Linear",
+      "C4_Polynomial_Ridge"
+    ],
+    "primary_groupcv_rmse_percent_rh": 0.5215597009202183,
+    "primary_groupcv_mae_percent_rh": 0.4922645833333333,
+    "loo_rh_rmse_percent_rh": 0.4534672250202631,
+    "loo_day_rmse_percent_rh": 0.45048176782163896,
+    "documented_limitation": "Strong Direction/hysteresis structure remains in a memoryless calibration."
+  },
+  "software": {
+    "python": "3.12.12",
+    "numpy": "2.4.0",
+    "pandas": "2.3.3",
+    "scikit_learn": "1.8.0"
+  },
+  "validation_measurements_used": false,
+  "validation_statement": "Reserved VALIDATION measurement values were not used for fitting, tuning, model selection, or model freeze."
+}

@@ -9,9 +9,9 @@
 - Default branch: `main`
 - Development policy: **merge-only main**
 - State snapshot date: **2026-10-25**
-- Snapshot baseline commit on `main`: `fd48f916684e76d3cac222cd95a720b76325622f`
-- Baseline commit message: `HV-005: repeatability and reproducibility analysis`
-- Continuity-work branch: `chore/project-state-continuity`
+- Snapshot baseline commit on `main`: `d3b348a3bb8f598260e96a1a003f04cfcdb407f2`
+- Baseline commit message: `Add durable project-state continuity snapshot (#7)`
+- Current development branch: `feature/hv-006-calibration-model-development`
 
 ## 2. Project Mission
 
@@ -132,7 +132,7 @@ The four matrix-only Test_IDs are intentional `UNCERTAINTY_EVALUATION` design po
 | HV-003 | Dataset Qualification | DQ-001 | **PASS WITH DOCUMENTED DESIGN CONDITIONS** |
 | HV-004 | Static Characterization | SC-001 | **PASS** |
 | HV-005 | Repeatability & Reproducibility | RR-001 | **PASS WITH DOCUMENTED CONDITIONS** |
-| HV-006 | Calibration Model Development | To be defined | **NEXT / NOT YET FROZEN** |
+| HV-006 | Calibration Model Development | CM-001 | **PASS WITH DOCUMENTED CONDITIONS — PENDING PR MERGE** |
 
 Closed HV-001 through HV-005 should not be reopened or redesigned casually. A later correction requires traceable evidence and a deliberate project decision.
 
@@ -143,7 +143,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `00_dataset_qualification.ipynb` | Dataset Qualification | **COMPLETE** |
 | `01_static_characterization.ipynb` | Static Measurement Performance | **COMPLETE** |
 | `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **COMPLETE** |
-| `03_calibration_model.ipynb` | Calibration Model Development | **PLANNED / NEXT** |
+| `03_calibration_model.ipynb` | Calibration Model Development | **COMPLETE — CM-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `04_blind_validation.ipynb` | Independent Validation | Planned |
 | `05_step_response.ipynb` | Dynamic Step Response | Planned |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | Planned |
@@ -362,32 +362,33 @@ HV-004 Static Characterization
   ->
 HV-005 Repeatability & Reproducibility
   ->
-HV-006 Calibration Model Development   <-- NEXT
+HV-006 Calibration Model Development   <-- COMPLETE / PENDING MERGE
+  ->
+HV-007 Independent Blind Validation     <-- NEXT
 ```
 
-No HV-006 analysis plan or calibration implementation is frozen yet.
+The CM-001 calibration-model-development analysis plan is now frozen on the HV-006 branch. Notebook 03 implementation has not yet started.
 
 ## 17. HV-006 — Immediate Next Task
 
 The next work session should begin with **design, not code**.
 
-Before creating or implementing `notebooks/03_calibration_model.ipynb`, freeze an HV-006 analysis plan that defines at minimum:
+The frozen HV-006 analysis plan is `docs/analysis_plan/CM-001_CALIBRATION_MODEL_DEVELOPMENT_PLAN.md`. It defines:
 
 - calibration engineering objective;
 - exact CALIBRATION-only data boundary;
-- target variable;
-- candidate predictor set;
-- candidate model classes;
-- feature-engineering policy;
-- training / internal model-selection strategy;
-- metrics and diagnostic plots;
-- model-selection rule;
-- overfitting controls;
-- model-freeze artifact;
-- explicit protection of the blind VALIDATION dataset;
-- completion criteria and technical gate ID.
+- correction target `RH_Reference - RH_DUT`;
+- deployable predictor policy;
+- candidate model hierarchy C0-C5;
+- Test_ID-level modeling unit;
+- group-aware cross-validation and robustness stress tests;
+- model-selection metrics and residual diagnostics;
+- parsimony/deployability selection rule;
+- canonical freeze artifact `config/calibration_model_v1.json`;
+- explicit blind VALIDATION protection;
+- CM-001 completion criteria.
 
-The VALIDATION set must remain untouched during model development.
+Notebook 03 has passed the initial clean-kernel checkpoint through CM-04 (boundary audit, Test_ID summary, correction-target verification, and predictor-leakage audit). The notebook now also contains CM-05 grouped cross-validation plus C0 uncalibrated and C1 constant-offset baselines. The C0/C1 baseline checkpoint has been reviewed: C1 reduces RMSE and MAE by about 60% versus C0 but leaves a strong Direction-dependent residual structure (approximately +0.4923 %RH for DOWN and -0.4923 %RH for UP). C2 RH-only does not materially improve RMSE relative to C1, while C3 RH+temperature performs worse and shows unstable temperature coefficients across folds. C4 polynomial Ridge also performs worse than C1 (RMSE about 0.6509 %RH). C5 Direction diagnostic performs dramatically better (RMSE about 0.1779 %RH, MAE about 0.1449 %RH) and collapses the UP/DOWN mean residual split to approximately zero, strongly identifying Direction/hysteresis as the dominant remaining systematic structure. C1 remains the leading memoryless deployable candidate; C5 is retained separately as a diagnostic/state-aware candidate. Notebook 03 now includes leave-one-RH-setpoint-out and leave-one-day-out robustness stress tests for C1 and C5. The robustness run is now substantially complete. C1 shows Primary GroupCV RMSE 0.5216 %RH, LOO-RH RMSE 0.4535 %RH, and LOO-Day RMSE 0.4505 %RH. C5 diagnostic shows Primary GroupCV RMSE 0.1779 %RH, LOO-RH RMSE 0.1933 %RH, and LOO-Day RMSE 0.1862 %RH. Leave-one-day results are stable: C1 held-out-day MBE is ±0.0895 %RH with RMSE about 0.45 %RH; C5 held-out-day RMSE is about 0.185-0.188 %RH and the UP increment is highly stable at about 0.82 %RH. The fold-level leave-one-RH review is complete. C1 remains stable across held-out 20, 40, 60, and 80 %RH with RMSE about 0.44-0.47 %RH. C5 remains stable with RMSE about 0.13-0.22 %RH, including the held-out edge conditions 20 and 80 %RH; its UP increment remains approximately 0.82 %RH. Robustness criterion C10 therefore passes. The final all-CALIBRATION refit completed successfully. Frozen parameters are: C1 offset = +1.2266788194 %RH; C5 DOWN correction = +0.8164583333 %RH; C5 UP increment = +0.8204409722 %RH; C5 UP correction = +1.6368993056 %RH. The scientific model-selection decision is therefore frozen: C1 is the preferred memoryless deployable calibration, while C5 is retained as a separate state-aware diagnostic model that demonstrates the dominant Direction/hysteresis effect. CM-001 = PASS WITH DOCUMENTED CONDITIONS. The model identity and coefficients are frozen. Repository closure is pending capture of the generated JSON/CSV artifacts and PR merge. VALIDATION measurement values remain untouched.
 
 ## 18. Resume Protocol for a New Chat
 
