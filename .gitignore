@@ -24,6 +24,7 @@ reports/figures/*
 reports/tables/*
 !reports/tables/.gitkeep
 !reports/tables/hv005_*.csv
+!reports/tables/hv006_*.csv
 data/processed/*
 !data/processed/.gitkeep
 
