@@ -9,9 +9,9 @@
 - Default branch: `main`
 - Development policy: **merge-only main**
 - State snapshot date: **2026-10-25**
-- Snapshot baseline commit on `main`: `d3b348a3bb8f598260e96a1a003f04cfcdb407f2`
-- Baseline commit message: `Add durable project-state continuity snapshot (#7)`
-- Current development branch: `feature/hv-006-calibration-model-development`
+- Snapshot baseline commit on `main`: `af55b2da6d064869c3f39b9298f8d94682774028`
+- Baseline commit message: `HV-006: Calibration Model Development (#8)`
+- Current development branch: none; HV-006 is merged and HV-007 has not yet started
 
 ## 2. Project Mission
 
@@ -132,7 +132,7 @@ The four matrix-only Test_IDs are intentional `UNCERTAINTY_EVALUATION` design po
 | HV-003 | Dataset Qualification | DQ-001 | **PASS WITH DOCUMENTED DESIGN CONDITIONS** |
 | HV-004 | Static Characterization | SC-001 | **PASS** |
 | HV-005 | Repeatability & Reproducibility | RR-001 | **PASS WITH DOCUMENTED CONDITIONS** |
-| HV-006 | Calibration Model Development | CM-001 | **PASS WITH DOCUMENTED CONDITIONS — PENDING PR MERGE** |
+| HV-006 | Calibration Model Development | CM-001 | **PASS WITH DOCUMENTED CONDITIONS** |
 
 Closed HV-001 through HV-005 should not be reopened or redesigned casually. A later correction requires traceable evidence and a deliberate project decision.
 
@@ -362,7 +362,7 @@ HV-004 Static Characterization
   ->
 HV-005 Repeatability & Reproducibility
   ->
-HV-006 Calibration Model Development   <-- COMPLETE / PENDING MERGE
+HV-006 Calibration Model Development   <-- COMPLETE / MERGED
   ->
 HV-007 Independent Blind Validation     <-- NEXT
 ```
@@ -388,7 +388,7 @@ The frozen HV-006 analysis plan is `docs/analysis_plan/CM-001_CALIBRATION_MODEL_
 - explicit blind VALIDATION protection;
 - CM-001 completion criteria.
 
-Notebook 03 has passed the initial clean-kernel checkpoint through CM-04 (boundary audit, Test_ID summary, correction-target verification, and predictor-leakage audit). The notebook now also contains CM-05 grouped cross-validation plus C0 uncalibrated and C1 constant-offset baselines. The C0/C1 baseline checkpoint has been reviewed: C1 reduces RMSE and MAE by about 60% versus C0 but leaves a strong Direction-dependent residual structure (approximately +0.4923 %RH for DOWN and -0.4923 %RH for UP). C2 RH-only does not materially improve RMSE relative to C1, while C3 RH+temperature performs worse and shows unstable temperature coefficients across folds. C4 polynomial Ridge also performs worse than C1 (RMSE about 0.6509 %RH). C5 Direction diagnostic performs dramatically better (RMSE about 0.1779 %RH, MAE about 0.1449 %RH) and collapses the UP/DOWN mean residual split to approximately zero, strongly identifying Direction/hysteresis as the dominant remaining systematic structure. C1 remains the leading memoryless deployable candidate; C5 is retained separately as a diagnostic/state-aware candidate. Notebook 03 now includes leave-one-RH-setpoint-out and leave-one-day-out robustness stress tests for C1 and C5. The robustness run is now substantially complete. C1 shows Primary GroupCV RMSE 0.5216 %RH, LOO-RH RMSE 0.4535 %RH, and LOO-Day RMSE 0.4505 %RH. C5 diagnostic shows Primary GroupCV RMSE 0.1779 %RH, LOO-RH RMSE 0.1933 %RH, and LOO-Day RMSE 0.1862 %RH. Leave-one-day results are stable: C1 held-out-day MBE is ±0.0895 %RH with RMSE about 0.45 %RH; C5 held-out-day RMSE is about 0.185-0.188 %RH and the UP increment is highly stable at about 0.82 %RH. The fold-level leave-one-RH review is complete. C1 remains stable across held-out 20, 40, 60, and 80 %RH with RMSE about 0.44-0.47 %RH. C5 remains stable with RMSE about 0.13-0.22 %RH, including the held-out edge conditions 20 and 80 %RH; its UP increment remains approximately 0.82 %RH. Robustness criterion C10 therefore passes. The final all-CALIBRATION refit completed successfully. Frozen parameters are: C1 offset = +1.2266788194 %RH; C5 DOWN correction = +0.8164583333 %RH; C5 UP increment = +0.8204409722 %RH; C5 UP correction = +1.6368993056 %RH. The scientific model-selection decision is therefore frozen: C1 is the preferred memoryless deployable calibration, while C5 is retained as a separate state-aware diagnostic model that demonstrates the dominant Direction/hysteresis effect. CM-001 = PASS WITH DOCUMENTED CONDITIONS. The model identity and coefficients are frozen. Repository closure is pending capture of the generated JSON/CSV artifacts and PR merge. VALIDATION measurement values remain untouched.
+Notebook 03 has passed the initial clean-kernel checkpoint through CM-04 (boundary audit, Test_ID summary, correction-target verification, and predictor-leakage audit). The notebook now also contains CM-05 grouped cross-validation plus C0 uncalibrated and C1 constant-offset baselines. The C0/C1 baseline checkpoint has been reviewed: C1 reduces RMSE and MAE by about 60% versus C0 but leaves a strong Direction-dependent residual structure (approximately +0.4923 %RH for DOWN and -0.4923 %RH for UP). C2 RH-only does not materially improve RMSE relative to C1, while C3 RH+temperature performs worse and shows unstable temperature coefficients across folds. C4 polynomial Ridge also performs worse than C1 (RMSE about 0.6509 %RH). C5 Direction diagnostic performs dramatically better (RMSE about 0.1779 %RH, MAE about 0.1449 %RH) and collapses the UP/DOWN mean residual split to approximately zero, strongly identifying Direction/hysteresis as the dominant remaining systematic structure. C1 remains the leading memoryless deployable candidate; C5 is retained separately as a diagnostic/state-aware candidate. Notebook 03 now includes leave-one-RH-setpoint-out and leave-one-day-out robustness stress tests for C1 and C5. The robustness run is now substantially complete. C1 shows Primary GroupCV RMSE 0.5216 %RH, LOO-RH RMSE 0.4535 %RH, and LOO-Day RMSE 0.4505 %RH. C5 diagnostic shows Primary GroupCV RMSE 0.1779 %RH, LOO-RH RMSE 0.1933 %RH, and LOO-Day RMSE 0.1862 %RH. Leave-one-day results are stable: C1 held-out-day MBE is ±0.0895 %RH with RMSE about 0.45 %RH; C5 held-out-day RMSE is about 0.185-0.188 %RH and the UP increment is highly stable at about 0.82 %RH. The fold-level leave-one-RH review is complete. C1 remains stable across held-out 20, 40, 60, and 80 %RH with RMSE about 0.44-0.47 %RH. C5 remains stable with RMSE about 0.13-0.22 %RH, including the held-out edge conditions 20 and 80 %RH; its UP increment remains approximately 0.82 %RH. Robustness criterion C10 therefore passes. The final all-CALIBRATION refit completed successfully. Frozen parameters are: C1 offset = +1.2266788194 %RH; C5 DOWN correction = +0.8164583333 %RH; C5 UP increment = +0.8204409722 %RH; C5 UP correction = +1.6368993056 %RH. The scientific model-selection decision is therefore frozen: C1 is the preferred memoryless deployable calibration, while C5 is retained as a separate state-aware diagnostic model that demonstrates the dominant Direction/hysteresis effect. CM-001 = PASS WITH DOCUMENTED CONDITIONS. The model identity and coefficients are frozen, the JSON/CSV artifacts are versioned, and PR #8 has been merged to `main`. VALIDATION measurement values remain untouched.
 
 ## 18. Resume Protocol for a New Chat
 
