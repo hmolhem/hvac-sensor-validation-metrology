@@ -145,7 +145,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **COMPLETE** |
 | `03_calibration_model.ipynb` | Calibration Model Development | **COMPLETE — CM-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
-| `05_step_response.ipynb` | Dynamic Step Response | **IN PROGRESS — DESIGN PLAN FROZEN** |
+| `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | Planned |
 | `07_stability_and_drift.ipynb` | Stability & Drift | Planned |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | Planned |
@@ -366,7 +366,9 @@ HV-006 Calibration Model Development   <-- COMPLETE / MERGED
   ->
 HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
   ->
-HV-008 Dynamic Step Response             <-- IN PROGRESS
+HV-008 Dynamic Step Response             <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+  ->
+HV-009 Dynamic Tracking                  <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. The next engineering frontier is HV-008 Dynamic Step Response.
@@ -409,7 +411,7 @@ RH_DUT = sensor response
 
 HV-008 reports both timing from command and DUT lag relative to the measured reference so chamber dynamics are not silently attributed to the DUT.
 
-The next executable checkpoint is a clean-kernel run of Notebook 05 through dataset audit, command-transition verification, per-Test_ID metric extraction, and condition-level summaries.
+Notebook 05 has passed SR-01 through SR-04. SR-001 = PASS WITH DOCUMENTED CONDITIONS. DUT t90 is 104.182 s DOWN and 119.861 s UP; corresponding DUT-minus-reference lags are 28.865 s and 38.478 s. Temperature dependence is weak across 15–35 °C, repeatability is tight, and overshoot is small. Final repository closure is pending one clean-kernel rerun of the updated notebook and capture of the curated CSV/PNG artifacts.
 
 ## 18. Resume Protocol for a New Chat
 
