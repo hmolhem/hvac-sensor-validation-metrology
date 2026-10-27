@@ -144,7 +144,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `01_static_characterization.ipynb` | Static Measurement Performance | **COMPLETE** |
 | `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **COMPLETE** |
 | `03_calibration_model.ipynb` | Calibration Model Development | **COMPLETE — CM-001 PASS WITH DOCUMENTED CONDITIONS** |
-| `04_blind_validation.ipynb` | Independent Blind Validation | **IN PROGRESS — DESIGN PLAN FROZEN** |
+| `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `05_step_response.ipynb` | Dynamic Step Response | Planned |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | Planned |
 | `07_stability_and_drift.ipynb` | Stability & Drift | Planned |
@@ -364,7 +364,9 @@ HV-005 Repeatability & Reproducibility
   ->
 HV-006 Calibration Model Development   <-- COMPLETE / MERGED
   ->
-HV-007 Independent Blind Validation     <-- NEXT
+HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
+  ->
+HV-008 Dynamic Step Response             <-- NEXT
 ```
 
 HV-006 is closed and merged. HV-007 Independent Blind Validation is now the active engineering frontier.
@@ -403,7 +405,7 @@ Governance for HV-007:
 - engineering interpretation must distinguish model generalization from final sensor suitability;
 - final HVAC suitability remains deferred until dynamic behavior and uncertainty are assessed.
 
-Notebook 04 has passed IV-01 through IV-03 and the first blind-validation results have been reviewed. Frozen C1 reduces validation RMSE from 1.1403 to 0.4566 %RH (~59.96%) and MAE from 1.0583 to 0.4046 %RH (~61.77%). Validation RMSE is highly consistent with HV-006 LOO-RH/LOO-Day estimates. C1 leaves +0.1683 %RH MBE and a Direction residual split of about 0.8078 %RH. Frozen C5 diagnostic gives RMSE 0.2131 %RH and largely removes the Direction split, independently confirming the hysteresis/state effect. IV-001 is provisionally PASS WITH DOCUMENTED CONDITIONS pending explicit review of the already-generated residual-by-temperature table and final repository closure.
+Notebook 04 has passed IV-01 through IV-03 and the first blind-validation results have been reviewed. Frozen C1 reduces validation RMSE from 1.1403 to 0.4566 %RH (~59.96%) and MAE from 1.0583 to 0.4046 %RH (~61.77%). Validation RMSE is highly consistent with HV-006 LOO-RH/LOO-Day estimates. C1 leaves +0.1683 %RH MBE and a Direction residual split of about 0.8078 %RH. Frozen C5 diagnostic gives RMSE 0.2131 %RH and largely removes the Direction split, independently confirming the hysteresis/state effect. The residual-by-temperature review is complete. C1 MAE remains stable near 0.40 %RH across 15–35 °C, with only a mild positive MBE trend. IV-001 = PASS WITH DOCUMENTED CONDITIONS. Repository closure is pending curated CSV capture and PR merge.
 
 ## 18. Resume Protocol for a New Chat
 
