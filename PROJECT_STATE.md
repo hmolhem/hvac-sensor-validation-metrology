@@ -9,8 +9,8 @@
 - Default branch: `main`
 - Development policy: **merge-only main**
 - State snapshot date: **2026-10-27**
-- Snapshot baseline commit on `main`: `af55b2da6d064869c3f39b9298f8d94682774028`
-- Baseline commit message: `HV-006: Calibration Model Development (#8)`
+- Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
+- Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
 - Current development branch: `feature/hv-007-independent-blind-validation`
 
 ## 2. Project Mission
@@ -369,9 +369,9 @@ HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
 HV-008 Dynamic Step Response             <-- NEXT
 ```
 
-HV-006 is closed and merged. HV-007 Independent Blind Validation is now the active engineering frontier.
+HV-006 and HV-007 are complete. The next engineering frontier is HV-008 Dynamic Step Response.
 
-## 17. HV-007 — Immediate Next Task
+## 17. HV-007 — Closed State
 
 The frozen HV-007 analysis plan is:
 
@@ -421,10 +421,10 @@ Continue from "Current Engineering Frontier" without redesigning closed mileston
 For the present state, the last completed handoff is:
 
 ```text
-docs/handoffs/HV-006_CALIBRATION_MODEL_DEVELOPMENT.md
+docs/handoffs/HV-007_INDEPENDENT_BLIND_VALIDATION.md
 ```
 
-Then continue HV-007 from the current independent-validation checkpoint.
+Then design and begin HV-008 Dynamic Step Response.
 
 ## 19. Update Policy for This File
 
