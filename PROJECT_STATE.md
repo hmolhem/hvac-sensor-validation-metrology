@@ -147,7 +147,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE SCIENTIFICALLY — DT-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `07_stability_and_drift.ipynb` | Stability & Drift | **IN PROGRESS — DESIGN PLAN FROZEN** |
+| `07_stability_and_drift.ipynb` | Stability & Drift | **COMPLETE SCIENTIFICALLY — SD-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | Planned |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
 | `10_final_validation.ipynb` | Final Engineering Assessment | Planned |
@@ -370,7 +370,9 @@ HV-008 Dynamic Step Response             <-- COMPLETE
   ->
 HV-009 Dynamic Tracking                  <-- COMPLETE
   ->
-HV-010 Stability & Drift                 <-- IN PROGRESS
+HV-010 Stability & Drift                 <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+  ->
+HV-011 Measurement Uncertainty Budget     <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
@@ -404,7 +406,7 @@ but does not change drift-from-baseline,
 short-term scatter, or span change
 ```
 
-The next executable checkpoint is a clean-kernel run of Notebook 07 through dataset audit, frozen-C1 verification, weekly trend analysis, and monthly multi-point analysis.
+Notebook 07 has passed SD-01 through SD-06. SD-001 = PASS WITH DOCUMENTED CONDITIONS. Weekly center behavior is non-monotonic with maximum observed drift excursion about 0.50 %RH; short-term scatter shows no aging degradation; monthly span/shape change is about -0.151 %RH. Final repository closure is pending one clean-kernel rerun of the updated notebook and capture of curated CSV/PNG artifacts.
 
 ## 18. Resume Protocol for a New Chat
 
