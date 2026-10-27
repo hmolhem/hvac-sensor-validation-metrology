@@ -11,7 +11,7 @@ This file is the canonical milestone registry for the HVAC Sensor Validation & M
 | HV-005 | Repeatability & Reproducibility | `feature/hv-005-repeatability-reproducibility` | RR-001 Repeatability & Reproducibility | `docs/handoffs/HV-005_REPEATABILITY_REPRODUCIBILITY.md` | #6 | PASS WITH DOCUMENTED CONDITIONS |
 
 | HV-006 | Calibration Model Development | `feature/hv-006-calibration-model-development` | CM-001 Calibration Model Development | `docs/handoffs/HV-006_CALIBRATION_MODEL_DEVELOPMENT.md` | #8 | PASS WITH DOCUMENTED CONDITIONS |
-| HV-007 | Independent Blind Validation | `feature/hv-007-independent-blind-validation` | IV-001 Independent Blind Validation | `docs/handoffs/HV-007_INDEPENDENT_BLIND_VALIDATION.md` | TBD | IN PROGRESS |
+| HV-007 | Independent Blind Validation | `feature/hv-007-independent-blind-validation` | IV-001 Independent Blind Validation | `docs/handoffs/HV-007_INDEPENDENT_BLIND_VALIDATION.md` | TBD | PASS WITH DOCUMENTED CONDITIONS |
 
 ## Milestone-ID Policy
 
