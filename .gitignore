@@ -34,3 +34,5 @@ data/processed/*
 *.log
 !reports/tables/hv008_*.csv
 !reports/figures/hv008_*.png
+!reports/tables/hv009_*.csv
+!reports/figures/hv009_*.png
