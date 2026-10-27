@@ -265,3 +265,42 @@ Interpretation: a mild temperature-related residual-center trend exists, but the
 IV-001 = PASS WITH DOCUMENTED CONDITIONS.
 
 The next stage is HV-008 - Dynamic Step Response.
+
+
+## HV-008 - Dynamic Step Response
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS — repository closure pending final curated artifact capture  
+**Branch:** `feature/hv-008-dynamic-step-response`  
+**Technical Gate:** SR-001
+
+### Verified Design
+- 30 DYNAMIC_STEP Test_IDs;
+- 9,030 measurement rows;
+- 301 samples/Test_ID at 1 Hz;
+- command transition detected at 60 s;
+- temperatures 15/25/35 °C;
+- UP/DOWN;
+- five repetitions per Temperature × Direction.
+
+### Main Dynamic Finding
+DOWN: reference t90 75.317 s, DUT t90 104.182 s, DUT lag 28.865 s.
+
+UP: reference t90 81.384 s, DUT t90 119.861 s, DUT lag 38.478 s.
+
+The measured reference is approximately 6.07 s slower for UP than DOWN, while the DUT is approximately 15.68 s slower. The DUT-relative-to-reference lag therefore differs by approximately 9.61 s between directions.
+
+This confirms a DUT-specific direction-dependent dynamic asymmetry beyond chamber/reference dynamics.
+
+### Temperature
+Mean DUT t90 remains approximately 111.6–112.8 s over 15–35 °C, indicating comparatively weak temperature dependence.
+
+### Repeatability
+DUT t90 SD across Temperature × Direction cells is approximately 0.75–1.69 s.
+
+### Settling and Overshoot
+Mean DUT ±2% settling time is approximately 174–199 s. Mean overshoot is small at approximately 1.26–1.43%.
+
+### Gate
+SR-001 = PASS WITH DOCUMENTED CONDITIONS.
+
+Final closure requires the final clean-kernel run and curated CSV/PNG capture.
