@@ -366,14 +366,14 @@ HV-006 Calibration Model Development   <-- COMPLETE / MERGED
   ->
 HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
   ->
-HV-008 Dynamic Step Response             <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+HV-008 Dynamic Step Response             <-- COMPLETE
   ->
 HV-009 Dynamic Tracking                  <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. The next engineering frontier is HV-008 Dynamic Step Response.
 
-## 17. HV-008 — Immediate Next Task
+## 17. HV-008 — Closed State
 
 The frozen HV-008 analysis plan is:
 
@@ -411,7 +411,7 @@ RH_DUT = sensor response
 
 HV-008 reports both timing from command and DUT lag relative to the measured reference so chamber dynamics are not silently attributed to the DUT.
 
-Notebook 05 has passed SR-01 through SR-04. SR-001 = PASS WITH DOCUMENTED CONDITIONS. DUT t90 is 104.182 s DOWN and 119.861 s UP; corresponding DUT-minus-reference lags are 28.865 s and 38.478 s. Temperature dependence is weak across 15–35 °C, repeatability is tight, and overshoot is small. Final repository closure is pending one clean-kernel rerun of the updated notebook and capture of the curated CSV/PNG artifacts.
+Notebook 05 has passed SR-01 through SR-04. SR-001 = PASS WITH DOCUMENTED CONDITIONS. DUT t90 is 104.182 s DOWN and 119.861 s UP; corresponding DUT-minus-reference lags are 28.865 s and 38.478 s. Temperature dependence is weak across 15–35 °C, repeatability is tight, and overshoot is small. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #11 is prepared for merge. SR-001 is closed; the next engineering stage is HV-009 Dynamic Tracking.
 
 ## 18. Resume Protocol for a New Chat
 
