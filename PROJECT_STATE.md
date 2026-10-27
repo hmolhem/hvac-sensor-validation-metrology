@@ -146,7 +146,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `03_calibration_model.ipynb` | Calibration Model Development | **COMPLETE — CM-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **IN PROGRESS — DESIGN PLAN FROZEN** |
+| `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE SCIENTIFICALLY — DT-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `07_stability_and_drift.ipynb` | Stability & Drift | Planned |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | Planned |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
@@ -368,7 +368,9 @@ HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
   ->
 HV-008 Dynamic Step Response             <-- COMPLETE
   ->
-HV-009 Dynamic Tracking                  <-- IN PROGRESS
+HV-009 Dynamic Tracking                  <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+  ->
+HV-010 Stability & Drift                 <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
@@ -395,7 +397,7 @@ RH_Calibrated = RH_DUT + 1.2266788194 %RH
 
 No dynamic refitting or retuning is permitted.
 
-The next executable checkpoint is a clean-kernel run of Notebook 06 through dataset-boundary audit, frozen-C1 verification, ramp metrics, cyclic metrics, and sinusoidal frequency-response extraction.
+Notebook 06 has passed DT-01 through DT-06. DT-001 = PASS WITH DOCUMENTED CONDITIONS. Ramp tracking is strongly Direction-dependent; cyclic behavior shows large repeatable hysteresis; sinusoidal response shows increasing attenuation and substantial phase lag. Final repository closure is pending one clean-kernel rerun of the updated notebook and capture of curated CSV/PNG artifacts.
 
 ## 18. Resume Protocol for a New Chat
 
