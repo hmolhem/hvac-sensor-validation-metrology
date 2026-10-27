@@ -1,0 +1,8 @@
+Quantity,Value
+N_Test_IDs,36
+RH_Levels,"[30.0, 50.0, 70.0]"
+Temperature_Levels_C,"[15.0, 25.0, 35.0]"
+Directions,"['DOWN', 'UP']"
+Days,[3]
+Runs,"[1, 2]"
+Samples_Per_Test_ID,[60]
