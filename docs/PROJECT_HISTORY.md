@@ -211,3 +211,50 @@ The memoryless C1 calibration does not eliminate Direction/hysteresis. C5 is the
 HV-006 freezes the calibration model before any independent VALIDATION measurement is evaluated.
 
 The next stage is HV-007 - Independent Blind Validation.
+
+
+## HV-007 - Independent Blind Validation
+
+**Status:** PROVISIONAL PASS WITH DOCUMENTED CONDITIONS — pending final residual-by-temperature review  
+**Branch:** `feature/hv-007-independent-blind-validation`  
+**Technical Gate:** IV-001
+
+### Objective
+Apply the frozen C1 calibration model to reserved STATIC / VALIDATION data without refitting, retuning, or model replacement.
+
+### Blind-Validation Results
+- VALIDATION Test_IDs: 36;
+- C0 RMSE: 1.1403 %RH;
+- frozen C1 RMSE: 0.4566 %RH;
+- C1 RMSE improvement versus C0: 59.96%;
+- C0 MAE: 1.0583 %RH;
+- frozen C1 MAE: 0.4046 %RH;
+- C1 MAE improvement versus C0: 61.77%;
+- C1 MBE: +0.1683 %RH;
+- C1 maximum absolute error: 0.8275 %RH.
+
+The blind-validation C1 RMSE closely matches the pre-validation HV-006 robustness evidence:
+- GroupCV: 0.5216 %RH;
+- LOO-RH: 0.4535 %RH;
+- LOO-Day: 0.4505 %RH;
+- Blind validation: 0.4566 %RH.
+
+### Independent Direction Finding
+After frozen C1:
+- DOWN MBE: +0.5722 %RH;
+- UP MBE: -0.2356 %RH;
+- Direction residual separation: approximately 0.8078 %RH.
+
+Frozen C5 diagnostic:
+- RMSE: 0.2131 %RH;
+- MAE: 0.1792 %RH;
+- DOWN MBE: +0.1620 %RH;
+- UP MBE: +0.1746 %RH.
+
+This independently reproduces the Direction/hysteresis structure identified in HV-006.
+
+### Governance
+No validation result has been used to alter the C1 model identity or coefficient. C5 remains diagnostic only.
+
+### Pending Closure Check
+Review the already-generated residual-by-temperature table before formal IV-001 closure.
