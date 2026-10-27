@@ -11,7 +11,7 @@
 - State snapshot date: **2026-10-27**
 - Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
 - Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: `feature/hv-007-independent-blind-validation`
+- Current development branch: none; HV-009 is complete and HV-010 has not yet started
 
 ## 2. Project Mission
 
@@ -146,7 +146,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `03_calibration_model.ipynb` | Calibration Model Development | **COMPLETE — CM-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | Planned |
+| `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE SCIENTIFICALLY — DT-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `07_stability_and_drift.ipynb` | Stability & Drift | Planned |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | Planned |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
@@ -368,50 +368,36 @@ HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
   ->
 HV-008 Dynamic Step Response             <-- COMPLETE
   ->
-HV-009 Dynamic Tracking                  <-- NEXT
+HV-009 Dynamic Tracking                  <-- COMPLETE
+  ->
+HV-010 Stability & Drift                 <-- NEXT
 ```
 
-HV-006 and HV-007 are complete. The next engineering frontier is HV-008 Dynamic Step Response.
+HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
 
-## 17. HV-008 — Closed State
+## 17. HV-009 — Closed State
 
-The frozen HV-008 analysis plan is:
+The frozen HV-009 analysis plan is:
 
 ```text
-docs/analysis_plan/SR-001_DYNAMIC_STEP_RESPONSE_PLAN.md
+docs/analysis_plan/DT-001_DYNAMIC_TRACKING_PLAN.md
 ```
 
-Dynamic-step design:
+HV-009 evaluates three distinct dynamic families:
 
-- 30 Test_IDs;
-- 301 samples/Test_ID;
-- 1 Hz sampling;
-- 60 s baseline + 240 s transient;
-- 15/25/35 °C;
-- UP and DOWN;
-- 5 repetitions per Temperature × Direction condition.
+- Ramp tracking: raw and frozen-C1 MBE/MAE/RMSE/max error;
+- Cyclic response: cycle-to-cycle repeatability, Direction gap, and cycle-index drift;
+- Sinusoidal response: gain and phase/time lag from known-frequency harmonic fits.
 
-Primary metrics:
+Frozen calibration remains:
 
 ```text
-dead_time
-tau
-t90
-settling_time
-overshoot
+RH_Calibrated = RH_DUT + 1.2266788194 %RH
 ```
 
-Critical interpretation rule:
+No dynamic refitting or retuning is permitted.
 
-```text
-RH_Command = commanded chamber transition
-RH_Reference = measured stimulus trajectory
-RH_DUT = sensor response
-```
-
-HV-008 reports both timing from command and DUT lag relative to the measured reference so chamber dynamics are not silently attributed to the DUT.
-
-Notebook 05 has passed SR-01 through SR-04. SR-001 = PASS WITH DOCUMENTED CONDITIONS. DUT t90 is 104.182 s DOWN and 119.861 s UP; corresponding DUT-minus-reference lags are 28.865 s and 38.478 s. Temperature dependence is weak across 15–35 °C, repeatability is tight, and overshoot is small. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #11 is prepared for merge. SR-001 is closed; the next engineering stage is HV-009 Dynamic Tracking.
+Notebook 06 has passed DT-01 through DT-06. DT-001 = PASS WITH DOCUMENTED CONDITIONS. Ramp tracking is strongly Direction-dependent; cyclic behavior shows large repeatable hysteresis; sinusoidal response shows increasing attenuation and substantial phase lag. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #12 is prepared for merge. DT-001 is closed; the next engineering stage is HV-010 Stability & Drift.
 
 ## 18. Resume Protocol for a New Chat
 
@@ -427,10 +413,10 @@ Continue from "Current Engineering Frontier" without redesigning closed mileston
 For the present state, the last completed handoff is:
 
 ```text
-docs/handoffs/HV-007_INDEPENDENT_BLIND_VALIDATION.md
+docs/handoffs/HV-008_DYNAMIC_STEP_RESPONSE.md
 ```
 
-Then design and begin HV-008 Dynamic Step Response.
+Then continue HV-009 Dynamic Tracking from the current checkpoint.
 
 ## 19. Update Policy for This File
 
