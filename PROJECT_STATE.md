@@ -403,7 +403,7 @@ Governance for HV-007:
 - engineering interpretation must distinguish model generalization from final sensor suitability;
 - final HVAC suitability remains deferred until dynamic behavior and uncertainty are assessed.
 
-The next executable checkpoint is the initial clean-kernel run of Notebook 04 through the VALIDATION boundary, model-freeze verification, and Test_ID-level summary audit.
+Notebook 04 has passed IV-01 through IV-03 and the first blind-validation results have been reviewed. Frozen C1 reduces validation RMSE from 1.1403 to 0.4566 %RH (~59.96%) and MAE from 1.0583 to 0.4046 %RH (~61.77%). Validation RMSE is highly consistent with HV-006 LOO-RH/LOO-Day estimates. C1 leaves +0.1683 %RH MBE and a Direction residual split of about 0.8078 %RH. Frozen C5 diagnostic gives RMSE 0.2131 %RH and largely removes the Direction split, independently confirming the hysteresis/state effect. IV-001 is provisionally PASS WITH DOCUMENTED CONDITIONS pending explicit review of the already-generated residual-by-temperature table and final repository closure.
 
 ## 18. Resume Protocol for a New Chat
 
