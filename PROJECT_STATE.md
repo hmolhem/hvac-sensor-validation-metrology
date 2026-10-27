@@ -145,7 +145,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **COMPLETE** |
 | `03_calibration_model.ipynb` | Calibration Model Development | **COMPLETE — CM-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
-| `05_step_response.ipynb` | Dynamic Step Response | Planned |
+| `05_step_response.ipynb` | Dynamic Step Response | **IN PROGRESS — DESIGN PLAN FROZEN** |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | Planned |
 | `07_stability_and_drift.ipynb` | Stability & Drift | Planned |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | Planned |
@@ -366,46 +366,50 @@ HV-006 Calibration Model Development   <-- COMPLETE / MERGED
   ->
 HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
   ->
-HV-008 Dynamic Step Response             <-- NEXT
+HV-008 Dynamic Step Response             <-- IN PROGRESS
 ```
 
 HV-006 and HV-007 are complete. The next engineering frontier is HV-008 Dynamic Step Response.
 
-## 17. HV-007 — Closed State
+## 17. HV-008 — Immediate Next Task
 
-The frozen HV-007 analysis plan is:
-
-```text
-docs/analysis_plan/IV-001_INDEPENDENT_BLIND_VALIDATION_PLAN.md
-```
-
-Primary frozen deployable model:
+The frozen HV-008 analysis plan is:
 
 ```text
-C1: RH_Calibrated = RH_DUT + 1.2266788194 %RH
+docs/analysis_plan/SR-001_DYNAMIC_STEP_RESPONSE_PLAN.md
 ```
 
-Secondary diagnostic comparator:
+Dynamic-step design:
+
+- 30 Test_IDs;
+- 301 samples/Test_ID;
+- 1 Hz sampling;
+- 60 s baseline + 240 s transient;
+- 15/25/35 °C;
+- UP and DOWN;
+- 5 repetitions per Temperature × Direction condition.
+
+Primary metrics:
 
 ```text
-C5 Direction diagnostic
-DOWN correction = +0.8164583333 %RH
-UP correction   = +1.6368993056 %RH
+dead_time
+tau
+t90
+settling_time
+overshoot
 ```
 
-Governance for HV-007:
+Critical interpretation rule:
 
-- VALIDATION measurements may now be exposed for the first time;
-- C1 identity and coefficient are frozen;
-- no refitting, retuning, or coefficient changes are permitted;
-- C5 remains diagnostic/state-aware and may not replace C1 after seeing validation results;
-- Test_ID remains the primary condition-level assessment unit;
-- pre- and post-calibration error metrics must be reported;
-- residual structure must be checked versus RH, temperature, Direction, and Run;
-- engineering interpretation must distinguish model generalization from final sensor suitability;
-- final HVAC suitability remains deferred until dynamic behavior and uncertainty are assessed.
+```text
+RH_Command = commanded chamber transition
+RH_Reference = measured stimulus trajectory
+RH_DUT = sensor response
+```
 
-Notebook 04 has passed IV-01 through IV-03 and the first blind-validation results have been reviewed. Frozen C1 reduces validation RMSE from 1.1403 to 0.4566 %RH (~59.96%) and MAE from 1.0583 to 0.4046 %RH (~61.77%). Validation RMSE is highly consistent with HV-006 LOO-RH/LOO-Day estimates. C1 leaves +0.1683 %RH MBE and a Direction residual split of about 0.8078 %RH. Frozen C5 diagnostic gives RMSE 0.2131 %RH and largely removes the Direction split, independently confirming the hysteresis/state effect. The residual-by-temperature review is complete. C1 MAE remains stable near 0.40 %RH across 15–35 °C, with only a mild positive MBE trend. IV-001 = PASS WITH DOCUMENTED CONDITIONS. Repository closure is pending curated CSV capture and PR merge.
+HV-008 reports both timing from command and DUT lag relative to the measured reference so chamber dynamics are not silently attributed to the DUT.
+
+The next executable checkpoint is a clean-kernel run of Notebook 05 through dataset audit, command-transition verification, per-Test_ID metric extraction, and condition-level summaries.
 
 ## 18. Resume Protocol for a New Chat
 
