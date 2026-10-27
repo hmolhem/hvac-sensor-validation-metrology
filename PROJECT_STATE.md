@@ -11,7 +11,7 @@
 - State snapshot date: **2026-10-27**
 - Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
 - Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: none; HV-009 is complete and HV-010 has not yet started
+- Current development branch: `feature/hv-010-stability-drift`
 
 ## 2. Project Mission
 
@@ -147,7 +147,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE SCIENTIFICALLY — DT-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `07_stability_and_drift.ipynb` | Stability & Drift | Planned |
+| `07_stability_and_drift.ipynb` | Stability & Drift | **IN PROGRESS — DESIGN PLAN FROZEN** |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | Planned |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
 | `10_final_validation.ipynb` | Final Engineering Assessment | Planned |
@@ -370,34 +370,41 @@ HV-008 Dynamic Step Response             <-- COMPLETE
   ->
 HV-009 Dynamic Tracking                  <-- COMPLETE
   ->
-HV-010 Stability & Drift                 <-- NEXT
+HV-010 Stability & Drift                 <-- IN PROGRESS
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
 
-## 17. HV-009 — Closed State
+## 17. HV-010 — Immediate Next Task
 
-The frozen HV-009 analysis plan is:
+The frozen HV-010 analysis plan is:
 
 ```text
-docs/analysis_plan/DT-001_DYNAMIC_TRACKING_PLAN.md
+docs/analysis_plan/SD-001_STABILITY_DRIFT_PLAN.md
 ```
 
-HV-009 evaluates three distinct dynamic families:
+HV-010 separates:
 
-- Ramp tracking: raw and frozen-C1 MBE/MAE/RMSE/max error;
-- Cyclic response: cycle-to-cycle repeatability, Direction gap, and cycle-index drift;
-- Sinusoidal response: gain and phase/time lag from known-frequency harmonic fits.
+- weekly center drift at 50 %RH / 25 °C from Day 0 through Day 84;
+- weekly short-term scatter stability;
+- monthly multi-point drift at 30/50/70 %RH on Days 30/60/90;
+- monthly span/shape change.
 
-Frozen calibration remains:
+Frozen C1 remains unchanged:
 
 ```text
 RH_Calibrated = RH_DUT + 1.2266788194 %RH
 ```
 
-No dynamic refitting or retuning is permitted.
+Critical metrology rule:
 
-Notebook 06 has passed DT-01 through DT-06. DT-001 = PASS WITH DOCUMENTED CONDITIONS. Ramp tracking is strongly Direction-dependent; cyclic behavior shows large repeatable hysteresis; sinusoidal response shows increasing attenuation and substantial phase lag. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #12 is prepared for merge. DT-001 is closed; the next engineering stage is HV-010 Stability & Drift.
+```text
+constant offset changes absolute bias,
+but does not change drift-from-baseline,
+short-term scatter, or span change
+```
+
+The next executable checkpoint is a clean-kernel run of Notebook 07 through dataset audit, frozen-C1 verification, weekly trend analysis, and monthly multi-point analysis.
 
 ## 18. Resume Protocol for a New Chat
 
@@ -413,10 +420,10 @@ Continue from "Current Engineering Frontier" without redesigning closed mileston
 For the present state, the last completed handoff is:
 
 ```text
-docs/handoffs/HV-008_DYNAMIC_STEP_RESPONSE.md
+docs/handoffs/HV-009_DYNAMIC_TRACKING.md
 ```
 
-Then continue HV-009 Dynamic Tracking from the current checkpoint.
+Then continue HV-010 Stability & Drift from the current checkpoint.
 
 ## 19. Update Policy for This File
 
