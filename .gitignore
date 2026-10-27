@@ -32,3 +32,5 @@ data/processed/*
 # Temporary files
 *.tmp
 *.log
+!reports/tables/hv008_*.csv
+!reports/figures/hv008_*.png
