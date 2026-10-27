@@ -215,7 +215,7 @@ The next stage is HV-007 - Independent Blind Validation.
 
 ## HV-007 - Independent Blind Validation
 
-**Status:** PROVISIONAL PASS WITH DOCUMENTED CONDITIONS — pending final residual-by-temperature review  
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
 **Branch:** `feature/hv-007-independent-blind-validation`  
 **Technical Gate:** IV-001
 
@@ -256,5 +256,12 @@ This independently reproduces the Direction/hysteresis structure identified in H
 ### Governance
 No validation result has been used to alter the C1 model identity or coefficient. C5 remains diagnostic only.
 
-### Pending Closure Check
-Review the already-generated residual-by-temperature table before formal IV-001 closure.
+### Temperature Residual Review
+C1 MBE decreases from +0.2353 %RH at 15 °C to +0.1069 %RH at 35 °C, while C1 MAE remains essentially stable at approximately 0.40 %RH across all three temperatures.
+
+Interpretation: a mild temperature-related residual-center trend exists, but there is no material temperature-dependent degradation in absolute validation error.
+
+### Result
+IV-001 = PASS WITH DOCUMENTED CONDITIONS.
+
+The next stage is HV-008 - Dynamic Step Response.
