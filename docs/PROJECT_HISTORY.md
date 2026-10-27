@@ -304,3 +304,24 @@ Mean DUT ±2% settling time is approximately 174–199 s. Mean overshoot is smal
 SR-001 = PASS WITH DOCUMENTED CONDITIONS.
 
 Final closure requires the final clean-kernel run and curated CSV/PNG capture.
+
+
+## HV-009 - Dynamic Tracking
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Branch:** `feature/hv-009-dynamic-tracking`  
+**Technical Gate:** DT-001
+
+### Ramp
+C1 improves UP dynamic tracking but materially worsens DOWN tracking. Mean C1 RMSE is 1.1248 %RH UP and 1.3175 %RH DOWN. Remaining mean biases are -1.0833 %RH UP and +1.2821 %RH DOWN.
+
+### Cyclic
+Mean dynamic Direction gap is approximately -4.69 %RH across all three sessions. After cycle-1 conditioning, cycles 2–5 are extremely repeatable.
+
+### Sinusoidal
+DUT/reference gain falls from 0.9996 at 0.001667 Hz to 0.4741 at 0.016667 Hz, with substantial phase lag.
+
+### Gate
+DT-001 = PASS WITH DOCUMENTED CONDITIONS.
+
+HV-010 will address long-term Stability & Drift.
