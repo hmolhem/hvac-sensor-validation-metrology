@@ -346,3 +346,27 @@ Point drift remains small in common-mode terms, but the error span changes by ap
 SD-001 = PASS WITH DOCUMENTED CONDITIONS.
 
 HV-011 must distinguish repeatability, center drift/excursion, and span/shape change without double-counting.
+
+
+## HV-011 - Measurement Uncertainty Budget
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Branch:** `feature/hv-011-measurement-uncertainty`  
+**Technical Gate:** MU-001
+
+### Primary result
+For a frozen-C1 calibrated 60-second stable mean, combined standard uncertainty is approximately 0.591–0.615 %RH and k=2 expanded uncertainty is approximately 1.182–1.230 %RH across the four declared evaluation points.
+
+### Dominant source
+Point-specific between-Test_ID state variability contributes approximately 64–67% of total variance, substantially more than short-term repeatability.
+
+### Stability and reference
+The bounded stability component contributes approximately 22–24% and reference calibration approximately 10–11% of variance.
+
+### Static accuracy comparison
+At all four declared uncertainty-evaluation points, |residual bias| + U remains below the public ±2.0 %RH static accuracy limit.
+
+### Gate
+MU-001 = PASS WITH DOCUMENTED CONDITIONS.
+
+HV-012 will validate the analytical uncertainty model using Monte Carlo propagation.
