@@ -11,7 +11,7 @@
 - State snapshot date: **2026-10-27**
 - Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
 - Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: `feature/hv-010-stability-drift`
+- Current development branch: none; HV-010 is complete and HV-011 has not yet started
 
 ## 2. Project Mission
 
@@ -370,14 +370,14 @@ HV-008 Dynamic Step Response             <-- COMPLETE
   ->
 HV-009 Dynamic Tracking                  <-- COMPLETE
   ->
-HV-010 Stability & Drift                 <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+HV-010 Stability & Drift                 <-- COMPLETE
   ->
 HV-011 Measurement Uncertainty Budget     <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
 
-## 17. HV-010 — Immediate Next Task
+## 17. HV-010 — Closed State
 
 The frozen HV-010 analysis plan is:
 
@@ -406,7 +406,7 @@ but does not change drift-from-baseline,
 short-term scatter, or span change
 ```
 
-Notebook 07 has passed SD-01 through SD-06. SD-001 = PASS WITH DOCUMENTED CONDITIONS. Weekly center behavior is non-monotonic with maximum observed drift excursion about 0.50 %RH; short-term scatter shows no aging degradation; monthly span/shape change is about -0.151 %RH. Final repository closure is pending one clean-kernel rerun of the updated notebook and capture of curated CSV/PNG artifacts.
+Notebook 07 has passed SD-01 through SD-06. SD-001 = PASS WITH DOCUMENTED CONDITIONS. Weekly center behavior is non-monotonic with maximum observed drift excursion about 0.50 %RH; short-term scatter shows no aging degradation; monthly span/shape change is about -0.151 %RH. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #13 is prepared for merge. SD-001 is closed; the next engineering stage is HV-011 Measurement Uncertainty Budget.
 
 ## 18. Resume Protocol for a New Chat
 
