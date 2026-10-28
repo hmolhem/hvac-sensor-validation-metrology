@@ -370,3 +370,24 @@ At all four declared uncertainty-evaluation points, |residual bias| + U remains 
 MU-001 = PASS WITH DOCUMENTED CONDITIONS.
 
 HV-012 will validate the analytical uncertainty model using Monte Carlo propagation.
+
+
+## HV-012 - Monte Carlo Uncertainty
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Branch:** `feature/hv-012-monte-carlo-uncertainty`  
+**Technical Gate:** MC-001
+
+### Analytical-equivalent validation
+Model A reproduces the HV-011 combined standard uncertainty with worst relative MC SD error of approximately 0.263%.
+
+### Empirical-state sensitivity
+Model B preserves the same variance scale with worst relative MC SD error of approximately 0.114%, but produces narrower central 95% intervals and approximately 98.1–98.4% coverage inside the analytical ±2u_c interval.
+
+### Distribution shape
+Model B is nearly symmetric but strongly platykurtic, with excess kurtosis approximately -0.86 to -0.92.
+
+### Gate
+MC-001 = PASS WITH DOCUMENTED CONDITIONS.
+
+HV-013 will integrate static, dynamic, stability, uncertainty, Monte Carlo, and public acceptance-limit evidence into the final engineering assessment.
