@@ -36,3 +36,5 @@ data/processed/*
 !reports/figures/hv008_*.png
 !reports/tables/hv009_*.csv
 !reports/figures/hv009_*.png
+!reports/tables/hv010_*.csv
+!reports/figures/hv010_*.png

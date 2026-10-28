@@ -325,3 +325,24 @@ DUT/reference gain falls from 0.9996 at 0.001667 Hz to 0.4741 at 0.016667 Hz, wi
 DT-001 = PASS WITH DOCUMENTED CONDITIONS.
 
 HV-010 will address long-term Stability & Drift.
+
+
+## HV-010 - Stability & Drift
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Branch:** `feature/hv-010-stability-drift`  
+**Technical Gate:** SD-001
+
+### Weekly center behavior
+The weekly center error is non-monotonic. Descriptive slope is approximately +0.133 %RH per 30 days with R² ≈ 0.405, but Day-84 drift is only +0.047 %RH while the maximum observed excursion is approximately +0.503 %RH.
+
+### Short-term stability
+Within-Test_ID error SD remains approximately 0.224–0.315 %RH with essentially zero trend versus aging day.
+
+### Monthly multi-point behavior
+Point drift remains small in common-mode terms, but the error span changes by approximately -0.151 %RH by Day 60 and remains similar at Day 90.
+
+### Gate
+SD-001 = PASS WITH DOCUMENTED CONDITIONS.
+
+HV-011 must distinguish repeatability, center drift/excursion, and span/shape change without double-counting.
