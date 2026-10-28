@@ -248,7 +248,7 @@ def build_compliance_matrix(
     static_accuracy_metric = float(
         uncertainty["Abs_Bias_Plus_Expanded_Uncertainty"].max()
     )
-    repeat_max = float(repeat_detail["Error_SD"].max())
+    repeat_max = float(repeat_detail["Std_Error_RH"].max())
     repeat_pooled = float(
         evidence["rr_summary"].loc[
             evidence["rr_summary"]["Component"].eq("Within-Test Repeatability"),
