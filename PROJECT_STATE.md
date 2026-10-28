@@ -148,7 +148,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE SCIENTIFICALLY — DT-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `07_stability_and_drift.ipynb` | Stability & Drift | **COMPLETE SCIENTIFICALLY — SD-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `08_uncertainty_budget.ipynb` | Measurement Uncertainty | **IN PROGRESS — MU-001 PLAN FROZEN** |
+| `08_uncertainty_budget.ipynb` | Measurement Uncertainty | **COMPLETE SCIENTIFICALLY — MU-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
 | `10_final_validation.ipynb` | Final Engineering Assessment | Planned |
 
@@ -372,7 +372,9 @@ HV-009 Dynamic Tracking                  <-- COMPLETE
   ->
 HV-010 Stability & Drift                 <-- COMPLETE
   ->
-HV-011 Measurement Uncertainty Budget     <-- IN PROGRESS
+HV-011 Measurement Uncertainty Budget     <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+  ->
+HV-012 Monte Carlo Uncertainty              <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
@@ -405,7 +407,7 @@ Primary uncertainty components are:
 
 Residual bias is reported separately rather than silently absorbed into uncertainty.
 
-Reference-drift and chamber-uniformity terms are sensitivity cases only to avoid unsupported assumptions and double counting.
+MU-001 = PASS WITH DOCUMENTED CONDITIONS. Primary k=2 expanded uncertainty is approximately 1.182–1.230 %RH across the four declared evaluation points. Point-state residual variability dominates the variance budget. Reference-drift and chamber-uniformity terms remain sensitivity cases only. Final repository closure is pending one clean-kernel rerun of the updated notebook and capture of curated CSV/PNG artifacts.
 
 ## 18. Resume Protocol for a New Chat
 
