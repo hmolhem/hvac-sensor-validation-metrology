@@ -11,7 +11,7 @@
 - State snapshot date: **2026-10-27**
 - Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
 - Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: `feature/hv-013-final-engineering-assessment`
+- Current development branch: none; HV-013 complete
 
 ## 2. Project Mission
 
@@ -376,12 +376,12 @@ HV-011 Measurement Uncertainty Budget     <-- COMPLETE
   ->
 HV-012 Monte Carlo Uncertainty              <-- COMPLETE
   ->
-HV-013 Final Engineering Assessment          <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+HV-013 Final Engineering Assessment          <-- COMPLETE
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
 
-## 17. HV-013 — Immediate Next Task
+## 17. Core Analytical Project — Closed State
 
 The frozen HV-013 plan is:
 
@@ -404,7 +404,7 @@ Three final conclusions are intentionally separated:
 2. steady-state/static HVAC suitability;
 3. dynamic HVAC suitability.
 
-No new requirement or threshold is invented. FA-001 = PASS WITH DOCUMENTED CONDITIONS. Final classification: full public-spec compliance NOT FULLY DEMONSTRATED; steady-state/static HVAC use CONDITIONALLY SUITABLE; dynamic HVAC use NOT RECOMMENDED AS-IS. Final repository closure is pending one clean-kernel rerun of Notebook 10 and capture of curated HV-013 CSV/PNG artifacts.
+No new requirement or threshold is invented. FA-001 = PASS WITH DOCUMENTED CONDITIONS. Final classification: full public-spec compliance NOT FULLY DEMONSTRATED; steady-state/static HVAC use CONDITIONALLY SUITABLE; dynamic HVAC use NOT RECOMMENDED AS-IS. Final clean-kernel artifact capture is complete. Curated HV-013 CSV/PNG evidence is versioned and PR #16 is prepared for merge. HV-001 through HV-013 are complete; the core analytical project is ready for final report/course-deliverable assembly.
 
 ## 18. Resume Protocol for a New Chat
 
