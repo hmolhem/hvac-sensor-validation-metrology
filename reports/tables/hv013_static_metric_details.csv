@@ -1,0 +1,6 @@
+Metric,Value,Units
+Max_TestID_Repeatability_SD,0.3192356691057228,%RH
+Pooled_Repeatability_SD,0.2592654906322251,%RH
+Max_Static_Hysteresis,0.9249999999999998,%RH
+Linearity_Max_Abs_Deviation,0.12086507936507952,%RH
+Temperature_Influence_Max_Abs_Slope,0.022608333333333324,%RH/degC

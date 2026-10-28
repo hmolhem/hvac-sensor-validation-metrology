@@ -1,0 +1,4 @@
+Decision_Area,Decision,Basis
+Full public-spec compliance,NOT FULLY DEMONSTRATED,All mandatory public requirements must be directly demonstrated; NOT_DEMONSTRATED prevents a full-compliance claim.
+Steady-state/static HVAC suitability,CONDITIONALLY SUITABLE,Static accuracy is uncertainty-aware; strict repeatability and other static requirements are evaluated separately.
+Dynamic HVAC suitability,NOT RECOMMENDED AS-IS,"Direction-dependent ramp/cyclic behavior, attenuation/phase lag, and unresolved direct t90 compliance materially limit dynamic use."

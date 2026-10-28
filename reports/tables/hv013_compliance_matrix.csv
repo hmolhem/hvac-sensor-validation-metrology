@@ -1,0 +1,9 @@
+Requirement,Public_Limit,Metric,Observed,Units,Status,Evidence,Notes
+Static accuracy,±2.00 %RH,max(|residual bias| + U_k2) at declared uncertainty points,1.4094316537533336,%RH,PASS,HV-011,Applies to four declared uncertainty-evaluation points.
+Repeatability sigma,≤ 0.30 %RH,maximum Test_ID within-hold error SD,0.3192356691057228,%RH,FAIL,HV-005,Pooled SD = 0.2593 %RH; strict max used for compliance.
+Static hysteresis,≤ 1.00 %RH,maximum matched |UP mean error - DOWN mean error|,0.9249999999999998,%RH,PASS,HV-004/HV-007,C1 offset cancels in matched direction difference.
+Linearity,≤ 1.00 %RH,max RH-level mean residual deviation from best-fit line,0.12086507936507952,%RH,PASS,HV-004/HV-013,METHOD-DEFINED: public spec does not define endpoint vs best-fit linearity.
+Temperature influence,≤ 0.050 %RH/°C,max |residual-vs-temperature slope| over RH × Direction,0.022608333333333324,%RH/°C,PASS,HV-004/HV-013,"Worst cell: RH=80 %RH, DOWN."
+t90,≤ 60.0 s,command-to-DUT t90 with reference adequacy check,112.0216031746032,s,NOT_DEMONSTRATED,HV-008,"DUT mean t90=112.0s, max=122.9s; reference mean t90=78.4s; mean DUT-reference lag=33.7s. Reference/chamber stimulus itself is slower than the 60s DUT limit."
+Settling band,±1.0 %RH,public absolute band only; no maximum settling time specified,,%RH,INFORMATIONAL,Public spec/HV-008,No binary time-to-settle acceptance criterion is publicly defined.
+Drift,≤ 0.80 %RH/year,90-day stability evidence; annualized slope diagnostic only,1.6173358189429268,%RH/year diagnostic,NOT_DEMONSTRATED,HV-010,90-day campaign; non-monotonic maximum center excursion=0.5025 %RH. Annualized slope is not used as a compliance extrapolation.
