@@ -391,3 +391,29 @@ Model B is nearly symmetric but strongly platykurtic, with excess kurtosis appro
 MC-001 = PASS WITH DOCUMENTED CONDITIONS.
 
 HV-013 will integrate static, dynamic, stability, uncertainty, Monte Carlo, and public acceptance-limit evidence into the final engineering assessment.
+
+
+## HV-013 - Final Engineering Assessment
+
+**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Branch:** `feature/hv-013-final-engineering-assessment`  
+**Technical Gate:** FA-001
+
+### Public-requirement outcome
+- PASS: static accuracy, static hysteresis, linearity, temperature influence.
+- FAIL: strict maximum repeatability sigma.
+- NOT_DEMONSTRATED: t90 and annual drift.
+- INFORMATIONAL: settling band without a public maximum settling time.
+
+### Final classification
+- Full public-spec compliance: NOT FULLY DEMONSTRATED.
+- Steady-state/static HVAC suitability: CONDITIONALLY SUITABLE.
+- Dynamic HVAC suitability: NOT RECOMMENDED AS-IS.
+
+### Engineering conclusion
+The frozen C1-calibrated DUT is conditionally suitable for slow or steady HVAC monitoring under the tested conditions, but the evidence does not support an unconditional compliance claim or fast direction-neutral dynamic use.
+
+### Gate
+FA-001 = PASS WITH DOCUMENTED CONDITIONS.
+
+After final artifact capture and merge, the analytical project is complete and ready for final report/course-deliverable assembly.
