@@ -11,7 +11,7 @@
 - State snapshot date: **2026-10-27**
 - Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
 - Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: none; HV-011 is complete and HV-012 has not yet started
+- Current development branch: none; HV-012 is complete and HV-013 has not yet started
 
 ## 2. Project Mission
 
@@ -374,40 +374,48 @@ HV-010 Stability & Drift                 <-- COMPLETE
   ->
 HV-011 Measurement Uncertainty Budget     <-- COMPLETE
   ->
-HV-012 Monte Carlo Uncertainty              <-- NEXT
+HV-012 Monte Carlo Uncertainty              <-- COMPLETE
+  ->
+HV-013 Final Engineering Assessment          <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
 
-## 17. HV-011 — Closed State
+## 17. HV-012 — Closed State
 
-The frozen HV-011 analysis plan is:
+The frozen HV-012 analysis plan is:
 
 ```text
-docs/analysis_plan/MU-001_MEASUREMENT_UNCERTAINTY_PLAN.md
+docs/analysis_plan/MC-001_MONTE_CARLO_UNCERTAINTY_PLAN.md
 ```
 
-The primary measurand/reporting model is a frozen-C1 calibrated 60-second stable RH mean.
+HV-012 validates the HV-011 analytical uncertainty budget using two reproducible Monte Carlo models.
 
-The four declared uncertainty-evaluation points are:
+Model A reproduces the analytical component distributions:
 
-- 30 %RH, 25 °C;
-- 50 %RH, 25 °C;
-- 70 %RH, 25 °C;
-- 80 %RH, 35 °C.
+- repeatability mean ~ Normal;
+- point-state residual ~ Normal;
+- reference calibration ~ Normal;
+- stability excursion ~ Uniform.
 
-Public analyst-visible laboratory specifications have been imported with provenance from the upstream Virtual Sensor Metrology Lab.
+Model B replaces only the point-state Gaussian approximation with a variance-matched bootstrap of the four observed Direction × Run Test_ID states at each point.
 
-Primary uncertainty components are:
+Frozen controls:
 
-- repeatability of the 60-s mean;
-- point-specific between-Test_ID residual/state variability after removing mean-repeatability contribution;
-- reference calibration standard uncertainty;
-- bounded observed stability excursion.
+```text
+seed = 7140
+trials per point per model = 250000
+```
 
-Residual bias is reported separately rather than silently absorbed into uncertainty.
+The key objective is to separate:
 
-MU-001 = PASS WITH DOCUMENTED CONDITIONS. Primary k=2 expanded uncertainty is approximately 1.182–1.230 %RH across the four declared evaluation points. Point-state residual variability dominates the variance budget. Reference-drift and chamber-uniformity terms remain sensitivity cases only. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #14 is prepared for merge. MU-001 is closed; the next engineering stage is HV-012 Monte Carlo Uncertainty.
+```text
+variance agreement
+from
+distribution-shape sensitivity
+```
+
+without changing the HV-011 budget or using hidden simulator truth. MC-001 = PASS WITH DOCUMENTED CONDITIONS. Model A reproduces analytical u_c within 0.263% at worst; Model B preserves the variance scale but gives narrower central 95% intervals and approximately 98.1–98.4% coverage inside ±2u_c. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #15 is prepared for merge. MC-001 is closed; the next engineering stage is HV-013 Final Engineering Assessment.
 
 ## 18. Resume Protocol for a New Chat
 
