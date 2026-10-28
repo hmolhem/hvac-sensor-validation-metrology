@@ -11,7 +11,7 @@
 - State snapshot date: **2026-10-27**
 - Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
 - Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: none; HV-012 is complete and HV-013 has not yet started
+- Current development branch: none; HV-013 complete
 
 ## 2. Project Mission
 
@@ -150,7 +150,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `07_stability_and_drift.ipynb` | Stability & Drift | **COMPLETE SCIENTIFICALLY — SD-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | **COMPLETE SCIENTIFICALLY — MU-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
-| `10_final_validation.ipynb` | Final Engineering Assessment | Planned |
+| `10_final_validation.ipynb` | Final Engineering Assessment | **COMPLETE SCIENTIFICALLY — FA-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 
 ## 10. Frozen HV-003 / Dataset-Qualification Conditions
 
@@ -376,46 +376,35 @@ HV-011 Measurement Uncertainty Budget     <-- COMPLETE
   ->
 HV-012 Monte Carlo Uncertainty              <-- COMPLETE
   ->
-HV-013 Final Engineering Assessment          <-- NEXT
+HV-013 Final Engineering Assessment          <-- COMPLETE
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
 
-## 17. HV-012 — Closed State
+## 17. Core Analytical Project — Closed State
 
-The frozen HV-012 analysis plan is:
-
-```text
-docs/analysis_plan/MC-001_MONTE_CARLO_UNCERTAINTY_PLAN.md
-```
-
-HV-012 validates the HV-011 analytical uncertainty budget using two reproducible Monte Carlo models.
-
-Model A reproduces the analytical component distributions:
-
-- repeatability mean ~ Normal;
-- point-state residual ~ Normal;
-- reference calibration ~ Normal;
-- stability excursion ~ Uniform.
-
-Model B replaces only the point-state Gaussian approximation with a variance-matched bootstrap of the four observed Direction × Run Test_ID states at each point.
-
-Frozen controls:
+The frozen HV-013 plan is:
 
 ```text
-seed = 7140
-trials per point per model = 250000
+docs/analysis_plan/FA-001_FINAL_ENGINEERING_ASSESSMENT_PLAN.md
 ```
 
-The key objective is to separate:
+HV-013 integrates all accepted evidence from HV-004 through HV-012 against the public DUT acceptance limits.
 
-```text
-variance agreement
-from
-distribution-shape sensitivity
-```
+Decision vocabulary:
 
-without changing the HV-011 budget or using hidden simulator truth. MC-001 = PASS WITH DOCUMENTED CONDITIONS. Model A reproduces analytical u_c within 0.263% at worst; Model B preserves the variance scale but gives narrower central 95% intervals and approximately 98.1–98.4% coverage inside ±2u_c. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #15 is prepared for merge. MC-001 is closed; the next engineering stage is HV-013 Final Engineering Assessment.
+- PASS
+- FAIL
+- NOT_DEMONSTRATED
+- INFORMATIONAL
+
+Three final conclusions are intentionally separated:
+
+1. full public-spec compliance;
+2. steady-state/static HVAC suitability;
+3. dynamic HVAC suitability.
+
+No new requirement or threshold is invented. FA-001 = PASS WITH DOCUMENTED CONDITIONS. Final classification: full public-spec compliance NOT FULLY DEMONSTRATED; steady-state/static HVAC use CONDITIONALLY SUITABLE; dynamic HVAC use NOT RECOMMENDED AS-IS. Final clean-kernel artifact capture is complete. Curated HV-013 CSV/PNG evidence is versioned and PR #16 is prepared for merge. HV-001 through HV-013 are complete; the core analytical project is ready for final report/course-deliverable assembly.
 
 ## 18. Resume Protocol for a New Chat
 

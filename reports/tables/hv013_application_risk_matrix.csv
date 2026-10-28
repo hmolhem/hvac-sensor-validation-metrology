@@ -1,0 +1,6 @@
+Risk,Observed,Units,Severity,Evidence,Interpretation
+Static direction/state dependence,0.8078055555555548,%RH,MODERATE,HV-007,Frozen C1 leaves a reproducible UP/DOWN residual split.
+Ramp direction bias,2.3653927282819875,%RH separation,HIGH,HV-009,"C1 ramp MBE DOWN=+1.282, UP=-1.083 %RH."
+Cyclic dynamic hysteresis,4.691995705186849,%RH,HIGH,HV-009,Large highly repeatable dynamic direction/state gap.
+High-frequency attenuation,0.4741371850142034,gain,HIGH,HV-009,Minimum measured-reference-relative gain at fastest sinusoid.
+Phase lag,43.93618882304492,deg,MODERATE,HV-009,Substantial phase lag at faster RH variation.
