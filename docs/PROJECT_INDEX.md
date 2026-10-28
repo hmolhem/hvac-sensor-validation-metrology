@@ -17,7 +17,7 @@ This file is the canonical milestone registry for the HVAC Sensor Validation & M
 | HV-010 | Stability & Drift | `feature/hv-010-stability-drift` | SD-001 Stability & Drift | `docs/handoffs/HV-010_STABILITY_DRIFT.md` | #13 | PASS WITH DOCUMENTED CONDITIONS |
 | HV-011 | Measurement Uncertainty Budget | `feature/hv-011-measurement-uncertainty` | MU-001 Measurement Uncertainty | `docs/handoffs/HV-011_MEASUREMENT_UNCERTAINTY.md` | #14 | PASS WITH DOCUMENTED CONDITIONS |
 | HV-012 | Monte Carlo Uncertainty | `feature/hv-012-monte-carlo-uncertainty` | MC-001 Monte Carlo Uncertainty | `docs/handoffs/HV-012_MONTE_CARLO_UNCERTAINTY.md` | #15 | PASS WITH DOCUMENTED CONDITIONS |
-| HV-013 | Final Engineering Assessment | `feature/hv-013-final-engineering-assessment` | FA-001 Final Engineering Assessment | `docs/handoffs/HV-013_FINAL_ENGINEERING_ASSESSMENT.md` | TBD | PASS WITH DOCUMENTED CONDITIONS |
+| HV-013 | Final Engineering Assessment | `feature/hv-013-final-engineering-assessment` | FA-001 Final Engineering Assessment | `docs/handoffs/HV-013_FINAL_ENGINEERING_ASSESSMENT.md` | #16 | PASS WITH DOCUMENTED CONDITIONS |
 
 ## Milestone-ID Policy
 
