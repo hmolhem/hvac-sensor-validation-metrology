@@ -374,7 +374,9 @@ HV-010 Stability & Drift                 <-- COMPLETE
   ->
 HV-011 Measurement Uncertainty Budget     <-- COMPLETE
   ->
-HV-012 Monte Carlo Uncertainty              <-- IN PROGRESS
+HV-012 Monte Carlo Uncertainty              <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
+  ->
+HV-013 Final Engineering Assessment          <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
@@ -413,7 +415,7 @@ from
 distribution-shape sensitivity
 ```
 
-without changing the HV-011 budget or using hidden simulator truth.
+without changing the HV-011 budget or using hidden simulator truth. MC-001 = PASS WITH DOCUMENTED CONDITIONS. Model A reproduces analytical u_c within 0.263% at worst; Model B preserves the variance scale but gives narrower central 95% intervals and approximately 98.1–98.4% coverage inside ±2u_c. Final repository closure is pending one clean-kernel rerun of the updated notebook and capture of curated CSV/PNG artifacts.
 
 ## 18. Resume Protocol for a New Chat
 
