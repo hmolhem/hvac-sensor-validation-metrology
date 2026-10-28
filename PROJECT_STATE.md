@@ -150,7 +150,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `07_stability_and_drift.ipynb` | Stability & Drift | **COMPLETE SCIENTIFICALLY — SD-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `08_uncertainty_budget.ipynb` | Measurement Uncertainty | **COMPLETE SCIENTIFICALLY — MU-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
-| `10_final_validation.ipynb` | Final Engineering Assessment | **IN PROGRESS — FA-001 PLAN FROZEN** |
+| `10_final_validation.ipynb` | Final Engineering Assessment | **COMPLETE SCIENTIFICALLY — FA-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 
 ## 10. Frozen HV-003 / Dataset-Qualification Conditions
 
@@ -376,7 +376,7 @@ HV-011 Measurement Uncertainty Budget     <-- COMPLETE
   ->
 HV-012 Monte Carlo Uncertainty              <-- COMPLETE
   ->
-HV-013 Final Engineering Assessment          <-- IN PROGRESS
+HV-013 Final Engineering Assessment          <-- COMPLETE SCIENTIFICALLY / ARTIFACT CAPTURE PENDING
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
@@ -404,7 +404,7 @@ Three final conclusions are intentionally separated:
 2. steady-state/static HVAC suitability;
 3. dynamic HVAC suitability.
 
-No new requirement or threshold is invented.
+No new requirement or threshold is invented. FA-001 = PASS WITH DOCUMENTED CONDITIONS. Final classification: full public-spec compliance NOT FULLY DEMONSTRATED; steady-state/static HVAC use CONDITIONALLY SUITABLE; dynamic HVAC use NOT RECOMMENDED AS-IS. Final repository closure is pending one clean-kernel rerun of Notebook 10 and capture of curated HV-013 CSV/PNG artifacts.
 
 ## 18. Resume Protocol for a New Chat
 
