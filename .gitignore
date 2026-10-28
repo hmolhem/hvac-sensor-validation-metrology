@@ -38,3 +38,5 @@ data/processed/*
 !reports/figures/hv009_*.png
 !reports/tables/hv010_*.csv
 !reports/figures/hv010_*.png
+!reports/tables/hv011_*.csv
+!reports/figures/hv011_*.png

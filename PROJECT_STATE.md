@@ -11,7 +11,7 @@
 - State snapshot date: **2026-10-27**
 - Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
 - Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: none; HV-010 is complete and HV-011 has not yet started
+- Current development branch: none; HV-011 is complete and HV-012 has not yet started
 
 ## 2. Project Mission
 
@@ -148,7 +148,7 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 | `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE SCIENTIFICALLY — DT-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `07_stability_and_drift.ipynb` | Stability & Drift | **COMPLETE SCIENTIFICALLY — SD-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `08_uncertainty_budget.ipynb` | Measurement Uncertainty | Planned |
+| `08_uncertainty_budget.ipynb` | Measurement Uncertainty | **COMPLETE SCIENTIFICALLY — MU-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
 | `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
 | `10_final_validation.ipynb` | Final Engineering Assessment | Planned |
 
@@ -372,41 +372,42 @@ HV-009 Dynamic Tracking                  <-- COMPLETE
   ->
 HV-010 Stability & Drift                 <-- COMPLETE
   ->
-HV-011 Measurement Uncertainty Budget     <-- NEXT
+HV-011 Measurement Uncertainty Budget     <-- COMPLETE
+  ->
+HV-012 Monte Carlo Uncertainty              <-- NEXT
 ```
 
 HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
 
-## 17. HV-010 — Closed State
+## 17. HV-011 — Closed State
 
-The frozen HV-010 analysis plan is:
-
-```text
-docs/analysis_plan/SD-001_STABILITY_DRIFT_PLAN.md
-```
-
-HV-010 separates:
-
-- weekly center drift at 50 %RH / 25 °C from Day 0 through Day 84;
-- weekly short-term scatter stability;
-- monthly multi-point drift at 30/50/70 %RH on Days 30/60/90;
-- monthly span/shape change.
-
-Frozen C1 remains unchanged:
+The frozen HV-011 analysis plan is:
 
 ```text
-RH_Calibrated = RH_DUT + 1.2266788194 %RH
+docs/analysis_plan/MU-001_MEASUREMENT_UNCERTAINTY_PLAN.md
 ```
 
-Critical metrology rule:
+The primary measurand/reporting model is a frozen-C1 calibrated 60-second stable RH mean.
 
-```text
-constant offset changes absolute bias,
-but does not change drift-from-baseline,
-short-term scatter, or span change
-```
+The four declared uncertainty-evaluation points are:
 
-Notebook 07 has passed SD-01 through SD-06. SD-001 = PASS WITH DOCUMENTED CONDITIONS. Weekly center behavior is non-monotonic with maximum observed drift excursion about 0.50 %RH; short-term scatter shows no aging degradation; monthly span/shape change is about -0.151 %RH. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #13 is prepared for merge. SD-001 is closed; the next engineering stage is HV-011 Measurement Uncertainty Budget.
+- 30 %RH, 25 °C;
+- 50 %RH, 25 °C;
+- 70 %RH, 25 °C;
+- 80 %RH, 35 °C.
+
+Public analyst-visible laboratory specifications have been imported with provenance from the upstream Virtual Sensor Metrology Lab.
+
+Primary uncertainty components are:
+
+- repeatability of the 60-s mean;
+- point-specific between-Test_ID residual/state variability after removing mean-repeatability contribution;
+- reference calibration standard uncertainty;
+- bounded observed stability excursion.
+
+Residual bias is reported separately rather than silently absorbed into uncertainty.
+
+MU-001 = PASS WITH DOCUMENTED CONDITIONS. Primary k=2 expanded uncertainty is approximately 1.182–1.230 %RH across the four declared evaluation points. Point-state residual variability dominates the variance budget. Reference-drift and chamber-uniformity terms remain sensitivity cases only. Final clean-kernel artifact capture is complete. Curated CSV/PNG evidence is versioned and PR #14 is prepared for merge. MU-001 is closed; the next engineering stage is HV-012 Monte Carlo Uncertainty.
 
 ## 18. Resume Protocol for a New Chat
 
