@@ -269,7 +269,7 @@ The next stage is HV-008 - Dynamic Step Response.
 
 ## HV-008 - Dynamic Step Response
 
-**Status:** PASS WITH DOCUMENTED CONDITIONS — repository closure pending final curated artifact capture  
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
 **Branch:** `feature/hv-008-dynamic-step-response`  
 **Technical Gate:** SR-001
 
@@ -303,12 +303,12 @@ Mean DUT ±2% settling time is approximately 174–199 s. Mean overshoot is smal
 ### Gate
 SR-001 = PASS WITH DOCUMENTED CONDITIONS.
 
-Final closure requires the final clean-kernel run and curated CSV/PNG capture.
+Final clean-kernel verification and curated CSV/PNG capture were completed before merge.
 
 
 ## HV-009 - Dynamic Tracking
 
-**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
 **Branch:** `feature/hv-009-dynamic-tracking`  
 **Technical Gate:** DT-001
 
@@ -329,7 +329,7 @@ HV-010 will address long-term Stability & Drift.
 
 ## HV-010 - Stability & Drift
 
-**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
 **Branch:** `feature/hv-010-stability-drift`  
 **Technical Gate:** SD-001
 
@@ -350,7 +350,7 @@ HV-011 must distinguish repeatability, center drift/excursion, and span/shape ch
 
 ## HV-011 - Measurement Uncertainty Budget
 
-**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
 **Branch:** `feature/hv-011-measurement-uncertainty`  
 **Technical Gate:** MU-001
 
@@ -374,7 +374,7 @@ HV-012 will validate the analytical uncertainty model using Monte Carlo propagat
 
 ## HV-012 - Monte Carlo Uncertainty
 
-**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
 **Branch:** `feature/hv-012-monte-carlo-uncertainty`  
 **Technical Gate:** MC-001
 
@@ -395,7 +395,7 @@ HV-013 will integrate static, dynamic, stability, uncertainty, Monte Carlo, and 
 
 ## HV-013 - Final Engineering Assessment
 
-**Status:** PASS WITH DOCUMENTED CONDITIONS — final artifact capture pending  
+**Status:** PASS WITH DOCUMENTED CONDITIONS  
 **Branch:** `feature/hv-013-final-engineering-assessment`  
 **Technical Gate:** FA-001
 
@@ -416,4 +416,4 @@ The frozen C1-calibrated DUT is conditionally suitable for slow or steady HVAC m
 ### Gate
 FA-001 = PASS WITH DOCUMENTED CONDITIONS.
 
-After final artifact capture and merge, the analytical project is complete and ready for final report/course-deliverable assembly.
+Final artifact capture and PR #16 merge are complete. HV-001 through HV-013 are closed, and the core analytical project is complete.
