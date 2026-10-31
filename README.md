@@ -11,7 +11,7 @@ The project asks a sequence of progressively stronger engineering questions:
 1. **Can the measurement evidence be trusted?**
 2. **What does the qualified evidence reveal about DUT measurement performance?**
 3. **Can systematic error be modeled and corrected?**
-4. **Does the frozen calibration generalize to independent validation data?**
+4. **Does the frozen calibration generalize to reserved validation data on a new day and interpolated RH setpoints?**
 5. **How does the sensor behave dynamically and over time?**
 6. **What uncertainty is associated with the reported measurement result?**
 7. **What engineering decision is justified by the evidence and stated requirements?**
@@ -166,7 +166,7 @@ The reference instrument is itself a measurement system with finite uncertainty.
 
 ## Final Engineering Outcome
 
-The frozen C1 calibration reduced independent-validation RMSE from approximately **1.1403 %RH** to **0.4566 %RH**. For the stable 60-second calibrated result, expanded uncertainty is approximately **1.182–1.230 %RH** at (k=2).
+The frozen C1 calibration reduced independent-validation RMSE from approximately **1.1403 %RH** to **0.4566 %RH**. For the stable 60-second calibrated result, expanded uncertainty is approximately **1.186–1.233 %RH** at \(k=2\).
 
 The final requirement-based assessment is:
 
@@ -181,7 +181,24 @@ Dynamic HVAC suitability:
 NOT RECOMMENDED AS-IS
 ```
 
-Important limitations remain explicit: the strict maximum repeatability result exceeds its public limit, direct (t90) compliance is not demonstrated by the available step stimulus, annual drift compliance is not demonstrated by the 90-day campaign, and the frozen C1 offset is not a dynamic compensation model.
+Important limitations remain explicit: pooled repeatability is below the public limit, but strict worst-condition repeatability is not formally demonstrated because the specification does not define a simultaneous decision rule; direct \(t90\) compliance is not demonstrated by the available step stimulus; annual drift compliance is not demonstrated by the 90-day campaign; and the frozen C1 offset is not a dynamic compensation model.
+
+## Quick Start
+
+Install the analysis environment:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Run the automated checks:
+
+```bash
+pytest -q
+python verification/DV-001_Dataset_Intake/dv001_dataset_intake_verification.py
+```
+
+The GitHub Actions reproducibility workflow executes the unit tests, DV-001, and all notebooks from clean kernels on each pull request. Curated evidence is stored under `reports/tables/` and `reports/figures/`.
 
 ## Core Engineering Principles
 
