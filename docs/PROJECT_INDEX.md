@@ -9,7 +9,6 @@ This file is the canonical milestone registry for the HVAC Sensor Validation & M
 | HV-003 | Dataset Qualification | `feature/hv-003-dataset-qualification` | DQ-001 Dataset Qualification | `docs/handoffs/HV-003_DATASET_QUALIFICATION.md` | #3 | PASS WITH DOCUMENTED DESIGN CONDITIONS |
 | HV-004 | Static Characterization | `feature/hv-004-static-characterization` | SC-001 Static Characterization | `docs/handoffs/HV-004_STATIC_CHARACTERIZATION.md` | #5 | PASS |
 | HV-005 | Repeatability & Reproducibility | `feature/hv-005-repeatability-reproducibility` | RR-001 Repeatability & Reproducibility | `docs/handoffs/HV-005_REPEATABILITY_REPRODUCIBILITY.md` | #6 | PASS WITH DOCUMENTED CONDITIONS |
-
 | HV-006 | Calibration Model Development | `feature/hv-006-calibration-model-development` | CM-001 Calibration Model Development | `docs/handoffs/HV-006_CALIBRATION_MODEL_DEVELOPMENT.md` | #8 | PASS WITH DOCUMENTED CONDITIONS |
 | HV-007 | Independent Blind Validation | `feature/hv-007-independent-blind-validation` | IV-001 Independent Blind Validation | `docs/handoffs/HV-007_INDEPENDENT_BLIND_VALIDATION.md` | #10 | PASS WITH DOCUMENTED CONDITIONS |
 | HV-008 | Dynamic Step Response | `feature/hv-008-dynamic-step-response` | SR-001 Dynamic Step Response | `docs/handoffs/HV-008_DYNAMIC_STEP_RESPONSE.md` | #11 | PASS WITH DOCUMENTED CONDITIONS |
@@ -18,6 +17,8 @@ This file is the canonical milestone registry for the HVAC Sensor Validation & M
 | HV-011 | Measurement Uncertainty Budget | `feature/hv-011-measurement-uncertainty` | MU-001 Measurement Uncertainty | `docs/handoffs/HV-011_MEASUREMENT_UNCERTAINTY.md` | #14 | PASS WITH DOCUMENTED CONDITIONS |
 | HV-012 | Monte Carlo Uncertainty | `feature/hv-012-monte-carlo-uncertainty` | MC-001 Monte Carlo Uncertainty | `docs/handoffs/HV-012_MONTE_CARLO_UNCERTAINTY.md` | #15 | PASS WITH DOCUMENTED CONDITIONS |
 | HV-013 | Final Engineering Assessment | `feature/hv-013-final-engineering-assessment` | FA-001 Final Engineering Assessment | `docs/handoffs/HV-013_FINAL_ENGINEERING_ASSESSMENT.md` | #16 | PASS WITH DOCUMENTED CONDITIONS |
+
+All milestones HV-001 through HV-013 are closed and merged to `main`.
 
 ## Milestone-ID Policy
 
