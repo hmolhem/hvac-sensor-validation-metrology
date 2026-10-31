@@ -417,3 +417,20 @@ The frozen C1-calibrated DUT is conditionally suitable for slow or steady HVAC m
 FA-001 = PASS WITH DOCUMENTED CONDITIONS.
 
 Final artifact capture and PR #16 merge are complete. HV-001 through HV-013 are closed, and the core analytical project is complete.
+
+
+## External Audit Closure — 2026-10-31
+
+An independent execution-based audit cloned both project repositories, reran all 11 analyst notebooks in a newer Python environment, compared regenerated evidence with committed results, reran public verification gates, and independently checked selected statistical claims.
+
+The audit confirmed excellent numerical reproducibility and identified several closure issues. The corrective work:
+
+- replaced the invalid maximum-of-120-sample-SDs repeatability FAIL rule with a documented common-sigma confidence analysis and NOT_DEMONSTRATED status for unspecified strict worst-condition compliance;
+- added C1 offset-estimation uncertainty to HV-011 and propagated it through HV-012;
+- documented blind-validation scope as new-day plus within-range interpolation, with Day 3 confounded with validation role;
+- changed Notebook 03 so reruns verify, rather than rewrite, frozen calibration JSON records;
+- added requirements, unit tests, and automated clean-kernel notebook execution;
+- simplified report-output tracking and removed the duplicate empty report directory;
+- retained the final application classification: full public-spec compliance NOT FULLY DEMONSTRATED, steady-state/static HVAC use CONDITIONALLY SUITABLE, dynamic HVAC use NOT RECOMMENDED AS-IS.
+
+No raw measurement data or frozen C1 coefficient changed.
