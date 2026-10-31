@@ -123,11 +123,13 @@ def _simulate_point(
     """Simulate one point under one frozen MC model."""
     u_repeat = float(summary_row["U_Repeat_Mean"])
     u_state = float(summary_row["U_State"])
+    u_c1 = float(summary_row["U_C1_Offset"])
     u_ref = float(summary_row["U_Reference_Calibration"])
     stability_bound = float(summary_row["Stability_Excursion_Bound"])
     analytical_uc = float(summary_row["Combined_Standard_Uncertainty"])
 
     repeat = rng.normal(0.0, u_repeat, size=trials)
+    c1_offset = rng.normal(0.0, u_c1, size=trials)
     reference = rng.normal(0.0, u_ref, size=trials)
     stability = rng.uniform(-stability_bound, stability_bound, size=trials)
 
@@ -140,7 +142,7 @@ def _simulate_point(
     else:
         raise ValueError(f"Unknown Monte Carlo model: {model}")
 
-    uncertainty_error = repeat + state + reference + stability
+    uncertainty_error = repeat + state + c1_offset + reference + stability
 
     q025, median, q975 = np.quantile(
         uncertainty_error, [0.025, 0.50, 0.975]
