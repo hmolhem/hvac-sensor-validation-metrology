@@ -1,0 +1,30 @@
+name: Reproducibility
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Unit tests
+        run: pytest -q
+      - name: Dataset verification
+        run: python verification/DV-001_Dataset_Intake/dv001_dataset_intake_verification.py
+      - name: Execute notebooks from clean kernels
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/executed_notebooks
+          for nb in notebooks/*.ipynb; do
+            echo "Executing $nb"
+            jupyter nbconvert               --to notebook               --execute "$nb"               --ExecutePreprocessor.timeout=600               --output-dir /tmp/executed_notebooks
+          done
