@@ -96,6 +96,7 @@ Each point contains four Test_ID means corresponding to Direction × Run structu
 u_c = sqrt(
     u_repeat_mean²
   + u_state²
+  + u_C1²
   + u_ref_cal²
   + u_stability²
 )
@@ -105,26 +106,21 @@ Results:
 
 | Point | u_c | U(k=2) |
 |---|---:|---:|
-| UNC-001 | 0.6149 %RH | 1.2297 %RH |
-| UNC-002 | 0.5911 %RH | 1.1823 %RH |
-| UNC-003 | 0.5916 %RH | 1.1831 %RH |
-| UNC-004 | 0.6108 %RH | 1.2216 %RH |
+| UNC-001 | 0.6165 %RH | 1.2331 %RH |
+| UNC-002 | 0.5929 %RH | 1.1858 %RH |
+| UNC-003 | 0.5933 %RH | 1.1866 %RH |
+| UNC-004 | 0.6125 %RH | 1.2250 %RH |
 
 Overall:
 
 ```text
-u_c ≈ 0.591–0.615 %RH
-U(k=2) ≈ 1.182–1.230 %RH
+u_c ≈ 0.593–0.617 %RH
+U(k=2) ≈ 1.186–1.233 %RH
 ```
 
 ## Variance Contribution
 
-Approximate contribution ranges:
-
-- point-state residual: **64–67%**
-- stability bounded excursion: **22–24%**
-- reference calibration: **10–11%**
-- repeatability of 60-s mean: **~0.3%**
+Approximate contribution ranges remain dominated by point-state residual variability. The C1 offset-estimation term is small (standard uncertainty ≈ **0.0455 %RH**) and does not change the dominant-source interpretation.
 
 Thus the dominant uncertainty is state/history dependence, not short-term random noise.
 
@@ -134,10 +130,10 @@ Residual bias is kept separate from uncertainty.
 
 Bias-plus-expanded-uncertainty envelope:
 
-- UNC-001: approximately 1.3189 %RH
-- UNC-002: approximately 1.4094 %RH
-- UNC-003: approximately 1.3551 %RH
-- UNC-004: approximately 1.3794 %RH
+- UNC-001: approximately 1.3222 %RH
+- UNC-002: approximately 1.4129 %RH
+- UNC-003: approximately 1.3586 %RH
+- UNC-004: approximately 1.3828 %RH
 
 No post-validation correction is applied.
 
@@ -188,7 +184,7 @@ Sensitivity-only standard uncertainty:
 u ≈ 0.1732 %RH
 ```
 
-Including it raises U to approximately 1.232–1.278 %RH.
+Including it raises U to approximately 1.235–1.281 %RH.
 
 It remains sensitivity-only because public DUT/reference spatial placement is not defined.
 
@@ -222,7 +218,8 @@ Documented conditions:
 4. UNC-004 uses CHARACTERIZATION evidence because blind VALIDATION does not include 80 %RH.
 5. Chamber uniformity is sensitivity-only because public spatial placement is unspecified.
 6. Residual bias remains explicit and separate from uncertainty.
-7. The budget applies only to a 60-s stable static result.
+7. The C1 offset-estimation uncertainty is explicitly included.
+8. The budget applies only to a 60-s stable static result.
 
 ## Curated Evidence
 
