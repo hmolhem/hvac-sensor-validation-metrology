@@ -195,10 +195,10 @@ Run the automated checks:
 
 ```bash
 pytest -q
-python verification/DV-001_Dataset_Intake/dv001_dataset_intake_verification.py
+python verification/DV-001_Frozen_Dataset_Intake/dv001_frozen_dataset_intake.py
 ```
 
-The GitHub Actions reproducibility workflow executes the unit tests, DV-001, and all notebooks from clean kernels on each pull request. Curated evidence is stored under `reports/tables/` and `reports/figures/`.
+The GitHub Actions reproducibility workflow executes the unit tests, DV-001, all notebooks from clean kernels, and semantic table-evidence verification on pull requests and pushes to `main`. Curated evidence is stored under `reports/tables/` and `reports/figures/`.
 
 ## Core Engineering Principles
 
