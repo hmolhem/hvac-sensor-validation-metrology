@@ -314,3 +314,17 @@ Possible gate outcomes:
 ## Project Completion
 
 After FA-001 closure, the analytical project is complete and ready for final report assembly.
+
+
+## Post-Audit Decision-Rule Correction
+
+The original plan proposed using the maximum observed Test_ID sample SD as the strict repeatability compliance metric. External audit showed that this rule is statistically unsuitable when 120 sample SD estimates, each based on 60 samples, are compared simultaneously: the maximum is strongly biased upward by sampling variability and multiple comparisons.
+
+The corrected final-assessment treatment is:
+
+- report the maximum observed Test_ID sample SD descriptively;
+- use pooled repeatability SD and a one-sided 95% upper confidence limit as supporting evidence for a common-sigma interpretation;
+- do not classify strict worst-condition repeatability as PASS or FAIL unless the public specification defines an appropriate condition-wise or simultaneous statistical decision rule;
+- final status for the strict worst-condition requirement: NOT_DEMONSTRATED.
+
+This correction does not alter HV-005 measurements; it corrects only the downstream compliance decision rule.
