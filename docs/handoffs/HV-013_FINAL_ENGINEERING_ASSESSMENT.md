@@ -16,8 +16,8 @@
 
 | Requirement | Public limit | Observed | Status |
 |---|---:|---:|---|
-| Static accuracy | ±2.0 %RH | max(|bias|+U) = 1.4094 %RH | PASS |
-| Repeatability sigma | ≤0.30 %RH | max Test_ID SD = 0.319236 %RH | FAIL |
+| Static accuracy | ±2.0 %RH | max(|bias|+U) = 1.4129 %RH | PASS |
+| Repeatability sigma | ≤0.30 %RH | pooled SD = 0.2593; common-sigma 95% UCL = 0.2629 %RH | NOT_DEMONSTRATED |
 | Static hysteresis | ≤1.0 %RH | max matched = 0.9250 %RH | PASS |
 | Linearity | ≤1.0 %RH | max best-fit deviation = 0.120865 %RH | PASS |
 | Temperature influence | ≤0.05 %RH/°C | max slope = 0.022608 %RH/°C | PASS |
@@ -28,8 +28,8 @@
 Status count:
 
 - PASS = 4
-- FAIL = 1
-- NOT_DEMONSTRATED = 2
+- FAIL = 0
+- NOT_DEMONSTRATED = 3
 - INFORMATIONAL = 1
 
 ## Static Accuracy
@@ -37,7 +37,7 @@ Status count:
 HV-011 uncertainty-aware result:
 
 ```text
-max(|residual bias| + U_k2) = 1.4094 %RH
+max(|residual bias| + U_k2) = 1.4129 %RH
 limit = 2.0 %RH
 ```
 
@@ -54,20 +54,23 @@ The statement applies to the four declared uncertainty-evaluation points.
 HV-005:
 
 ```text
-pooled within-Test_ID SD = 0.2593 %RH
-maximum Test_ID SD       = 0.319236 %RH
-public sigma limit       = 0.300000 %RH
+pooled within-Test_ID SD       = 0.2593 %RH
+95% UCL for common sigma      = 0.2629 %RH
+maximum observed sample SD    = 0.319236 %RH
+public sigma limit            = 0.300000 %RH
 ```
 
-The strict maximum exceeds the limit by approximately 0.01924 %RH, or 6.4%.
+The pooled estimate and its one-sided 95% common-sigma upper confidence limit are below the public limit.
+
+The previous direct FAIL rule based on the maximum of 120 sample standard deviations is not retained because that maximum is strongly influenced by sampling variability and multiple comparisons. The public specification does not define the required statistical decision rule for a maximum condition-specific sigma.
 
 Result:
 
 ```text
-FAIL
+NOT_DEMONSTRATED
 ```
 
-Typical pooled repeatability remains acceptable, but strict worst observed hold does not.
+The available evidence supports good repeatability, but strict worst-condition compliance requires a predefined simultaneous or condition-wise confidence rule.
 
 ## Static Hysteresis
 
@@ -89,7 +92,7 @@ Result:
 PASS
 ```
 
-Margin is only 0.075 %RH.
+Margin is only 0.075 %RH. The point-estimate result is PASS, but no formal guard-band decision rule is defined.
 
 Independent blind validation also shows a persistent direction split of approximately 0.8078 %RH.
 
@@ -181,6 +184,12 @@ Result:
 NOT_DEMONSTRATED
 ```
 
+## Validation-Design Limitation
+
+The frozen VALIDATION data are independent of model fitting and tuning, but the design is limited to Day 3 and RH setpoints 30, 50, and 70 %RH. CALIBRATION uses Days 1–2 and RH setpoints 20, 40, 60, and 80 %RH.
+
+Therefore blind validation demonstrates generalization to a new day and to interpolated RH setpoints within the tested operating range. Because validation role and Day 3 are fully confounded, the validation residual cannot be decomposed cleanly into a day effect and a pure model-generalization effect.
+
 ## Dynamic Application-Risk Evidence
 
 Key findings:
@@ -203,7 +212,7 @@ NOT FULLY DEMONSTRATED
 
 because:
 
-- repeatability has one direct FAIL;
+- strict worst-condition repeatability is NOT_DEMONSTRATED under the available decision rule;
 - t90 is NOT_DEMONSTRATED;
 - annual drift is NOT_DEMONSTRATED.
 
@@ -213,7 +222,7 @@ because:
 CONDITIONALLY SUITABLE
 ```
 
-because uncertainty-aware static accuracy, static hysteresis, linearity, and temperature influence pass, but strict maximum repeatability slightly exceeds its public limit and long-term drift remains unresolved.
+because uncertainty-aware static accuracy, static hysteresis, linearity, and temperature influence pass; pooled repeatability is supportive, but strict worst-condition repeatability is not formally demonstrated and long-term drift remains unresolved.
 
 ### Dynamic HVAC suitability
 
