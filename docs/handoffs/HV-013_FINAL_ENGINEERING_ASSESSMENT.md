@@ -253,5 +253,5 @@ After final artifact capture and merge:
 ```text
 HV-001 through HV-013 = complete
 Core analytical project = complete
-Next activity = final report / course-deliverable assembly
+Next activity = technical reporting, communication, and future scoped extensions
 ```
