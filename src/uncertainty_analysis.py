@@ -34,6 +34,30 @@ def load_frozen_c1_offset(project_root: Path | None = None) -> float:
     return float(record["parameters"]["offset_percent_rh"])
 
 
+def load_c1_offset_standard_uncertainty(
+    project_root: Path | None = None,
+) -> float:
+    """Estimate standard uncertainty of the frozen C1 offset.
+
+    C1 is the mean correction across 96 CALIBRATION Test_ID summaries. The
+    standard uncertainty of that estimated mean is therefore the calibration
+    correction SD divided by sqrt(N). The C0 residual SD in the frozen HV-006
+    model-comparison table is the SD of the uncorrected Test_ID errors and is
+    numerically identical to the SD of the correction target.
+    """
+    root = locate_project_root() if project_root is None else Path(project_root)
+    table = pd.read_csv(root / "reports" / "tables" / "hv006_model_comparison.csv")
+    row = table.loc[table["Model"].eq("C0_Uncalibrated")]
+    if len(row) != 1:
+        raise ValueError("Could not identify unique C0 calibration evidence row.")
+
+    n = int(row["N"].iloc[0])
+    correction_sd = float(row["Residual_SD"].iloc[0])
+    if n <= 1:
+        raise ValueError("Calibration evidence count must exceed one.")
+    return float(correction_sd / np.sqrt(n))
+
+
 def load_static_and_matrix(
     project_root: Path | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -207,6 +231,7 @@ def build_uncertainty_budget(
     point_summary_df: pd.DataFrame,
     public_spec: dict,
     stability_excursion: float,
+    c1_offset_standard_uncertainty: float,
     coverage_factor: float = 2.0,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Build primary standard-uncertainty budget and point summary."""
@@ -225,6 +250,7 @@ def build_uncertainty_budget(
         components = {
             "Repeatability_of_60s_Mean": float(row["U_Repeat_Mean"]),
             "Point_State_Residual": float(row["U_State"]),
+            "C1_Offset_Estimation": float(c1_offset_standard_uncertainty),
             "Reference_Calibration": u_ref_cal,
             "Stability_Bounded_Excursion": u_stability,
         }
@@ -249,6 +275,7 @@ def build_uncertainty_budget(
         summary_rows.append(
             {
                 **row.to_dict(),
+                "U_C1_Offset": float(c1_offset_standard_uncertainty),
                 "U_Reference_Calibration": u_ref_cal,
                 "Stability_Excursion_Bound": float(stability_excursion),
                 "U_Stability": u_stability,

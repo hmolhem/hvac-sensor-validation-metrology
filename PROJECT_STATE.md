@@ -406,12 +406,15 @@ Key closed-state evidence includes:
 
 - frozen C1 correction: **+1.2266788194 %RH**;
 - independent-validation RMSE: **1.1403 -> 0.4566 %RH**;
-- pooled repeatability SD: **0.259265 %RH**;
-- strict maximum Test_ID SD: **0.319236 %RH**;
-- expanded uncertainty (U, k=2): approximately **1.182–1.230 %RH**;
+- maximum observed Test_ID sample SD: **0.319236 %RH** (descriptive only);
+- pooled repeatability SD: **0.259265 %RH** with one-sided 95% common-sigma UCL **0.262903 %RH**;
+- strict worst-condition repeatability status: **NOT_DEMONSTRATED** because the public specification does not define the simultaneous statistical decision rule;
+- expanded uncertainty \(U, k=2\): approximately **1.186–1.233 %RH**;
 - maximum static hysteresis metric used in the final assessment: **0.9250 %RH**.
 
-Final clean-kernel verification and curated evidence capture are complete. PRs through #16 are merged. HV-001 through HV-013 are closed.
+An external audit identified a repeatability decision-rule issue, a missing C1-estimation uncertainty term, and software-governance gaps. These are addressed in the audit-closure update: repeatability is no longer classified by the maximum of 120 sample SD estimates, C1 offset-estimation uncertainty is propagated through HV-011/HV-012, frozen model JSON files are verify-only on rerun, and automated reproducibility checks are added.
+
+Final clean-kernel verification and curated evidence capture remain the required closure standard. HV-001 through HV-013 remain closed; the audit-closure work corrects interpretation and reproducibility controls without changing the frozen C1 coefficient or underlying measurement data.
 
 ## 18. Resume Protocol for a New Chat
 

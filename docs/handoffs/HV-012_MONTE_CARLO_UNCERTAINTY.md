@@ -32,6 +32,7 @@ Four evaluation points:
 Components:
 
 - repeatability of 60-s mean: Normal
+- C1 offset-estimation uncertainty: Normal
 - point-state residual: Normal
 - reference calibration: Normal
 - stability excursion: Uniform over ±0.5025 %RH
@@ -56,15 +57,15 @@ This preserves state structure while matching the same variance budget.
 
 Relative MC SD error versus analytical `u_c`:
 
-- UNC-001: -0.160%
-- UNC-002: -0.042%
-- UNC-003: -0.082%
-- UNC-004: +0.263%
+- UNC-001: +0.036%
+- UNC-002: -0.106%
+- UNC-003: -0.166%
+- UNC-004: -0.002%
 
 Worst magnitude:
 
 ```text
-0.263%
+0.166%
 ```
 
 This is well inside the frozen 1% criterion.
@@ -74,7 +75,7 @@ This is well inside the frozen 1% criterion.
 Relative MC SD error magnitude is at most approximately:
 
 ```text
-0.114%
+0.146%
 ```
 
 This is well inside the frozen 1.5% criterion.
@@ -82,7 +83,7 @@ This is well inside the frozen 1.5% criterion.
 Monte Carlo means for both models satisfy:
 
 ```text
-|mean| <= 0.00186 %RH
+|mean| <= 0.00159 %RH
 ```
 
 ## Interval / Coverage Findings
@@ -91,19 +92,19 @@ Monte Carlo means for both models satisfy:
 
 Central 95% half-widths:
 
-- UNC-001: 1.1998 %RH
-- UNC-002: 1.1510 %RH
-- UNC-003: 1.1556 %RH
-- UNC-004: 1.1942 %RH
+- UNC-001: 1.2058 %RH
+- UNC-002: 1.1590 %RH
+- UNC-003: 1.1564 %RH
+- UNC-004: 1.1991 %RH
 
 HV-011 analytical `2u_c` values:
 
-- UNC-001: 1.2297 %RH
-- UNC-002: 1.1823 %RH
-- UNC-003: 1.1831 %RH
-- UNC-004: 1.2216 %RH
+- UNC-001: 1.2331 %RH
+- UNC-002: 1.1858 %RH
+- UNC-003: 1.1866 %RH
+- UNC-004: 1.2250 %RH
 
-Coverage inside `±2u_c` is approximately 95.5–95.6%.
+Coverage inside `±2u_c` is approximately 95.49–95.59%.
 
 Interpretation: analytical k=2 intervals are slightly conservative relative to the exact mixed Normal + Uniform Model A central 95% interval.
 
@@ -111,17 +112,17 @@ Interpretation: analytical k=2 intervals are slightly conservative relative to t
 
 Central 95% half-widths:
 
-- UNC-001: 1.0845 %RH
-- UNC-002: 1.0525 %RH
-- UNC-003: 1.0572 %RH
-- UNC-004: 1.0794 %RH
+- UNC-001: 1.0894 %RH
+- UNC-002: 1.0541 %RH
+- UNC-003: 1.0595 %RH
+- UNC-004: 1.0847 %RH
 
-These are approximately 90.4–91.5% of the corresponding Model A half-widths.
+These are approximately 90.4–91.6% of the corresponding Model A half-widths.
 
 Coverage inside `±2u_c` rises to approximately:
 
 ```text
-98.15–98.43%
+98.15–98.41%
 ```
 
 ## Distribution Shape
@@ -129,7 +130,7 @@ Coverage inside `±2u_c` rises to approximately:
 Model B remains nearly symmetric but is strongly platykurtic:
 
 ```text
-excess kurtosis ≈ -0.86 to -0.92
+excess kurtosis ≈ -0.85 to -0.91
 ```
 
 The finite balanced UP/DOWN state support produces lighter/bounded tails compared with the Gaussian state approximation.
@@ -164,8 +165,8 @@ The principal remaining uncertainty is not numerical propagation but the probabi
 HV-011 therefore remains the primary traceable uncertainty statement:
 
 ```text
-u_c ≈ 0.591–0.615 %RH
-U(k=2) ≈ 1.182–1.230 %RH
+u_c ≈ 0.593–0.617 %RH
+U(k=2) ≈ 1.186–1.233 %RH
 ```
 
 HV-012 adds distribution-shape sensitivity and confirms that Direction/Run structure matters beyond variance alone.

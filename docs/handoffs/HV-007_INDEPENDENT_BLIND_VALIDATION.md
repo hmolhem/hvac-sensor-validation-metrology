@@ -135,3 +135,15 @@ Notebook 04 exports:
 ## Next Engineering Stage
 
 HV-008 — Dynamic Step Response.
+
+
+## Post-Audit Scope Clarification
+
+The validation measurements remain blind and independent of model fitting, tuning, feature selection, and model freeze. The experimental design nevertheless limits what "generalization" means:
+
+- CALIBRATION: Days 1–2 at RH = 20, 40, 60, 80 %RH;
+- VALIDATION: Day 3 at RH = 30, 50, 70 %RH.
+
+Therefore HV-007 demonstrates generalization to a new day and to interpolated RH setpoints within the tested 20–80 %RH range. It does not test extrapolation outside the operating range.
+
+Because Day 3 and VALIDATION role are fully confounded, the remaining validation bias cannot be cleanly decomposed into an independent day effect and a pure model-generalization effect. The +0.1683 %RH C1 validation MBE must therefore be interpreted as their combined observed residual, not assigned causally to either source.

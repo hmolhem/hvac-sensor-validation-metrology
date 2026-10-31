@@ -15,32 +15,12 @@ env/
 .DS_Store
 Thumbs.db
 
-# Generated analysis outputs
-# Keep folders ignored by default, but allow curated milestone evidence.
-reports/figures/*
-!reports/figures/.gitkeep
-!reports/figures/hv005_*.png
-
-reports/tables/*
-!reports/tables/.gitkeep
-!reports/tables/hv005_*.csv
-!reports/tables/hv006_*.csv
-!reports/tables/hv007_*.csv
+# Curated analysis evidence
+# Curated reports are intentionally versioned. Temporary analysis products
+# should be written outside reports/ or use a .tmp/.log suffix.
 data/processed/*
 !data/processed/.gitkeep
 
 # Temporary files
 *.tmp
 *.log
-!reports/tables/hv008_*.csv
-!reports/figures/hv008_*.png
-!reports/tables/hv009_*.csv
-!reports/figures/hv009_*.png
-!reports/tables/hv010_*.csv
-!reports/figures/hv010_*.png
-!reports/tables/hv011_*.csv
-!reports/figures/hv011_*.png
-!reports/tables/hv012_*.csv
-!reports/figures/hv012_*.png
-!reports/tables/hv013_*.csv
-!reports/figures/hv013_*.png
