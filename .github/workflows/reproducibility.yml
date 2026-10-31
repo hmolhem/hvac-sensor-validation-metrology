@@ -2,6 +2,9 @@ name: Reproducibility
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -28,6 +31,8 @@ jobs:
             echo "Executing $nb"
             jupyter nbconvert               --to notebook               --execute "$nb"               --ExecutePreprocessor.timeout=600               --output-dir /tmp/executed_notebooks
           done
+      - name: Verify committed tables match regenerated outputs
+        run: git diff --exit-code -- reports/tables
       - name: Upload executed notebooks
         if: always()
         uses: actions/upload-artifact@v4
