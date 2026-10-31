@@ -32,7 +32,7 @@ jobs:
             jupyter nbconvert               --to notebook               --execute "$nb"               --ExecutePreprocessor.timeout=600               --output-dir /tmp/executed_notebooks
           done
       - name: Verify committed tables match regenerated outputs
-        run: git diff --exit-code -- reports/tables
+        run: python scripts/verify_table_reproducibility.py
       - name: Upload executed notebooks
         if: always()
         uses: actions/upload-artifact@v4
