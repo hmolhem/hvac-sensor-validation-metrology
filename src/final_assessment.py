@@ -321,7 +321,7 @@ def build_compliance_matrix(
                 else "FAIL"
             ),
             "Evidence": "HV-011",
-            "Notes": "Applies to four declared uncertainty-evaluation points.",
+            "Notes": "Applies to four declared uncertainty-evaluation points; includes C1 offset-estimation uncertainty.",
         },
         {
             "Requirement": "Repeatability sigma",
