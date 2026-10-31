@@ -41,10 +41,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          rm -rf /tmp/final_evidence_snapshot
+          mkdir -p /tmp/final_evidence_snapshot/notebooks /tmp/final_evidence_snapshot/figures
           for nb in 03_calibration_model 04_blind_validation 05_step_response 06_dynamic_tracking 07_stability_and_drift 08_uncertainty_budget 09_monte_carlo 10_final_validation; do
-            cp "/tmp/executed_notebooks/${nb}.ipynb" "notebooks/${nb}.ipynb"
+            cp "/tmp/executed_notebooks/${nb}.ipynb" "/tmp/final_evidence_snapshot/notebooks/${nb}.ipynb"
           done
+          for fig in             hv011_uncertainty_components.png             hv011_expanded_uncertainty_by_point.png             hv012_mc_interval_comparison.png             hv012_mc_representative_distribution.png             hv013_compliance_status.png             hv013_final_evidence_summary.png; do
+            cp "reports/figures/${fig}" "/tmp/final_evidence_snapshot/figures/${fig}"
+          done
+
+          git reset --hard
+          git fetch origin "${GITHUB_HEAD_REF}"
+          git checkout -B "${GITHUB_HEAD_REF}" "origin/${GITHUB_HEAD_REF}"
+
+          cp /tmp/final_evidence_snapshot/notebooks/*.ipynb notebooks/
+          cp /tmp/final_evidence_snapshot/figures/*.png reports/figures/
+
           git add             notebooks/03_calibration_model.ipynb             notebooks/04_blind_validation.ipynb             notebooks/05_step_response.ipynb             notebooks/06_dynamic_tracking.ipynb             notebooks/07_stability_and_drift.ipynb             notebooks/08_uncertainty_budget.ipynb             notebooks/09_monte_carlo.ipynb             notebooks/10_final_validation.ipynb             reports/figures/hv011_uncertainty_components.png             reports/figures/hv011_expanded_uncertainty_by_point.png             reports/figures/hv012_mc_interval_comparison.png             reports/figures/hv012_mc_representative_distribution.png             reports/figures/hv013_compliance_status.png             reports/figures/hv013_final_evidence_summary.png
+
           if git diff --cached --quiet; then
             echo "No evidence snapshot changes."
             exit 0
@@ -52,7 +66,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "audit2: snapshot final generated evidence [skip ci]"
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin HEAD:"${GITHUB_HEAD_REF}"
       - name: Upload executed notebooks
         if: always()
         uses: actions/upload-artifact@v4
