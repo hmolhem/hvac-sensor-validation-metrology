@@ -7,6 +7,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from scipy.stats import chi2
 
 from src.static_analysis import STATIC_RELEASE_DIR, locate_project_root
 
@@ -229,6 +230,33 @@ def load_final_evidence(project_root: Path | None = None) -> dict[str, pd.DataFr
     return {key: pd.read_csv(t / filename) for key, filename in paths.items()}
 
 
+def pooled_sigma_upper_confidence_limit(
+    pooled_sd: float,
+    degrees_of_freedom: int,
+    confidence: float = 0.95,
+) -> float:
+    """Return a one-sided upper confidence limit for a common sigma.
+
+    The calculation uses the chi-square distribution for a pooled variance
+    estimate. It is supporting evidence only; it does not convert an
+    unspecified worst-condition requirement into a common-sigma requirement.
+    """
+    if pooled_sd < 0:
+        raise ValueError("pooled_sd must be non-negative.")
+    if degrees_of_freedom <= 0:
+        raise ValueError("degrees_of_freedom must be positive.")
+    if not 0.0 < confidence < 1.0:
+        raise ValueError("confidence must be between 0 and 1.")
+
+    lower_tail = 1.0 - confidence
+    return float(
+        np.sqrt(
+            degrees_of_freedom * pooled_sd**2
+            / chi2.ppf(lower_tail, degrees_of_freedom)
+        )
+    )
+
+
 def build_compliance_matrix(
     public_spec: dict,
     static_test_summary: pd.DataFrame,
@@ -254,6 +282,12 @@ def build_compliance_matrix(
             evidence["rr_summary"]["Component"].eq("Within-Test Repeatability"),
             "Value_RH",
         ].iloc[0]
+    )
+    repeat_df = int((repeat_detail["N_Samples"].astype(int) - 1).sum())
+    repeat_ucl95 = pooled_sigma_upper_confidence_limit(
+        repeat_pooled,
+        repeat_df,
+        confidence=0.95,
     )
     hysteresis_max = float(hysteresis_df["Hysteresis_Abs"].max())
 
@@ -292,16 +326,19 @@ def build_compliance_matrix(
         {
             "Requirement": "Repeatability sigma",
             "Public_Limit": f"≤ {limits['repeatability_sigma_max_rh_percent']:.2f} %RH",
-            "Metric": "maximum Test_ID within-hold error SD",
-            "Observed": repeat_max,
+            "Metric": "pooled/common-sigma 95% UCL; strict worst-condition rule unspecified",
+            "Observed": repeat_ucl95,
             "Units": "%RH",
-            "Status": (
-                "PASS"
-                if repeat_max <= limits["repeatability_sigma_max_rh_percent"]
-                else "FAIL"
+            "Status": "NOT_DEMONSTRATED",
+            "Evidence": "HV-005 / audit review",
+            "Notes": (
+                f"Pooled SD={repeat_pooled:.4f} %RH; one-sided 95% common-sigma "
+                f"UCL={repeat_ucl95:.4f} %RH with df={repeat_df}. The maximum "
+                f"sample SD={repeat_max:.4f} %RH is retained descriptively but is "
+                "not used as a direct FAIL rule across 120 simultaneous sample-SD "
+                "estimates. The public specification does not define the required "
+                "worst-condition statistical decision rule."
             ),
-            "Evidence": "HV-005",
-            "Notes": f"Pooled SD = {repeat_pooled:.4f} %RH; strict max used for compliance.",
         },
         {
             "Requirement": "Static hysteresis",
@@ -315,7 +352,7 @@ def build_compliance_matrix(
                 else "FAIL"
             ),
             "Evidence": "HV-004/HV-007",
-            "Notes": "C1 offset cancels in matched direction difference.",
+            "Notes": "C1 offset cancels in matched direction difference. PASS has a narrow 0.075 %RH observed margin; no formal guard-band decision rule is defined.",
         },
         {
             "Requirement": "Linearity",
