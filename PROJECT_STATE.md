@@ -8,10 +8,10 @@
 - Repository: `hmolhem/hvac-sensor-validation-metrology`
 - Default branch: `main`
 - Development policy: **merge-only main**
-- State snapshot date: **2026-10-27**
-- Snapshot baseline commit on `main`: `b86722d975c0155b7d46eed72e98bb34a9fd2e95`
-- Baseline commit message: `HV-006: Finalize post-merge project state (#9)`
-- Current development branch: none; HV-013 complete
+- State snapshot date: **2026-10-31**
+- Analytical closure baseline commit on `main`: `472d4de60e3b3640a242615e15519e173f0c10f1`
+- Analytical closure commit message: `HV-013: Final Engineering Assessment (#16)`
+- Current analytical state: **HV-001 through HV-013 complete and merged**
 
 ## 2. Project Mission
 
@@ -133,8 +133,15 @@ The four matrix-only Test_IDs are intentional `UNCERTAINTY_EVALUATION` design po
 | HV-004 | Static Characterization | SC-001 | **PASS** |
 | HV-005 | Repeatability & Reproducibility | RR-001 | **PASS WITH DOCUMENTED CONDITIONS** |
 | HV-006 | Calibration Model Development | CM-001 | **PASS WITH DOCUMENTED CONDITIONS** |
+| HV-007 | Independent Blind Validation | IV-001 | **PASS WITH DOCUMENTED CONDITIONS** |
+| HV-008 | Dynamic Step Response | SR-001 | **PASS WITH DOCUMENTED CONDITIONS** |
+| HV-009 | Dynamic Tracking | DT-001 | **PASS WITH DOCUMENTED CONDITIONS** |
+| HV-010 | Stability & Drift | SD-001 | **PASS WITH DOCUMENTED CONDITIONS** |
+| HV-011 | Measurement Uncertainty Budget | MU-001 | **PASS WITH DOCUMENTED CONDITIONS** |
+| HV-012 | Monte Carlo Uncertainty | MC-001 | **PASS WITH DOCUMENTED CONDITIONS** |
+| HV-013 | Final Engineering Assessment | FA-001 | **PASS WITH DOCUMENTED CONDITIONS** |
 
-Closed HV-001 through HV-005 should not be reopened or redesigned casually. A later correction requires traceable evidence and a deliberate project decision.
+Closed HV-001 through HV-013 should not be reopened or redesigned casually. A later correction or extension requires traceable evidence and a deliberate project decision.
 
 ## 9. Notebook State
 
@@ -142,15 +149,15 @@ Closed HV-001 through HV-005 should not be reopened or redesigned casually. A la
 |---|---|---|
 | `00_dataset_qualification.ipynb` | Dataset Qualification | **COMPLETE** |
 | `01_static_characterization.ipynb` | Static Measurement Performance | **COMPLETE** |
-| `02_repeatability_reproducibility.ipynb` | Repeatability & Reproducibility | **COMPLETE** |
+| `02_repeatability_reproducibility.ipynb` | Repeatability & Intermediate Precision | **COMPLETE** |
 | `03_calibration_model.ipynb` | Calibration Model Development | **COMPLETE — CM-001 PASS WITH DOCUMENTED CONDITIONS** |
 | `04_blind_validation.ipynb` | Independent Blind Validation | **COMPLETE — IV-001 PASS WITH DOCUMENTED CONDITIONS** |
-| `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE SCIENTIFICALLY — SR-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE SCIENTIFICALLY — DT-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `07_stability_and_drift.ipynb` | Stability & Drift | **COMPLETE SCIENTIFICALLY — SD-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `08_uncertainty_budget.ipynb` | Measurement Uncertainty | **COMPLETE SCIENTIFICALLY — MU-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
-| `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | Planned |
-| `10_final_validation.ipynb` | Final Engineering Assessment | **COMPLETE SCIENTIFICALLY — FA-001 PASS WITH DOCUMENTED CONDITIONS; ARTIFACT CAPTURE PENDING** |
+| `05_step_response.ipynb` | Dynamic Step Response | **COMPLETE — SR-001 PASS WITH DOCUMENTED CONDITIONS** |
+| `06_dynamic_tracking.ipynb` | Ramp / Cyclic / Sinusoidal Tracking | **COMPLETE — DT-001 PASS WITH DOCUMENTED CONDITIONS** |
+| `07_stability_and_drift.ipynb` | Stability & Drift | **COMPLETE — SD-001 PASS WITH DOCUMENTED CONDITIONS** |
+| `08_uncertainty_budget.ipynb` | Measurement Uncertainty | **COMPLETE — MU-001 PASS WITH DOCUMENTED CONDITIONS** |
+| `09_monte_carlo.ipynb` | Monte Carlo Uncertainty Analysis | **COMPLETE — MC-001 PASS WITH DOCUMENTED CONDITIONS** |
+| `10_final_validation.ipynb` | Final Engineering Assessment | **COMPLETE — FA-001 PASS WITH DOCUMENTED CONDITIONS** |
 
 ## 10. Frozen HV-003 / Dataset-Qualification Conditions
 
@@ -349,7 +356,7 @@ Curated report/poster evidence may be versioned even though unrelated generated 
 
 ## 16. Current Engineering Frontier
 
-The completed chain is:
+The complete analytical chain is closed and merged:
 
 ```text
 HV-001 Repository Bootstrap
@@ -362,68 +369,63 @@ HV-004 Static Characterization
   ->
 HV-005 Repeatability & Reproducibility
   ->
-HV-006 Calibration Model Development   <-- COMPLETE / MERGED
+HV-006 Calibration Model Development
   ->
-HV-007 Independent Blind Validation     <-- COMPLETE / PENDING MERGE
+HV-007 Independent Blind Validation
   ->
-HV-008 Dynamic Step Response             <-- COMPLETE
+HV-008 Dynamic Step Response
   ->
-HV-009 Dynamic Tracking                  <-- COMPLETE
+HV-009 Dynamic Tracking
   ->
-HV-010 Stability & Drift                 <-- COMPLETE
+HV-010 Stability & Drift
   ->
-HV-011 Measurement Uncertainty Budget     <-- COMPLETE
+HV-011 Measurement Uncertainty Budget
   ->
-HV-012 Monte Carlo Uncertainty              <-- COMPLETE
+HV-012 Monte Carlo Uncertainty
   ->
-HV-013 Final Engineering Assessment          <-- COMPLETE
+HV-013 Final Engineering Assessment
 ```
 
-HV-006 and HV-007 are complete. HV-008 is complete. The next engineering frontier is HV-009 Dynamic Tracking.
+There is no pending analytical milestone in the HV-001 through HV-013 program. New technical work should be opened as a separate, explicitly scoped extension rather than modifying the closed analytical chain.
 
 ## 17. Core Analytical Project — Closed State
 
-The frozen HV-013 plan is:
+The final engineering assessment is recorded in:
 
 ```text
-docs/analysis_plan/FA-001_FINAL_ENGINEERING_ASSESSMENT_PLAN.md
+docs/handoffs/HV-013_FINAL_ENGINEERING_ASSESSMENT.md
 ```
 
-HV-013 integrates all accepted evidence from HV-004 through HV-012 against the public DUT acceptance limits.
+FA-001 concluded:
 
-Decision vocabulary:
+- full public-spec compliance: **NOT FULLY DEMONSTRATED**;
+- steady-state/static HVAC suitability: **CONDITIONALLY SUITABLE**;
+- dynamic HVAC suitability: **NOT RECOMMENDED AS-IS**.
 
-- PASS
-- FAIL
-- NOT_DEMONSTRATED
-- INFORMATIONAL
+Key closed-state evidence includes:
 
-Three final conclusions are intentionally separated:
+- frozen C1 correction: **+1.2266788194 %RH**;
+- independent-validation RMSE: **1.1403 -> 0.4566 %RH**;
+- pooled repeatability SD: **0.259265 %RH**;
+- strict maximum Test_ID SD: **0.319236 %RH**;
+- expanded uncertainty (U, k=2): approximately **1.182–1.230 %RH**;
+- maximum static hysteresis metric used in the final assessment: **0.9250 %RH**.
 
-1. full public-spec compliance;
-2. steady-state/static HVAC suitability;
-3. dynamic HVAC suitability.
-
-No new requirement or threshold is invented. FA-001 = PASS WITH DOCUMENTED CONDITIONS. Final classification: full public-spec compliance NOT FULLY DEMONSTRATED; steady-state/static HVAC use CONDITIONALLY SUITABLE; dynamic HVAC use NOT RECOMMENDED AS-IS. Final clean-kernel artifact capture is complete. Curated HV-013 CSV/PNG evidence is versioned and PR #16 is prepared for merge. HV-001 through HV-013 are complete; the core analytical project is ready for final report/course-deliverable assembly.
+Final clean-kernel verification and curated evidence capture are complete. PRs through #16 are merged. HV-001 through HV-013 are closed.
 
 ## 18. Resume Protocol for a New Chat
 
-A new ChatGPT conversation should be given repository access and instructed:
+A new ChatGPT conversation, collaborator, or future work session should:
 
 ```text
 Read PROJECT_STATE.md first.
 Then read docs/PROJECT_INDEX.md.
-Then read the handoff for the last completed milestone.
-Continue from "Current Engineering Frontier" without redesigning closed milestones.
+Then read docs/handoffs/HV-013_FINAL_ENGINEERING_ASSESSMENT.md.
+Use earlier milestone handoffs only when the specific technical history is needed.
+Do not redesign closed HV-001 through HV-013 milestones without new traceable evidence.
 ```
 
-For the present state, the last completed handoff is:
-
-```text
-docs/handoffs/HV-009_DYNAMIC_TRACKING.md
-```
-
-Then continue HV-010 Stability & Drift from the current checkpoint.
+No further analytical milestone is pending in the closed program. Future work should begin with a new scope and a new traceable project decision.
 
 ## 19. Update Policy for This File
 
