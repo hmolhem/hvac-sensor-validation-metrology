@@ -1,5 +1,6 @@
 Metric,Value,Units
 Max_TestID_Repeatability_SD,0.3192356691057228,%RH
+Repeatability_CommonSigma_UCL95,0.2629034876058438,%RH
 Pooled_Repeatability_SD,0.2592654906322251,%RH
 Max_Static_Hysteresis,0.9249999999999998,%RH
 Linearity_Max_Abs_Deviation,0.12086507936507952,%RH
