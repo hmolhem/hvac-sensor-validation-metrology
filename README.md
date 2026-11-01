@@ -282,3 +282,17 @@ Current work is focused on:
 Closed milestones HV-001 through HV-013 should not be casually redesigned. Any future technical extension should begin with a new scope, evidence boundary, and traceable decision record.
 
 For a new work session, read [PROJECT_STATE.md](PROJECT_STATE.md) first.
+
+## Licensing
+
+This repository uses a split license appropriate for a software-plus-evidence
+metrology project:
+
+- **Source code:** MIT License — see `LICENSE`.
+- **Frozen datasets, documentation, figures, tables, report artifacts, and
+  other non-code content:** Creative Commons Attribution 4.0 International
+  (CC BY 4.0) — see `LICENSE-DATA-DOCS.md`.
+
+For Jupyter notebooks, code cells are covered by MIT; prose, figures, tables,
+and committed output content are covered by CC BY 4.0.
+
