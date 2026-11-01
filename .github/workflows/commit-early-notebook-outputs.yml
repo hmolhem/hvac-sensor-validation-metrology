@@ -1,6 +1,11 @@
 name: Commit early notebook outputs
 
 on:
+  push:
+    branches:
+      - release/portfolio-v1-notebook-outputs
+    paths:
+      - .github/workflows/commit-early-notebook-outputs.yml
   workflow_dispatch:
 
 permissions:
