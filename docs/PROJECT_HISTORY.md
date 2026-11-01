@@ -355,7 +355,7 @@ HV-011 must distinguish repeatability, center drift/excursion, and span/shape ch
 **Technical Gate:** MU-001
 
 ### Primary result
-For a frozen-C1 calibrated 60-second stable mean, combined standard uncertainty is approximately 0.591–0.615 %RH and k=2 expanded uncertainty is approximately 1.182–1.230 %RH across the four declared evaluation points.
+For a frozen-C1 calibrated 60-second stable mean, combined standard uncertainty is approximately 0.593–0.617 %RH and k=2 expanded uncertainty is approximately 1.186–1.233 %RH across the four declared evaluation points.
 
 ### Dominant source
 Point-specific between-Test_ID state variability contributes approximately 64–67% of total variance, substantially more than short-term repeatability.
@@ -379,10 +379,10 @@ HV-012 will validate the analytical uncertainty model using Monte Carlo propagat
 **Technical Gate:** MC-001
 
 ### Analytical-equivalent validation
-Model A reproduces the HV-011 combined standard uncertainty with worst relative MC SD error of approximately 0.263%.
+Model A reproduces the HV-011 combined standard uncertainty with worst relative MC SD error of approximately 0.166%.
 
 ### Empirical-state sensitivity
-Model B preserves the same variance scale with worst relative MC SD error of approximately 0.114%, but produces narrower central 95% intervals and approximately 98.1–98.4% coverage inside the analytical ±2u_c interval.
+Model B preserves the same variance scale with worst relative MC SD error of approximately 0.146%, but produces narrower central 95% intervals and approximately 98.1–98.4% coverage inside the analytical ±2u_c interval.
 
 ### Distribution shape
 Model B is nearly symmetric but strongly platykurtic, with excess kurtosis approximately -0.86 to -0.92.
@@ -401,7 +401,7 @@ HV-013 will integrate static, dynamic, stability, uncertainty, Monte Carlo, and 
 
 ### Public-requirement outcome
 - PASS: static accuracy, static hysteresis, linearity, temperature influence.
-- FAIL: strict maximum repeatability sigma.
+- PRE-AUDIT (superseded): strict maximum repeatability sigma was initially labeled FAIL. The 2026-10-31 External Audit Closure replaced this with **NOT_DEMONSTRATED** because the public specification does not define a simultaneous/worst-condition statistical decision rule.
 - NOT_DEMONSTRATED: t90 and annual drift.
 - INFORMATIONAL: settling band without a public maximum settling time.
 
