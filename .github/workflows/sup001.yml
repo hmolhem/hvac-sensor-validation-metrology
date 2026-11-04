@@ -1,0 +1,52 @@
+name: SUP-001 Controlled Supplemental Analysis
+
+on:
+  push:
+    branches:
+      - "supp/sup001-controlled-analysis"
+    paths:
+      - "supplemental/SUP-001/**"
+      - ".github/workflows/sup001.yml"
+  workflow_dispatch:
+
+jobs:
+  sup001:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12.15
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.15"
+
+      - name: Install pinned dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r supplemental/SUP-001/requirements.txt
+
+      - name: Run SUP-001
+        run: |
+          python supplemental/SUP-001/run_sup001.py
+
+      - name: Generate SHA-256 sums
+        run: |
+          cd supplemental/SUP-001
+          sha256sum README.md manifest.json requirements.txt run_sup001.py > SHA256SUMS.txt
+          find outputs -type f -print0 | sort -z | xargs -0 sha256sum >> SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Upload controlled outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: SUP-001-controlled-outputs
+          path: |
+            supplemental/SUP-001/README.md
+            supplemental/SUP-001/manifest.json
+            supplemental/SUP-001/requirements.txt
+            supplemental/SUP-001/run_sup001.py
+            supplemental/SUP-001/outputs/**
+            supplemental/SUP-001/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 90
