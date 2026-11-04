@@ -187,39 +187,56 @@ def inverse_reference_lag(tt: np.ndarray, ref: np.ndarray, tau_ref_s: float) -> 
     return x
 
 
+def _evaluate_tau_grid(tt: np.ndarray, us: np.ndarray, dut: np.ndarray, taus: np.ndarray):
+    """Evaluate all tau values simultaneously for one delayed input."""
+    dt = float(np.median(np.diff(tt)))
+    a = dt / (taus + dt)
+    y = np.empty((len(taus), len(us)), dtype=float)
+    y[:, 0] = us[0]
+    for i in range(1, len(us)):
+        y[:, i] = y[:, i - 1] + a * (us[i] - y[:, i - 1])
+    offset = np.mean(dut[None, :] - y, axis=1)
+    resid = dut[None, :] - y - offset[:, None]
+    sse = np.sum(resid * resid, axis=1)
+    j = int(np.argmin(sse))
+    return float(sse[j]), float(taus[j]), float(offset[j]), resid[j]
+
+
 def fit_first_order_grid(tt: np.ndarray, u: np.ndarray, dut: np.ndarray) -> dict[str, float]:
-    delays = np.arange(0.0, 10.0001, 0.25)
-    taus = np.arange(5.0, 50.0001, 0.25)
+    """Two-stage finer-than-review grid search (0.5 s coarse, 0.05 s local)."""
+    coarse_delays = np.arange(0.0, 10.0001, 0.5)
+    coarse_taus = np.arange(5.0, 50.0001, 0.5)
     best = None
-    for delay in delays:
+    for delay in coarse_delays:
         us = shift_signal(tt, u, float(delay))
-        dt = float(np.median(np.diff(tt)))
-        for tau in taus:
-            a = dt / (float(tau) + dt)
-            y = np.empty_like(us, dtype=float)
-            y[0] = us[0]
-            for i in range(1, len(y)):
-                y[i] = y[i - 1] + a * (us[i] - y[i - 1])
-            offset = float(np.mean(dut - y))
-            resid = dut - y - offset
-            sse = float(np.sum(resid * resid))
-            if best is None or sse < best[0]:
-                best = (sse, float(delay), float(tau), offset, lag1(resid))
+        sse, tau, offset, resid = _evaluate_tau_grid(tt, us, dut, coarse_taus)
+        if best is None or sse < best[0]:
+            best = (sse, float(delay), tau, offset, resid)
     assert best is not None
-    sse, delay, tau, offset, resid_r1 = best
+
+    _, delay0, tau0, _, _ = best
+    fine_delays = np.arange(max(0.0, delay0 - 0.5), min(10.0, delay0 + 0.5) + 1e-9, 0.05)
+    fine_taus = np.arange(max(2.0, tau0 - 1.0), min(60.0, tau0 + 1.0) + 1e-9, 0.05)
+    best_fine = None
+    for delay in fine_delays:
+        us = shift_signal(tt, u, float(delay))
+        sse, tau, offset, resid = _evaluate_tau_grid(tt, us, dut, fine_taus)
+        if best_fine is None or sse < best_fine[0]:
+            best_fine = (sse, float(delay), tau, offset, resid)
+    assert best_fine is not None
+
+    sse, delay, tau, offset, resid = best_fine
     rmse = float(np.sqrt(sse / len(dut)))
     return {
         "delay_s": delay,
         "tau_s": tau,
         "offset_pctRH": offset,
         "fit_RMSE_pctRH": rmse,
-        "residual_lag1": resid_r1,
+        "residual_lag1": lag1(resid),
         "t90_s": delay + tau * np.log(10.0),
-        "tau_at_grid_min": bool(np.isclose(tau, taus.min())),
-        "tau_at_grid_max": bool(np.isclose(tau, taus.max())),
-        "delay_at_grid_max": bool(np.isclose(delay, delays.max())),
+        "tau_at_search_boundary": bool(tau <= 2.0001 or tau >= 59.9999),
+        "delay_at_search_boundary": bool(delay <= 0.0001 or delay >= 9.9999),
     }
-
 
 def t90_outputs() -> tuple[pd.DataFrame, pd.DataFrame]:
     st = pd.read_csv(DATA / "dynamic_step_measurements.csv")
@@ -272,7 +289,7 @@ def t90_outputs() -> tuple[pd.DataFrame, pd.DataFrame]:
             "mean_fit_RMSE_pctRH": float(g["fit_RMSE_pctRH"].mean()),
             "max_fit_RMSE_pctRH": float(g["fit_RMSE_pctRH"].max()),
             "mean_residual_lag1": float(g["residual_lag1"].mean()),
-            "grid_boundary_hits": int(g[["tau_at_grid_min", "tau_at_grid_max", "delay_at_grid_max"]].any(axis=1).sum()),
+            "grid_boundary_hits": int(g[["tau_at_search_boundary", "delay_at_search_boundary"]].any(axis=1).sum()),
             "interpretation": "post-freeze model-dependent estimate; not a frozen conformity decision",
         })
     summary = pd.DataFrame(summary_rows)
