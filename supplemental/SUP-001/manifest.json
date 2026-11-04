@@ -1,0 +1,26 @@
+{
+  "package_id": "SUP-001",
+  "package_version": "0.1.0",
+  "stream": "SYN-SUPPLEMENTAL",
+  "classification": "post-freeze controlled supplemental analysis",
+  "source_release": "v1.0.0",
+  "source_commit": "dce3b9b9d4e44fddceceada67641b41cb3dd8050",
+  "dataset_release": "VSM-LAB-DATA-v1.1",
+  "frozen_status_policy": "No v1.0.0 conformity status is rewritten by SUP-001.",
+  "expected_input_sha256": {
+    "static_measurements.csv": "3f34e8a9bc31a81e32700d7347f96947351770e1b2c208e5b37e78537a235dd8",
+    "dynamic_step_measurements.csv": "1dd80275b7c80377c99cd0e4cb2110ed9aad8346b336fa42c0bc52f02d3bd592"
+  },
+  "post_hoc_labels_required": [
+    "R-REP",
+    "cell-level hysteresis",
+    "nu_eff coverage treatment"
+  ],
+  "public_assumptions_used": {
+    "chamber_rh_uniformity_abs_percent": 0.30,
+    "reference_t90_max_s": 10.0,
+    "static_accuracy_limit_abs_percent": 2.0,
+    "hysteresis_limit_abs_percent": 1.0,
+    "annual_drift_limit_abs_percent_per_year": 0.8
+  }
+}
