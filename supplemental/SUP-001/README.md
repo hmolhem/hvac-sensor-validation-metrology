@@ -35,12 +35,15 @@ The workflow generates and archives:
 - `outputs/sup001_rmse_levels.csv`
 - `outputs/sup001_hysteresis_pairs.csv`
 - `outputs/sup001_hysteresis_cells.csv`
+- `outputs/sup001_hysteresis_frozen_metric.csv`
+- `outputs/sup001_repeatability_rrep.csv`
 - `outputs/sup001_t90_identification_detail.csv`
 - `outputs/sup001_t90_identification_summary.csv`
 - `outputs/sup001_drift_inference.csv`
 - `outputs/sup001_uncertainty_coverage_bracket.csv`
 - `outputs/sup001_uncertainty_primary_budget.csv`
 - `outputs/sup001_validation_cell_primary_budget.csv`
+- `outputs/sup001_direction_conditional_uncertainty.csv`
 - `outputs/sup001_input_hashes.csv`
 - `outputs/sup001_runtime_manifest.json`
 - `outputs/sup001_run_summary.txt`
@@ -50,14 +53,31 @@ The workflow generates and archives:
 
 1. The frozen raw static and dynamic-step CSV hashes are verified before analysis.
 2. The environment is pinned in `requirements.txt` and the workflow pins Python.
-3. t90 identification uses a finer delay/tau grid than the review prototype and includes residual lag-1 diagnostics.
+3. t90 identification uses a finer delay/tau grid than the review prototype and includes residual lag-1 diagnostics. The first-order-plus-delay model mirrors the public generator structure; this is part of the parameter-blind framing and is not independent model discovery.
 4. A reference-lag sensitivity uses the public reference limit `t90 <= 10 s`, corresponding to `tau_ref <= 10/ln(10) ≈ 4.343 s` under a first-order model.
 5. Chamber RH uniformity `±0.30 %RH` is converted to a rectangular Type-B standard uncertainty `0.30/sqrt(3)` and included in the primary supplemental uncertainty budget.
 6. Held-out cell uncertainty uses only the 9 validation cells (RH 30/50/70 × T 15/25/35). No held-out claim is made at 20 %RH.
 7. All generated files are SHA-256 hashed.
+8. R-REP repeatability evidence is emitted as a controlled post-freeze/post-hoc output.
+9. Direction-conditional RH × T × direction uncertainty is emitted as a robustness case so direction structure is not buried in the pooled state term.
+10. t90 mean confidence intervals are across-test statistical intervals only and do not represent model-form uncertainty.
+11. The reference-lag-corrected t90 result is a sensitivity bound based on the public reference t90 maximum, not a point estimate.
 
 ## Interpretation boundary
 
 - Frozen v1.0.0 statuses remain the historical record.
 - SUP-001 may strengthen or qualify interpretation, but it does not silently change the frozen release.
 - Chapters 12, 14 and 16 may cite SUP-001 only after its workflow completes successfully and its outputs/hashes are archived.
+
+
+## REVIEW-008 close-out changes
+
+This package incorporates the blocking items identified in 08_SUP001_TARGETED_VERIFICATION:
+
+- **R2**: adds `sup001_repeatability_rrep.csv` with Bartlett/Levene homogeneity tests, lag-1 autocorrelation, common-sigma UCL, max-SD probability, and Bonferroni per-test UCL count. It is explicitly labelled post-freeze/post-hoc.
+- **R3**: adds `sup001_direction_conditional_uncertainty.csv` using RH × T × direction conditional bias with the state term excluded and chamber non-uniformity retained.
+- Coverage-bracket outputs now carry an explicit post-freeze/post-hoc label.
+- Drift CI includes the OLS residual-independence caveat.
+- Hysteresis notes that the pooled pair-difference SD includes between-cell spread and is therefore conservative.
+- t90 intervals are labelled as across-test statistical intervals only, not model-form uncertainty.
+- Delay=0 is tracked as the physical non-negativity bound.
