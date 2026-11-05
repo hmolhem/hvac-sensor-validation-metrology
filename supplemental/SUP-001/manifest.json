@@ -17,10 +17,23 @@
     "nu_eff coverage treatment"
   ],
   "public_assumptions_used": {
-    "chamber_rh_uniformity_abs_percent": 0.30,
-    "reference_t90_max_s": 10.0,
-    "static_accuracy_limit_abs_percent": 2.0,
-    "hysteresis_limit_abs_percent": 1.0,
+    "chamber_rh_uniformity_abs_percent": 0.3,
+    "reference_t90_max_s": 10,
+    "static_accuracy_limit_abs_percent": 2,
+    "hysteresis_limit_abs_percent": 1,
     "annual_drift_limit_abs_percent_per_year": 0.8
-  }
+  },
+  "review_008_closeout": {
+    "R1": "pending immutable tag and permanent archive closeout",
+    "R2": "implemented: sup001_repeatability_rrep.csv",
+    "R3": "implemented: sup001_direction_conditional_uncertainty.csv"
+  },
+  "output_classification": {
+    "repeatability_rrep": "post-freeze, post-hoc",
+    "cell_level_hysteresis": "post-freeze, post-hoc",
+    "nu_eff_coverage": "post-freeze, post-hoc",
+    "direction_conditional_uncertainty": "post-freeze, post-hoc supplemental robustness case"
+  },
+  "t90_interval_scope": "Across-test statistical intervals only; excludes model-form uncertainty.",
+  "reference_lag_sensitivity_scope": "Bound/sensitivity using the public reference t90 maximum; not a point estimate."
 }
