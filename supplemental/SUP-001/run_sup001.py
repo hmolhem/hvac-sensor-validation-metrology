@@ -19,7 +19,6 @@ PACKAGE_VERSION = "0.1.0"
 SOURCE_RELEASE = "v1.0.0"
 SOURCE_COMMIT = "dce3b9b9d4e44fddceceada67641b41cb3dd8050"
 DATASET_RELEASE = "VSM-LAB-DATA-v1.1"
-C1_OFFSET = 1.2266788194444438
 RH_LIMIT_STATIC = 2.0
 RH_LIMIT_HYST = 1.0
 DRIFT_LIMIT_PER_YEAR = 0.8
@@ -27,22 +26,20 @@ CHAMBER_RH_UNIFORMITY_BOUND = 0.30
 REFERENCE_T90_MAX_S = 10.0
 REFERENCE_TAU_MAX_S = REFERENCE_T90_MAX_S / np.log(10.0)
 
-EXPECTED_INPUT_SHA256 = {
-    "static_measurements.csv": "3f34e8a9bc31a81e32700d7347f96947351770e1b2c208e5b37e78537a235dd8",
-    "dynamic_step_measurements.csv": "1dd80275b7c80377c99cd0e4cb2110ed9aad8346b336fa42c0bc52f02d3bd592",
+EXPECTED_FROZEN_SHA256 = {
+    "data/raw/vsm_lab_data_v1_1/static_measurements.csv": "3f34e8a9bc31a81e32700d7347f96947351770e1b2c208e5b37e78537a235dd8",
+    "data/raw/vsm_lab_data_v1_1/dynamic_step_measurements.csv": "1dd80275b7c80377c99cd0e4cb2110ed9aad8346b336fa42c0bc52f02d3bd592",
+    "reports/tables/hv011_uncertainty_summary.csv": "a642072a2f811882d59e58c50c7bbd60de6718cb0c79e279513879bfedd3cfd4",
+    "reports/tables/hv012_mc_model_comparison.csv": "582cadb4a65db42b35e5d5c4529da696808491645ebff2660454d461be583a8c",
+    "reports/tables/hv010_weekly_center_drift.csv": "ce3d21379442c9b50fcd81fe31c8d34b130cb6d430975b932696ae78e0eacdd4",
+    "config/calibration_model_v1.json": "80e2a77ba0b57cc1ab954ebffb7f26543d8713098921d23f52b5e66351551506",
 }
-
-# Full SHA-256 values for derived frozen tables are verified separately in CI/manifest.
-EXPECTED_DERIVED_TABLES = [
-    "hv011_uncertainty_summary.csv",
-    "hv012_mc_model_comparison.csv",
-    "hv010_weekly_center_drift.csv",
-]
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 DATA = ROOT / "data" / "raw" / "vsm_lab_data_v1_1"
 TABLES = ROOT / "reports" / "tables"
+CALIBRATION_CONFIG = ROOT / "config" / "calibration_model_v1.json"
 OUT = HERE / "outputs"
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -56,27 +53,31 @@ def sha256_file(path: Path) -> str:
 
 
 def verify_frozen_inputs() -> pd.DataFrame:
+    """Fail closed unless every frozen input/table/config byte hash matches v1.0.0."""
     rows = []
-    for name, expected in EXPECTED_INPUT_SHA256.items():
-        path = DATA / name
+    for rel_path, expected in EXPECTED_FROZEN_SHA256.items():
+        path = ROOT / rel_path
         actual = sha256_file(path)
         ok = actual == expected
-        rows.append({"file": str(path.relative_to(ROOT)), "expected_sha256": expected, "actual_sha256": actual, "pass": ok})
-        if not ok:
-            raise RuntimeError(f"Frozen input hash mismatch for {name}: {actual} != {expected}")
-
-    for name in EXPECTED_DERIVED_TABLES:
-        path = TABLES / name
         rows.append({
-            "file": str(path.relative_to(ROOT)),
-            "expected_sha256": "v1.0.0 commit-controlled; exact SHA-256 recorded in closeout manifest",
-            "actual_sha256": sha256_file(path),
-            "pass": True,
+            "file": rel_path,
+            "expected_sha256": expected,
+            "actual_sha256": actual,
+            "pass": ok,
         })
+        if not ok:
+            raise RuntimeError(
+                f"Frozen source hash mismatch for {rel_path}: {actual} != {expected}"
+            )
     df = pd.DataFrame(rows)
     df.to_csv(OUT / "sup001_input_hashes.csv", index=False)
     return df
 
+
+def load_c1_offset() -> float:
+    """Load the frozen C1 offset from the verified v1.0.0 calibration config."""
+    payload = json.loads(CALIBRATION_CONFIG.read_text(encoding="utf-8"))
+    return float(payload["parameters"]["offset_percent_rh"])
 
 def load_static() -> tuple[pd.DataFrame, pd.DataFrame]:
     s = pd.read_csv(DATA / "static_measurements.csv")
@@ -99,12 +100,12 @@ def load_static() -> tuple[pd.DataFrame, pd.DataFrame]:
     return s, tests
 
 
-def rmse_outputs(s: pd.DataFrame) -> pd.DataFrame:
+def rmse_outputs(s: pd.DataFrame, c1_offset: float) -> pd.DataFrame:
     v = s[s["Analysis_Role"] == "VALIDATION"].copy()
     tm = v.groupby("Test_ID")["err"].mean()
     rows = []
     for level, e0 in [("60-s Test_ID mean", tm), ("single reading", v["err"])]:
-        e1 = e0 + C1_OFFSET
+        e1 = e0 + c1_offset
         c0 = float(np.sqrt(np.mean(np.square(e0))))
         c1 = float(np.sqrt(np.mean(np.square(e1))))
         rows.append({
@@ -353,6 +354,18 @@ def t90_outputs() -> tuple[pd.DataFrame, pd.DataFrame]:
             "mean_residual_lag1": float(g["residual_lag1"].mean()),
             "grid_boundary_hits": int(g[["tau_at_search_boundary", "delay_at_search_boundary"]].any(axis=1).sum()),
             "zero_delay_hits": int(g["delay_at_zero_physical_bound"].sum()),
+            "zero_delay_fraction": float(g["delay_at_zero_physical_bound"].mean()),
+            "t90_quantity_definition": (
+                "measured-reference-to-DUT first-order-plus-delay t90"
+                if basis == "measured_reference"
+                else "reference-lag-deconvolved-to-DUT sensitivity t90"
+            ),
+            "frozen_metric_relation": "Different quantity from the frozen command-to-DUT t90 (~112 s); do not compare without stating the input basis.",
+            "identifiability_note": (
+                f"Delay reached the zero physical bound in {int(g['delay_at_zero_physical_bound'].sum())}/{n} fits; delay is poorly identifiable for those fits."
+                if g["delay_at_zero_physical_bound"].any()
+                else "No zero-delay bound hits in this group."
+            ),
             "interpretation": (
                 "post-freeze model-dependent estimate relative to measured reference"
                 if basis == "measured_reference"
@@ -369,32 +382,50 @@ def drift_outputs() -> pd.DataFrame:
     x = wk["Aging_Day"].to_numpy(float)
     y = wk["Center_Drift_From_Day0"].to_numpy(float)
     lr = stats.linregress(x, y)
+    fitted = lr.intercept + lr.slope * x
+    resid = y - fitted
+    r1 = lag1(resid)
+    dw = float(np.sum(np.diff(resid) ** 2) / np.sum(resid ** 2))
+
     df = len(x) - 2
     tcrit = float(stats.t.ppf(0.975, df))
     annual = float(lr.slope * 365.0)
     annual_se = float(lr.stderr * 365.0)
     lo = annual - tcrit * annual_se
     hi = annual + tcrit * annual_se
+
+    # Approximate AR(1) sensitivity only: inflate the OLS SE by
+    # sqrt((1+rho)/(1-rho)). This is not a replacement for a formal GLS model.
+    ar1_factor = float(np.sqrt((1.0 + r1) / (1.0 - r1))) if np.isfinite(r1) and abs(r1) < 1 else np.nan
+    annual_se_ar1 = annual_se * ar1_factor
+    lo_ar1 = annual - tcrit * annual_se_ar1
+    hi_ar1 = annual + tcrit * annual_se_ar1
+
     out = pd.DataFrame([{
         "n_weekly_points": len(x),
         "slope_pctRH_per_day": float(lr.slope),
         "slope_SE_pctRH_per_day": float(lr.stderr),
         "p_value_two_sided": float(lr.pvalue),
         "annualized_diagnostic_pctRH_per_year": annual,
-        "annualized_95CI_low": lo,
-        "annualized_95CI_high": hi,
+        "annualized_95CI_OLS_low": lo,
+        "annualized_95CI_OLS_high": hi,
+        "OLS_residual_lag1": r1,
+        "Durbin_Watson": dw,
+        "AR1_SE_inflation_factor_approx": ar1_factor,
+        "annualized_95CI_AR1approx_low": lo_ar1,
+        "annualized_95CI_AR1approx_high": hi_ar1,
         "public_limit_pctRH_per_year": DRIFT_LIMIT_PER_YEAR,
         "day0_to_56_mean_pctRH": float(np.mean(y[x <= 56])),
         "day63_to_77_mean_pctRH": float(np.mean(y[(x >= 63) & (x <= 77)])),
         "day84_pctRH": float(y[x == 84][0]),
-        "status": "NOT DEMONSTRATED (frozen); supplemental trend evidence unfavorable but non-monotonic",
-        "CI_scope_note": "OLS interval assumes independent weekly residuals; visible temporal structure means this interval may be too narrow.",
+        "status": "NOT DEMONSTRATED (frozen); supplemental drift trend is inconclusive after serial-correlation sensitivity",
+        "CI_scope_note": "OLS interval assumes independent weekly residuals. AR(1)-inflated interval is an approximate sensitivity diagnostic, not a formal GLS confidence interval.",
     }])
     out.to_csv(OUT / "sup001_drift_inference.csv", index=False)
     return out
 
 
-def uncertainty_outputs(tests: pd.DataFrame):
+def uncertainty_outputs(tests: pd.DataFrame, c1_offset: float):
     u = pd.read_csv(TABLES / "hv011_uncertainty_summary.csv")
     mc = pd.read_csv(TABLES / "hv012_mc_model_comparison.csv")
 
@@ -428,7 +459,7 @@ def uncertainty_outputs(tests: pd.DataFrame):
     primary.to_csv(OUT / "sup001_uncertainty_primary_budget.csv", index=False)
 
     vt = tests[tests["role"] == "VALIDATION"].copy()
-    vt["mbe_C1"] = vt["mbe"] + C1_OFFSET
+    vt["mbe_C1"] = vt["mbe"] + c1_offset
     cell_mean = vt.groupby(["RH", "T"])["mbe_C1"].transform("mean")
     df_state = int(len(vt) - vt.groupby(["RH", "T"]).ngroups)
     u_state_pool = float(np.sqrt(np.sum(np.square(vt["mbe_C1"] - cell_mean)) / df_state))
@@ -460,23 +491,62 @@ def uncertainty_outputs(tests: pd.DataFrame):
 
     # R3: preserve direction-dependent residual structure rather than burying it
     # in a pooled state term. This is a post-freeze robustness view.
+    direction_key = ["RH", "T", "direction"]
+    direction_cell_mean = vt.groupby(direction_key)["mbe_C1"].transform("mean")
+    direction_ngroups = vt.groupby(direction_key).ngroups
+    direction_between_df = int(len(vt) - direction_ngroups)
+    direction_between_sd = float(
+        np.sqrt(
+            np.sum(np.square(vt["mbe_C1"] - direction_cell_mean))
+            / direction_between_df
+        )
+    )
+    tests_per_direction_cell = int(vt.groupby(direction_key).size().iloc[0])
+    u_between_direction_mean = direction_between_sd / np.sqrt(tests_per_direction_cell)
+
     direction = (
-        vt.groupby(["RH", "T", "direction"])["mbe_C1"]
+        vt.groupby(direction_key)["mbe_C1"]
         .mean()
         .rename("Direction_Conditional_Bias_pctRH")
         .reset_index()
     )
-    u_nonstate_no_chamber = float(np.sqrt(u_repeat**2 + u_offset_c1**2 + u_ref**2 + u_stab**2))
-    u_direction = float(np.sqrt(u_nonstate_no_chamber**2 + u_chamber**2))
-    direction["U_NonState_Excl_Chamber_pctRH"] = u_nonstate_no_chamber
+    u_nonstate_no_chamber = float(
+        np.sqrt(u_repeat**2 + u_offset_c1**2 + u_ref**2 + u_stab**2)
+    )
+    u_direction = float(
+        np.sqrt(
+            u_nonstate_no_chamber**2
+            + u_chamber**2
+            + u_between_direction_mean**2
+        )
+    )
+    nu_direction = float(
+        u_direction**4
+        / (u_between_direction_mean**4 / direction_between_df)
+    )
+    k95_direction = float(stats.t.ppf(0.975, nu_direction))
+    U95_direction = k95_direction * u_direction
+
+    direction["N_Test_IDs_Per_Direction_Cell"] = tests_per_direction_cell
+    direction["Between_Test_SD_pctRH"] = direction_between_sd
+    direction["U_BetweenTest_Mean_pctRH"] = u_between_direction_mean
+    direction["BetweenTest_df"] = direction_between_df
+    direction["U_NonState_Excl_Chamber_BetweenTest_pctRH"] = u_nonstate_no_chamber
     direction["U_Chamber_Uniformity_pctRH"] = u_chamber
-    direction["U_DirectionConditional_pctRH"] = u_direction
-    direction["Expanded_k2_pctRH"] = 2.0 * u_direction
-    direction["AbsBiasPlusExpanded_k2_pctRH"] = direction["Direction_Conditional_Bias_pctRH"].abs() + 2.0 * u_direction
+    direction["UC_DirectionConditional_pctRH"] = u_direction
+    direction["nu_eff"] = nu_direction
+    direction["k95"] = k95_direction
+    direction["U95_pctRH"] = U95_direction
+    direction["AbsBiasPlusU95_pctRH"] = (
+        direction["Direction_Conditional_Bias_pctRH"].abs() + U95_direction
+    )
     direction["static_limit_pctRH"] = RH_LIMIT_STATIC
-    direction["pass"] = direction["AbsBiasPlusExpanded_k2_pctRH"] <= RH_LIMIT_STATIC
+    direction["pass"] = direction["AbsBiasPlusU95_pctRH"] <= RH_LIMIT_STATIC
     direction["decision_rule_status"] = "post-freeze, post-hoc supplemental robustness case"
-    direction["scope_note"] = "Held-out validation RH×T×direction cells; state term excluded because direction is conditioned explicitly; frozen status unchanged."
+    direction["scope_note"] = (
+        "Held-out validation RH×T×direction cells; pooled state term is excluded because direction is conditioned explicitly. "
+        "Between-test day/run dispersion within each 2-test direction cell is included; frozen status unchanged."
+    )
     direction.to_csv(OUT / "sup001_direction_conditional_uncertainty.csv", index=False)
 
     return bracket, primary, cells, direction
@@ -546,13 +616,14 @@ def write_manifest_runtime(input_hashes: pd.DataFrame) -> None:
 
 def main() -> None:
     input_hashes = verify_frozen_inputs()
+    c1_offset = load_c1_offset()
     s, tests = load_static()
-    rmse = rmse_outputs(s)
+    rmse = rmse_outputs(s, c1_offset)
     repeatability = repeatability_rrep_output(s, tests)
     _, hyst_cells, _ = hysteresis_outputs(tests)
     _, t90_summary = t90_outputs()
     drift = drift_outputs()
-    _, primary_u, cell_u, direction_u = uncertainty_outputs(tests)
+    _, primary_u, cell_u, direction_u = uncertainty_outputs(tests, c1_offset)
     write_manifest_runtime(input_hashes)
     write_run_summary(rmse, repeatability, hyst_cells, t90_summary, drift, primary_u, cell_u, direction_u)
     print(f"{PACKAGE_ID}: PASS")
