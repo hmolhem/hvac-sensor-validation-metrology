@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "supp/sup001-controlled-analysis"
+      - "main"
     paths:
       - "supplemental/SUP-001/**"
       - ".github/workflows/sup001.yml"
@@ -20,7 +21,7 @@ jobs:
 
       - name: Prove frozen v1.0.0 paths are untouched
         run: |
-          git diff --exit-code v1.0.0 -- data reports notebooks src config tests scripts
+          git diff --exit-code v1.0.0 -- data reports notebooks src config tests scripts docs
 
       - name: Set up Python 3.12.15
         uses: actions/setup-python@v5
