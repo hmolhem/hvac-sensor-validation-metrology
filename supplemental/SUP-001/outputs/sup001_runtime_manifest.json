@@ -1,0 +1,63 @@
+{
+  "package_id": "SUP-001",
+  "package_version": "0.1.0",
+  "classification": "SYN-SUPPLEMENTAL / post-freeze",
+  "source_release": "v1.0.0",
+  "source_commit": "dce3b9b9d4e44fddceceada67641b41cb3dd8050",
+  "dataset_release": "VSM-LAB-DATA-v1.1",
+  "frozen_status_policy": "No v1.0.0 conformity status is rewritten by SUP-001.",
+  "post_hoc_labels_required": [
+    "R-REP",
+    "cell-level hysteresis",
+    "nu_eff coverage treatment"
+  ],
+  "chamber_uniformity": {
+    "public_bound_pctRH": 0.3,
+    "distribution_assumption": "rectangular (post-freeze uncertainty treatment)",
+    "standard_uncertainty_pctRH": 0.17320508075688773,
+    "budget_role": "primary; combined with C1 offset uncertainty"
+  },
+  "reference_lag_sensitivity": {
+    "public_reference_t90_max_s": 10.0,
+    "first_order_tau_corresponding_to_t90_max_s": 4.3429448190325175,
+    "method": "first-order inverse of measured reference; sensitivity only; noise amplification expected"
+  },
+  "input_hash_verification": [
+    {
+      "file": "data/raw/vsm_lab_data_v1_1/static_measurements.csv",
+      "expected_sha256": "3f34e8a9bc31a81e32700d7347f96947351770e1b2c208e5b37e78537a235dd8",
+      "actual_sha256": "3f34e8a9bc31a81e32700d7347f96947351770e1b2c208e5b37e78537a235dd8",
+      "pass": true
+    },
+    {
+      "file": "data/raw/vsm_lab_data_v1_1/dynamic_step_measurements.csv",
+      "expected_sha256": "1dd80275b7c80377c99cd0e4cb2110ed9aad8346b336fa42c0bc52f02d3bd592",
+      "actual_sha256": "1dd80275b7c80377c99cd0e4cb2110ed9aad8346b336fa42c0bc52f02d3bd592",
+      "pass": true
+    },
+    {
+      "file": "reports/tables/hv011_uncertainty_summary.csv",
+      "expected_sha256": "a642072a2f811882d59e58c50c7bbd60de6718cb0c79e279513879bfedd3cfd4",
+      "actual_sha256": "a642072a2f811882d59e58c50c7bbd60de6718cb0c79e279513879bfedd3cfd4",
+      "pass": true
+    },
+    {
+      "file": "reports/tables/hv012_mc_model_comparison.csv",
+      "expected_sha256": "582cadb4a65db42b35e5d5c4529da696808491645ebff2660454d461be583a8c",
+      "actual_sha256": "582cadb4a65db42b35e5d5c4529da696808491645ebff2660454d461be583a8c",
+      "pass": true
+    },
+    {
+      "file": "reports/tables/hv010_weekly_center_drift.csv",
+      "expected_sha256": "ce3d21379442c9b50fcd81fe31c8d34b130cb6d430975b932696ae78e0eacdd4",
+      "actual_sha256": "ce3d21379442c9b50fcd81fe31c8d34b130cb6d430975b932696ae78e0eacdd4",
+      "pass": true
+    },
+    {
+      "file": "config/calibration_model_v1.json",
+      "expected_sha256": "80e2a77ba0b57cc1ab954ebffb7f26543d8713098921d23f52b5e66351551506",
+      "actual_sha256": "80e2a77ba0b57cc1ab954ebffb7f26543d8713098921d23f52b5e66351551506",
+      "pass": true
+    }
+  ]
+}

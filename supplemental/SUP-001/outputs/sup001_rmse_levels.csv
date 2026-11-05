@@ -1,0 +1,3 @@
+metric_level,n,C0_RMSE_pctRH,C1_RMSE_pctRH,improvement_pct,C1_MBE_pctRH,classification
+60-s Test_ID mean,36,1.140287292219069,0.4566090150601351,59.956668974925954,0.1683315972222215,post-freeze supplemental metric clarification
+single reading,2160,1.1701022628623345,0.5266649688307036,54.98983417548804,0.1683315972222214,post-freeze supplemental metric clarification

@@ -1,0 +1,2 @@
+frozen_metric,n_pairs,max_abs_H_pctRH,mean_H_pctRH,pair_SD_pctRH,pair_df,note
+max absolute single matched pair,60,0.9249999999999997,-0.8304388888888892,0.046928361947263346,59,Frozen 0.925 %RH remains historical; cell-level guarded estimate is supplemental/post-hoc.

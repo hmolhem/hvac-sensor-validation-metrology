@@ -1,0 +1,45 @@
+{
+  "package_id": "SUP-001",
+  "package_version": "0.1.0",
+  "stream": "SYN-SUPPLEMENTAL",
+  "classification": "post-freeze controlled supplemental analysis",
+  "source_release": "v1.0.0",
+  "source_commit": "dce3b9b9d4e44fddceceada67641b41cb3dd8050",
+  "dataset_release": "VSM-LAB-DATA-v1.1",
+  "frozen_status_policy": "No v1.0.0 conformity status is rewritten by SUP-001.",
+  "expected_input_sha256": {
+    "data/raw/vsm_lab_data_v1_1/static_measurements.csv": "3f34e8a9bc31a81e32700d7347f96947351770e1b2c208e5b37e78537a235dd8",
+    "data/raw/vsm_lab_data_v1_1/dynamic_step_measurements.csv": "1dd80275b7c80377c99cd0e4cb2110ed9aad8346b336fa42c0bc52f02d3bd592",
+    "reports/tables/hv011_uncertainty_summary.csv": "a642072a2f811882d59e58c50c7bbd60de6718cb0c79e279513879bfedd3cfd4",
+    "reports/tables/hv012_mc_model_comparison.csv": "582cadb4a65db42b35e5d5c4529da696808491645ebff2660454d461be583a8c",
+    "reports/tables/hv010_weekly_center_drift.csv": "ce3d21379442c9b50fcd81fe31c8d34b130cb6d430975b932696ae78e0eacdd4",
+    "config/calibration_model_v1.json": "80e2a77ba0b57cc1ab954ebffb7f26543d8713098921d23f52b5e66351551506"
+  },
+  "post_hoc_labels_required": [
+    "R-REP",
+    "cell-level hysteresis",
+    "nu_eff coverage treatment"
+  ],
+  "public_assumptions_used": {
+    "chamber_rh_uniformity_abs_percent": 0.3,
+    "reference_t90_max_s": 10,
+    "static_accuracy_limit_abs_percent": 2,
+    "hysteresis_limit_abs_percent": 1,
+    "annual_drift_limit_abs_percent_per_year": 0.8
+  },
+  "review_008_closeout": {
+    "R1": "pending committed outputs/SHA256SUMS, PR merge, immutable tag",
+    "R2": "implemented and CI-verified output required",
+    "R3": "implemented with between-test component and effective-DOF coverage"
+  },
+  "output_classification": {
+    "repeatability_rrep": "post-freeze, post-hoc",
+    "cell_level_hysteresis": "post-freeze, post-hoc",
+    "nu_eff_coverage": "post-freeze, post-hoc",
+    "direction_conditional_uncertainty": "post-freeze, post-hoc supplemental robustness case"
+  },
+  "t90_interval_scope": "Across-test statistical intervals only; excludes model-form uncertainty.",
+  "reference_lag_sensitivity_scope": "Bound/sensitivity using the public reference t90 maximum; not a point estimate.",
+  "drift_interpretation": "Frozen status remains NOT DEMONSTRATED; supplemental trend is inconclusive after serial-correlation sensitivity.",
+  "t90_definition_control": "SUP-001 t90 is reference-to-DUT/model-dependent; frozen ~112 s is command-to-DUT. They are different quantities."
+}
