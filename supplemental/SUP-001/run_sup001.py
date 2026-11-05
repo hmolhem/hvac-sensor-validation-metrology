@@ -32,6 +32,13 @@ EXPECTED_INPUT_SHA256 = {
     "dynamic_step_measurements.csv": "1dd80275b7c80377c99cd0e4cb2110ed9aad8346b336fa42c0bc52f02d3bd592",
 }
 
+# Full SHA-256 values for derived frozen tables are verified separately in CI/manifest.
+EXPECTED_DERIVED_TABLES = [
+    "hv011_uncertainty_summary.csv",
+    "hv012_mc_model_comparison.csv",
+    "hv010_weekly_center_drift.csv",
+]
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 DATA = ROOT / "data" / "raw" / "vsm_lab_data_v1_1"
@@ -58,14 +65,11 @@ def verify_frozen_inputs() -> pd.DataFrame:
         if not ok:
             raise RuntimeError(f"Frozen input hash mismatch for {name}: {actual} != {expected}")
 
-    for path in [
-        TABLES / "hv011_uncertainty_summary.csv",
-        TABLES / "hv012_mc_model_comparison.csv",
-        TABLES / "hv010_weekly_center_drift.csv",
-    ]:
+    for name in EXPECTED_DERIVED_TABLES:
+        path = TABLES / name
         rows.append({
             "file": str(path.relative_to(ROOT)),
-            "expected_sha256": "source-commit-controlled",
+            "expected_sha256": "v1.0.0 commit-controlled; exact SHA-256 recorded in closeout manifest",
             "actual_sha256": sha256_file(path),
             "pass": True,
         })
@@ -117,6 +121,61 @@ def rmse_outputs(s: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def repeatability_rrep_output(s: pd.DataFrame, tests: pd.DataFrame) -> pd.DataFrame:
+    """Post-freeze/post-hoc common-sigma repeatability rule diagnostics (R-REP)."""
+    ch_tests = tests[tests["role"] == "CHARACTERIZATION"].copy()
+    ch_rows = s[s["Analysis_Role"] == "CHARACTERIZATION"].copy()
+
+    groups = []
+    r1 = []
+    for _, g in ch_rows.groupby("Test_ID"):
+        x = g.sort_values("Elapsed_s")["err"].to_numpy(float)
+        groups.append(x)
+        r1.append(lag1(x))
+    r1 = np.asarray(r1, dtype=float)
+
+    bartlett = stats.bartlett(*groups)
+    levene = stats.levene(*groups)
+
+    pooled = float(np.sqrt(
+        np.sum((ch_tests["n"] - 1) * np.square(ch_tests["sd"]))
+        / np.sum(ch_tests["n"] - 1)
+    ))
+    df = int(np.sum(ch_tests["n"] - 1))
+    n_per_test = int(ch_tests["n"].iloc[0])
+    k = n_per_test - 1
+    max_sd = float(ch_tests["sd"].max())
+    p_one = float(stats.chi2.sf(k * (max_sd / pooled) ** 2, k))
+    p_max = float(1.0 - (1.0 - p_one) ** len(ch_tests))
+    common_sigma_ucl95 = float(pooled * np.sqrt(df / stats.chi2.ppf(0.05, df)))
+
+    bonf = ch_tests["sd"] * np.sqrt(k / stats.chi2.ppf(0.05 / len(ch_tests), k))
+    out = pd.DataFrame([{
+        "rule_id": "R-REP",
+        "classification": "post-freeze, post-hoc",
+        "frozen_requirement_status": "NOT DEMONSTRATED",
+        "n_characterization_tests": int(len(ch_tests)),
+        "samples_per_test": n_per_test,
+        "pooled_common_sigma_pctRH": pooled,
+        "pooled_df": df,
+        "Bartlett_p": float(bartlett.pvalue),
+        "Levene_p": float(levene.pvalue),
+        "lag1_mean": float(np.nanmean(r1)),
+        "lag1_p05": float(np.nanpercentile(r1, 5)),
+        "lag1_p95": float(np.nanpercentile(r1, 95)),
+        "observed_max_test_SD_pctRH": max_sd,
+        "P_max_ge_observed_given_common_sigma": p_max,
+        "common_sigma_one_sided_95UCL_pctRH": common_sigma_ucl95,
+        "repeatability_limit_pctRH": 0.30,
+        "would_pass_R_REP": bool(common_sigma_ucl95 <= 0.30 and bartlett.pvalue > 0.05 and levene.pvalue > 0.05),
+        "Bonferroni_per_test_UCL_max_pctRH": float(bonf.max()),
+        "Bonferroni_per_test_UCL_count_above_0p30": int((bonf > 0.30).sum()),
+        "interpretation": "Aggregate common-sigma evidence is favorable under post-hoc R-REP; per-condition compliance remains NOT DEMONSTRATED.",
+    }])
+    out.to_csv(OUT / "sup001_repeatability_rrep.csv", index=False)
+    return out
+
+
 def hysteresis_outputs(tests: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     ch = tests[tests["role"] == "CHARACTERIZATION"].copy()
     p = (
@@ -147,6 +206,7 @@ def hysteresis_outputs(tests: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame,
     cell["limit_pctRH"] = RH_LIMIT_HYST
     cell["guarded_pass"] = cell["guarded_abs_H_95_pctRH"] <= RH_LIMIT_HYST
     cell["decision_rule_status"] = "post-freeze, post-hoc"
+    cell["pooled_SD_scope_note"] = "Pooled pair-difference SD is calculated about the grand mean and therefore includes between-cell spread; this is conservative."
 
     frozen = pd.DataFrame([{
         "frozen_metric": "max absolute single matched pair",
@@ -234,8 +294,9 @@ def fit_first_order_grid(tt: np.ndarray, u: np.ndarray, dut: np.ndarray) -> dict
         "fit_RMSE_pctRH": rmse,
         "residual_lag1": lag1(resid),
         "t90_s": delay + tau * np.log(10.0),
-        "tau_at_search_boundary": bool(tau <= 2.0001 or tau >= 59.9999),
-        "delay_at_search_boundary": bool(delay <= 0.0001 or delay >= 9.9999),
+        "tau_at_search_boundary": bool(np.isclose(tau, fine_taus.min()) or np.isclose(tau, fine_taus.max())),
+        "delay_at_search_boundary": bool(np.isclose(delay, fine_delays.min()) or np.isclose(delay, fine_delays.max())),
+        "delay_at_zero_physical_bound": bool(np.isclose(delay, 0.0)),
     }
 
 def t90_outputs() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -284,13 +345,19 @@ def t90_outputs() -> tuple[pd.DataFrame, pd.DataFrame]:
             "sd_t90_across_tests_s": sd_t90,
             "mean_t90_95CI_low_s": mean_t90 - tcrit * se,
             "mean_t90_95CI_high_s": mean_t90 + tcrit * se,
+            "mean_t90_95CI_scope": "across-test statistical interval only; excludes model-form uncertainty",
             "min_t90_s": float(g["t90_s"].min()),
             "max_t90_s": float(g["t90_s"].max()),
             "mean_fit_RMSE_pctRH": float(g["fit_RMSE_pctRH"].mean()),
             "max_fit_RMSE_pctRH": float(g["fit_RMSE_pctRH"].max()),
             "mean_residual_lag1": float(g["residual_lag1"].mean()),
             "grid_boundary_hits": int(g[["tau_at_search_boundary", "delay_at_search_boundary"]].any(axis=1).sum()),
-            "interpretation": "post-freeze model-dependent estimate; not a frozen conformity decision",
+            "zero_delay_hits": int(g["delay_at_zero_physical_bound"].sum()),
+            "interpretation": (
+                "post-freeze model-dependent estimate relative to measured reference"
+                if basis == "measured_reference"
+                else "post-freeze reference-lag-bound sensitivity; assumes reference at its public t90 maximum and is not a point estimate"
+            ),
         })
     summary = pd.DataFrame(summary_rows)
     summary.to_csv(OUT / "sup001_t90_identification_summary.csv", index=False)
@@ -321,6 +388,7 @@ def drift_outputs() -> pd.DataFrame:
         "day63_to_77_mean_pctRH": float(np.mean(y[(x >= 63) & (x <= 77)])),
         "day84_pctRH": float(y[x == 84][0]),
         "status": "NOT DEMONSTRATED (frozen); supplemental trend evidence unfavorable but non-monotonic",
+        "CI_scope_note": "OLS interval assumes independent weekly residuals; visible temporal structure means this interval may be too narrow.",
     }])
     out.to_csv(OUT / "sup001_drift_inference.csv", index=False)
     return out
@@ -335,6 +403,7 @@ def uncertainty_outputs(tests: pd.DataFrame):
     bracket["k95_from_nu_eff"] = stats.t.ppf(0.975, bracket["nu_eff_from_4_test_state"])
     bracket["small_sample_95_halfwidth_pctRH"] = bracket["k95_from_nu_eff"] * bracket["Combined_Standard_Uncertainty"]
     bracket = bracket.merge(mc[["Point_ID", "ModelB_Central95_HalfWidth", "ModelB_vs_A_95HalfWidth_Ratio"]], on="Point_ID", how="left")
+    bracket["decision_rule_status"] = "post-freeze, post-hoc"
     bracket["interpretation"] = "coverage-model bracket on frozen component set; not a physical validation of the budget"
     bracket.to_csv(OUT / "sup001_uncertainty_coverage_bracket.csv", index=False)
 
@@ -388,10 +457,32 @@ def uncertainty_outputs(tests: pd.DataFrame):
     cells["pass"] = cells["AbsBiasPlusU95_pctRH"] <= RH_LIMIT_STATIC
     cells["scope_note"] = "held-out cells only (RH 30/50/70; T 15/25/35); no 20 %RH held-out data"
     cells.to_csv(OUT / "sup001_validation_cell_primary_budget.csv", index=False)
-    return bracket, primary, cells
+
+    # R3: preserve direction-dependent residual structure rather than burying it
+    # in a pooled state term. This is a post-freeze robustness view.
+    direction = (
+        vt.groupby(["RH", "T", "direction"])["mbe_C1"]
+        .mean()
+        .rename("Direction_Conditional_Bias_pctRH")
+        .reset_index()
+    )
+    u_nonstate_no_chamber = float(np.sqrt(u_repeat**2 + u_offset_c1**2 + u_ref**2 + u_stab**2))
+    u_direction = float(np.sqrt(u_nonstate_no_chamber**2 + u_chamber**2))
+    direction["U_NonState_Excl_Chamber_pctRH"] = u_nonstate_no_chamber
+    direction["U_Chamber_Uniformity_pctRH"] = u_chamber
+    direction["U_DirectionConditional_pctRH"] = u_direction
+    direction["Expanded_k2_pctRH"] = 2.0 * u_direction
+    direction["AbsBiasPlusExpanded_k2_pctRH"] = direction["Direction_Conditional_Bias_pctRH"].abs() + 2.0 * u_direction
+    direction["static_limit_pctRH"] = RH_LIMIT_STATIC
+    direction["pass"] = direction["AbsBiasPlusExpanded_k2_pctRH"] <= RH_LIMIT_STATIC
+    direction["decision_rule_status"] = "post-freeze, post-hoc supplemental robustness case"
+    direction["scope_note"] = "Held-out validation RH×T×direction cells; state term excluded because direction is conditioned explicitly; frozen status unchanged."
+    direction.to_csv(OUT / "sup001_direction_conditional_uncertainty.csv", index=False)
+
+    return bracket, primary, cells, direction
 
 
-def write_run_summary(rmse, hyst_cells, t90, drift, primary_u, cell_u) -> None:
+def write_run_summary(rmse, repeatability, hyst_cells, t90, drift, primary_u, cell_u, direction_u) -> None:
     worst_h = hyst_cells.loc[hyst_cells["abs_H_mean_pctRH"].idxmax()]
     lines = [
         f"{PACKAGE_ID} v{PACKAGE_VERSION}",
@@ -402,6 +493,9 @@ def write_run_summary(rmse, hyst_cells, t90, drift, primary_u, cell_u) -> None:
         "",
         "RMSE:",
         rmse.to_string(index=False),
+        "",
+        "Repeatability R-REP (post-freeze, post-hoc):",
+        repeatability.to_string(index=False),
         "",
         "Hysteresis worst cell (post-hoc guarded):",
         worst_h.to_frame().T.to_string(index=False),
@@ -417,6 +511,9 @@ def write_run_summary(rmse, hyst_cells, t90, drift, primary_u, cell_u) -> None:
         "",
         "All held-out validation cells with pooled state term:",
         cell_u.to_string(index=False),
+        "",
+        "Direction-conditional held-out robustness case:",
+        direction_u.to_string(index=False),
     ]
     (OUT / "sup001_run_summary.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -451,12 +548,13 @@ def main() -> None:
     input_hashes = verify_frozen_inputs()
     s, tests = load_static()
     rmse = rmse_outputs(s)
+    repeatability = repeatability_rrep_output(s, tests)
     _, hyst_cells, _ = hysteresis_outputs(tests)
     _, t90_summary = t90_outputs()
     drift = drift_outputs()
-    _, primary_u, cell_u = uncertainty_outputs(tests)
+    _, primary_u, cell_u, direction_u = uncertainty_outputs(tests)
     write_manifest_runtime(input_hashes)
-    write_run_summary(rmse, hyst_cells, t90_summary, drift, primary_u, cell_u)
+    write_run_summary(rmse, repeatability, hyst_cells, t90_summary, drift, primary_u, cell_u, direction_u)
     print(f"{PACKAGE_ID}: PASS")
     print(f"Outputs: {OUT}")
     print("Frozen v1.0.0 conformity decisions were not modified.")
