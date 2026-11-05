@@ -81,3 +81,15 @@ This package incorporates the blocking items identified in 08_SUP001_TARGETED_VE
 - Hysteresis notes that the pooled pair-difference SD includes between-cell spread and is therefore conservative.
 - t90 intervals are labelled as across-test statistical intervals only, not model-form uncertainty.
 - Delay=0 is tracked as the physical non-negativity bound.
+
+## REVIEW-009 closeout hardening
+
+- Frozen derived tables and `config/calibration_model_v1.json` are now verified by exact SHA-256 and fail closed.
+- The C1 offset is loaded from the verified frozen calibration JSON rather than hard-coded in the supplemental code.
+- Direction-conditional uncertainty includes between-test day/run dispersion for the two-Test_ID cells and uses an effective-DOF 95% coverage factor.
+- Drift is reported as **inconclusive** after serial-correlation sensitivity; OLS-only language is not used as the final interpretation.
+- SUP-001 t90 and frozen command-to-DUT t90 are explicitly treated as different quantities.
+- Delay-at-zero-bound counts are reported as an identifiability warning.
+- CI protects frozen `docs/` content as well as data/reports/notebooks/src/config/tests/scripts and also runs on `main` after merge.
+
+R1 remains open until generated outputs plus `SHA256SUMS.txt` are committed, the PR is merged, and immutable tag `sup001-v0.1.0` exists.
