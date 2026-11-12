@@ -268,6 +268,13 @@ Substantive milestones use stable `HV-###` identifiers. Technical verification g
 Repository governance: [docs/governance/REPOSITORY_GOVERNANCE.md](docs/governance/REPOSITORY_GOVERNANCE.md)  
 Handoff index: [docs/handoffs/HANDOFF_INDEX.md](docs/handoffs/HANDOFF_INDEX.md)
 
+## Related Tools
+
+- [**Evidence Checker**](https://github.com/hmolhem/evidence-checker) checks that every reported number in a document built from this repository traces back to the evidence files at a fixed git tag, for example `reports/tables` at `v1.0.0`.
+  - It is rounding-aware and records the source of each number.
+  - On the integrated engineering report, it checked 604 numbers and found one rounding error, which was corrected.
+  - It is a separate repository that only reads this one. The frozen `v1.0.0` analysis is unchanged.
+
 ## Current Focus
 
 The core analytical project is complete and the final engineering assessment is closed.
